@@ -249,22 +249,30 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 		
 			switch(collisionTypes[i]) { 
 				
-				case "back":     
+				case "back":
+				case "backLeft":
+				case "backRight":     
 				
 					lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.z-lastBlock.front, 2))/(this.position.y+CONFIG.GRAVITY);
 					break;                                                              
 				
 				case "front":
+				case "frontLeft":
+				case "frontRight":     
 
 					lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.z-lastBlock.back, 2))/(this.position.y+CONFIG.GRAVITY);
 					break;                                                              
 
 				case "left":
+				case "backLeft":
+				case "frontLeft":     
 
 					lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.x-lastBlock.right, 2))/(this.position.y+CONFIG.GRAVITY);
 					break;                                                              
 
-				case "right":
+				case "right":        
+				case "backRight":
+				case "frontRight":
                      
 					lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.x-lastBlock.left, 2))/(this.position.y+CONFIG.GRAVITY);
 					break
