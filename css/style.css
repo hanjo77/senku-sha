@@ -1,0 +1,121 @@
+/* Global */
+
+html, body {
+	
+	font-family: 'Aldrich', sans-serif;
+	overflow: hidden; 
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: #000000;
+	display:table;
+	color: #ffffff;
+	text-transform: uppercase;
+}
+
+#content {
+
+	height: 100%;
+	padding: auto auto;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+h1 {
+	
+	font-size: 10em;
+	padding: 0;
+	margin: 0;
+	color: #ff0000;
+}
+
+h2 {
+	
+	font-size: 3em;
+	padding: 0 0 1em 0;
+	margin: 0;
+}
+
+a {
+	
+	color: #990000;
+	text-decoration: none;
+}
+
+a.menuButton, a.blockButton {
+
+	border: 2px solid #990000;
+	display: inline-block; 
+}
+  
+a.menuButton {
+                           
+	font-size: 2em;
+	padding: 0.5em 1em;
+	width: auto;
+}
+       
+a.blockButton {
+	           
+	height: 3em;
+	width: 3em;
+}
+
+div.block {
+	             
+	position: absolute;
+}
+
+a.menuButton:hover, a.menuButton.active,
+a.blockButton:hover, a.blockButton.active {
+
+	border-color: #ff0000;
+	color: #ff0000;
+}
+
+a.menuButton:hover, a.menuButton.active {
+	
+	background: #ffffff;
+}
+
+div.copyRight {
+	                          
+	margin: 3em;
+	padding: 1em;            
+	color: #333333;
+	width: auto;
+	display: block;
+	clear: both;
+}
+
+/* Game */
+
+#game {
+	
+	width: 100%;
+	height: 100%;
+}
+
+canvas {
+	
+	width: 100%;
+	height: 100%;
+}        
+
+/* Editor */
+
+#controls {
+	
+	width: 14em;
+	float: left;
+}
+
+#display {
+	
+	width: 15em;
+	float: left;
+	border: 2px solid #990000;
+	height: 30em;
+}
