@@ -15,10 +15,9 @@ html, body {
 }
 
 #content {
-
-	height: 100%;
-	padding: auto auto;
-	display: table-cell;
+                 
+	width: 100%;       
+	display: block;
 	vertical-align: middle;
 	text-align: center;
 }
@@ -27,15 +26,22 @@ h1 {
 	
 	font-size: 10em;
 	padding: 0;
-	margin: 0;
+	margin: 0 0 -.2em 0;
 	color: #ff0000;
+	text-shadow: 0 0 10px #000;
 }
 
 h2 {
 	
 	font-size: 3em;
-	padding: 0 0 1em 0;
+	padding: 0;
 	margin: 0;
+	text-shadow: 0 0 10px #000;
+}
+   
+p {                            
+	
+	text-shadow: 0 0 10px #000;
 }
 
 a {
@@ -43,18 +49,80 @@ a {
 	color: #990000;
 	text-decoration: none;
 }
+   
+div.copyRight {
+	                          
+	margin: 1em;
+	padding: 1em;            
+	color: #333333;
+	width: auto;
+	display: block;
+	clear: both;
+}
 
-a.menuButton, a.blockButton {
+.formRowWrapper {
+	
+	display: inline-block;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
 
+.inputWrapper {
+	
+	text-align: left;
+	width: 40%;
+}
+
+.labelWrapper {
+	
+	text-align: right; 
+	width: 40%;
+}
+
+#bgBall {
+	
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 0;
+}
+
+#contentWrapper {
+	
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 1;
+}
+
+/* Buttons */
+
+a.menuButton, a.blockButton, label, input.button {
+	
 	border: 2px solid #990000;
-	display: inline-block; 
+	background: #000000;
+	color: #ffffff;
+	display: inline-block;
+	box-shadow: 0 0 10px #000;
 }
   
-a.menuButton {
+a.menuButton, input.button {
                            
 	font-size: 2em;
-	padding: 0.5em 1em;
-	width: auto;
+	padding: 0.5em 0;
+	width: 6em;
+	margin-top: .2em;
+	cursor: pointer;
+}
+
+input.button {
+	
+	width: 7em;
 }
        
 a.blockButton {
@@ -66,29 +134,72 @@ a.blockButton {
 div.block {
 	             
 	position: absolute;
+}    
+
+div.buttonRows {
+	
+	margin-top: 3em;
 }
 
 a.menuButton:hover, a.menuButton.active,
-a.blockButton:hover, a.blockButton.active {
+a.blockButton:hover, a.blockButton.active,
+input.button:hover {
 
 	border-color: #ff0000;
 	color: #ff0000;
 }
 
-a.menuButton:hover, a.menuButton.active {
+a.menuButton:hover, a.menuButton.active, 
+input.button:hover {
 	
 	background: #ffffff;
 }
 
-div.copyRight {
-	                          
-	margin: 3em;
-	padding: 1em;            
-	color: #333333;
-	width: auto;
-	display: block;
-	clear: both;
+/* Forms */
+   
+form {
+	          
+	display: inline-block; 
+	width: 100%;
 }
+    
+row {
+
+	display: block;
+	line-height: 1.5em;
+	clear: both;
+}   
+   
+row.buttons {
+	
+	margin-top: .5em;
+}
+
+label {
+	
+	width: 15em;
+	text-align: right;
+	padding: 0.1em 0.2em;
+	margin-right: 0.2em;
+}
+
+input {
+	
+	font-family: 'Aldrich', sans-serif;   
+	text-transform: uppercase;
+	width: 15em;
+	padding: 0.2em;
+	font-size: 1em;
+	display: inline;  
+	box-shadow: 0 0 10px #000;
+}
+
+.validator {
+	
+	display: inline;
+	color: #ff0000;
+	text-shadow: 0 0 10px #000;
+}               
 
 /* Game */
 
@@ -104,18 +215,60 @@ canvas {
 	height: 100%;
 }        
 
-/* Editor */
+/* Editor */            
+
+.editorWrapper, .editorDisplayWrapper {
+	
+	width: auto;	          
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#buttonUp, #buttonDown {
+	
+	display: block;
+	height: 6em;
+	max-height: 6em;
+	position: absolute;
+	z-index: 100000;
+	line-height: 6em; 
+	color: #ffffff;
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+	overflow: hidden;
+	opacity: 0;
+}
+
+#buttonUp {
+	
+	background: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+} 
+
+#buttonDown {
+	       
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+} 
 
 #controls {
 	
 	width: 14em;
 	float: left;
 }
+   
+#editorDisplayWrapper {
+	
+	width: 27.3em;
+	float: left;
+	height: 31em
+}
 
 #display {
 	
-	width: 15em;
-	float: left;
 	border: 2px solid #990000;
 	height: 30em;
+	background: #000000;
+	box-shadow: 0 0 10px #000;
 }

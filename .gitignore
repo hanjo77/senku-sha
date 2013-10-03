@@ -2,3 +2,7 @@
 *.docx
 
 *.db
+
+*.docx#
+
+*.xlsx

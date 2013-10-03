@@ -34,10 +34,10 @@ var CONFIG = {
 	},
 	TRACK: {
 		
-		BACK_ROWS: 7,
+		BACK_ROWS: 5,
 		FRONT_ROWS: 20,
 		FOG_NEAR: 15,
-		FOG_FAR: 25
+		FOG_FAR: 20
 	},
 	EDITOR: {
 		

@@ -1,27 +1,3 @@
-$(document).ready(function() {
-
-	editor = new Editor();
-	$('#controls a').click(function(e) {
-
-		var obj = $(e.target);
-		$('#controls a').removeClass("active");
-		if (!obj.hasClass("active")) {
-		                        
-			editor.activeButton = obj;
-			obj.addClass("active");
-		}                          
-	});
-	
-	editor.displayContainer.click(function(e) {
-                  
-		var pos = [
-			Math.floor((e.clientX - editor.displayOffset.left) / editor.blockButton.innerWidth()), 
-			Math.floor((e.clientY - editor.displayOffset.top) / editor.blockButton.innerHeight())
-		];
-		editor.addBlock(pos);
-	});
-});
-
 var editor = null;
 
 function Editor() {
@@ -37,9 +13,53 @@ function Editor() {
 	this.controlsContainer.append(Util.menuButton("save", "SAVE"));
 	this.controlsContainer.append(Util.menuButton("clear", "CLEAR"));
 	this.controlsContainer.append(Util.menuButton("exit", "EXIT"));
-	                                                           
+	this.borderWidth = (this.displayContainer.outerWidth()-this.displayContainer.innerWidth())/2;
+		                                                           
 	this.blockButton = $('.blockButton').first();
-	this.displayOffset = this.displayContainer.offset();
+	this.updateOffset();
+}
+
+Editor.prototype.updateOffset = function() {
+	
+	this.displayOffset = this.displayContainer.position();    
+	if (this.displayOffset) {
+		
+		$("#buttonUp").css({
+
+			top: this.displayOffset.top+this.borderWidth,
+			left: this.displayOffset.left+this.borderWidth,
+			width: this.displayContainer.innerWidth()
+		});
+
+		$("#buttonDown").css({
+
+			top: (this.displayOffset.top-$("#buttonDown").outerHeight())+this.displayContainer.innerHeight()+this.borderWidth,
+			left: this.displayOffset.left+this.borderWidth,
+			width: this.displayContainer.innerWidth()
+		});
+	}
+}
+
+Editor.prototype.drawBlocks = function() {
+	   
+	this.displayContainer.html(""); 
+	for (var row = 0; row < this.blocks.length; row++) {
+		
+		if (this.blocks[row]) {
+			
+			for (var col = 0; col < this.blocks[row].length; col++) {
+				
+				if (this.blocks[row][col]) {
+					
+					var color = CONFIG.BLOCK_TYPES[this.blocks[row][col]].color;
+					if (color) {
+					                                                              
+						this.appendBlock([col, row], '#'+color.toString(16))
+					} 
+				}
+			}
+		}
+	}
 }
 
 Editor.prototype.addBlock = function(pos) {
@@ -52,16 +72,21 @@ Editor.prototype.addBlock = function(pos) {
 		
 		this.blocks[pos[1]] = new Array();
 	}
-	this.blocks[pos[1]][pos[0]] = this.activeButton.attr("id");                                                          
+	this.blocks[pos[1]][pos[0]] = this.activeButton.attr("id");
+	var color = this.activeButton.css("backgroundColor");
+	this.appendBlock(pos, color);                                                          
+}
+
+Editor.prototype.appendBlock = function(pos, color) {
+	
 	var id = "block_" + pos[0] + "_" + pos[1];
-	var borderWidth = (this.displayContainer.outerWidth()-this.displayContainer.innerWidth())/2;
     this.displayContainer.append('<div class="block" id="' + id + '">&nbsp;</div>');
 	$('#' + id).css({
-		backgroundColor: this.activeButton.css("backgroundColor"),
+		backgroundColor: color,
 		height: this.blockButton.innerHeight() + "px",
 		width: this.blockButton.innerWidth() + "px",
-		left: this.displayOffset.left + borderWidth + (pos[0] * this.blockButton.innerWidth()) + "px",
-		top: this.displayOffset.top + borderWidth + (pos[1] * this.blockButton.innerHeight()) + "px"
+		left: this.displayOffset.left + this.borderWidth + (pos[0] * this.blockButton.innerWidth()) + "px",
+		top: this.displayOffset.top + this.borderWidth + (pos[1] * this.blockButton.innerHeight()) + "px"
 	});
 }
 

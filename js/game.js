@@ -39,6 +39,11 @@ $(window).resize(function() {
 						 
 	if (renderer) {
 	
+		container.css({
+			
+			width: $(window).innerWidth(),
+			height: $(window).innerHeight() 
+		});
 		camera.aspect = container.width()/container.height();
 		camera.updateProjectionMatrix();
 		renderer.setSize(container.width(), container.height());
@@ -47,10 +52,6 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	
-	$('body').css({
-	
-		backgroundColor: CONFIG.BACKGROUND_COLOR
-	})
 	startGame();
 });
 
@@ -60,10 +61,14 @@ function startGame() {
 	speedX = 0;
 	speedY = 0;
 	speedZ = 0; 
-	$('body').html('<div id="game"></div>')                           
 
 	scene = new THREE.Scene();
 	container = $("#game");
+	container.css({
+		
+		width: $(window).innerWidth(),
+		height: $(window).innerHeight() 
+	});
 	
 	pointLight = new THREE.PointLight(0xffffff);
 	pointLight.position.set(0,5,7);     
