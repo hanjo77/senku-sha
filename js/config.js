@@ -17,7 +17,7 @@ var CONFIG = {
 		}, {            
 			name: "normalDark",
 			color: 0xca8842
-	}, {
+		}, {
 			name: "blocker",
 			color: 0xea4dc4,
 			blocker: true,

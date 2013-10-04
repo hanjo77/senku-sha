@@ -51,12 +51,28 @@ Util.exit = function() {
 	// window.location.href = "index.php";
 }
 
-Util.save = function() {
+Util.editorSave = function() {
 
-	// TODO: Save edited level
+	$.ajax({
+		
+		url: "save_level.php",
+		type: "POST",
+		data: {
+			
+			title: $("#levelTitle").val(),
+			data: editor.levelString(),
+			id: $("#levelId").val()
+		}
+	}).done(function(result) {
+		
+		if (parseInt(result, 10) > 0) {
+			
+			$("#levelId").val(result);
+		}
+	});
 }
 
-Util.clear = function() {
+Util.editorClear = function() {
 
 	$('#display').html('');
 }

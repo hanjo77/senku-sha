@@ -31,11 +31,20 @@ class DBUtil {
 	function query($query) {
 	       
 	  	$this->connect();
-		$id = mysql_query($query, $this->connection);
-		if (!$id) {
+		$result = mysql_query($query, $this->connection);
+		if (!$result) {
 			
 			echo mysql_error();
 		}
+		mysql_close();
+		return $result;	
+	}
+
+	function insert($query) {
+	       
+	  	$this->connect();
+		mysql_query($query);
+		$id = mysql_insert_id();
 		mysql_close();
 		return $id;	
 	}

@@ -1,6 +1,10 @@
 /**
-  *  Block - used for trail
-  **/
+ * The block, a tile of the track
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ */
+
 function Block(type, pos) {
 	       
 	// call parent constructor
@@ -23,9 +27,15 @@ function Block(type, pos) {
 	this.back = this.position.z+this.blockSize;
 }
 
-// inherit Persion
+// inherit Mesh
 Block.prototype = new THREE.Mesh();
 Block.prototype.constructor = Block;           
+
+/**
+ * Returns an object containing the neighbour blocks
+ * @returns This blocks neighbour blocks
+ * @type Object
+ */
 
 Block.prototype.neighbourBlocks = function() {
                                                       
@@ -42,6 +52,14 @@ Block.prototype.neighbourBlocks = function() {
 		back: track.blockForPosition(col, row+1)
 	};      
 }           
+
+/**
+ * Finds the next track position, calculated by distance between this block and ball
+ * @param {String} type Type of collision (top|bottom|left|right|topLeft|topRight|bottomLeft|bottomRight)
+ * @param {THREE.Vector3} nextPos the track position in the next frame
+ * @returns Updated track position
+ * @type THREE.Vector3
+ */
 
 Block.prototype.getNextPositionToBall = function(type, nextPos) {
 	    

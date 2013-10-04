@@ -1,6 +1,10 @@
 /**
-  *  Ball - the main actor
-  **/
+ * The ball - our great main actor
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ */
+
 function Ball() {
 	       
 	// call parent constructor
@@ -20,9 +24,15 @@ function Ball() {
 	this.isFalling = true;
 }
 
-// inherit Persion
+// inherit Mesh
 Ball.prototype = new THREE.Mesh();
 Ball.prototype.constructor = Ball;
+
+/**
+ * The point directly under the ball
+ * @returns Vector3 object of the ball's bottom touch point
+ * @type THREE.Vector3
+ */
 
 Ball.prototype.touchPoint = function() {
 	
@@ -34,6 +44,12 @@ Ball.prototype.touchPoint = function() {
 	);
 }
 
+/**
+ * The point that will be under the ball in the next frame
+ * @returns Vector3 object of the ball's next bottom touch point
+ * @type THREE.Vector3
+ */
+
 Ball.prototype.nextTouchPoint = function() {
 	
 	return new THREE.Vector3(
@@ -44,7 +60,12 @@ Ball.prototype.nextTouchPoint = function() {
 	);
 }                     
          
-// Rotate an object around an arbitrary axis in world space       
+/**
+ * Rotate ball around an arbitrary axis in world space
+ * @param {THREE.Vector3} axis The axis
+ * @param {Number} radians The angle in radians
+ */
+      
 Ball.prototype.rotateAroundWorldAxis = function(axis, radians) {
 	
     var rotWorldMatrix = new THREE.Matrix4();
@@ -53,6 +74,13 @@ Ball.prototype.rotateAroundWorldAxis = function(axis, radians) {
     this.matrix = rotWorldMatrix;
     this.rotation.setFromRotationMatrix(this.matrix);
 }         
+
+/**
+ * Finds block under the ball
+ * @param {THREE.Vector3} trackPosition Position of the track
+ * @returns Block under ball
+ * @type Block
+ */
 
 Ball.prototype.blockUnderBall = function(trackPosition) {
 

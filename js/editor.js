@@ -10,8 +10,8 @@ function Editor() {
 		
 		this.controlsContainer.append(Util.blockButton(i));
 	}
-	this.controlsContainer.append(Util.menuButton("save", "SAVE"));
-	this.controlsContainer.append(Util.menuButton("clear", "CLEAR"));
+	this.controlsContainer.append(Util.menuButton("editorSave", "SAVE"));
+	this.controlsContainer.append(Util.menuButton("editorClear", "CLEAR"));
 	this.controlsContainer.append(Util.menuButton("exit", "EXIT"));
 	this.borderWidth = (this.displayContainer.outerWidth()-this.displayContainer.innerWidth())/2;
 		                                                           
@@ -96,4 +96,27 @@ Editor.prototype.removeBlock = function(pos) {
     this.blocks[pos[1]][pos[0]] = null;            
 }
 
+Editor.prototype.levelString = function() {
+	
+	var level = "";
+	for (var row = 0; row < this.blocks.length; row++) {
+		
+		if (this.blocks[row]) {
+			
+			for (var col = 0; col < this.blocks[row].length; col++) {
+				
+				if (this.blocks[row][col]) {
+					
+					level += this.blocks[row][col];
+				}
+				else {
+					
+					level += " ";
+				}
+			}
+		}
+		level += "\n"
+	}
+	return level;
+}
 

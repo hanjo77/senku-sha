@@ -51,7 +51,6 @@ function startBall() {
 	scene.add(ball);          
 
 	camera = new THREE.PerspectiveCamera(45, container.width()/container.height(), 1, 1000); 
-	// camera = THREE.OrthographicCamera( container.width() / - 2, container.width() / 2, container.height() / 2, container.height() / - 2, 1, 1000 );
 	camera.position.z = 1.5;
 	camera.position.y = 1;
 	camera.lookAt(ball.position);       
@@ -59,16 +58,9 @@ function startBall() {
    	container.get(0).appendChild(renderer.domElement);
 	
 	var render = function() {
-		requestAnimationFrame(render);     
-		/* 
-		console.log(mouseX + " - " + mouseY);	                
-		console.log(ball.position.x + " - " + ball.position.y);	                
-		console.log(" - ");             
-		if (mouseMoveX && mouseMoveY) {
-			
-			ball.position.x += mouseMoveX/100;
-			ball.position.y += mouseMoveY/100;
-		} 	   	 */   					  
+		
+		requestAnimationFrame(render);   
+		    					  
 		if (mouseX && mouseY) {
 			
 			if (mouseX && mouseY) {
@@ -77,6 +69,7 @@ function startBall() {
 				speedZ = (mouseY-($(document).height()/2))/10000;
 			}
 		}
+		
 		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), speedZ);
 		ball.rotateAroundWorldAxis(new THREE.Vector3(0,1,0), speedX);  
                                                                          		

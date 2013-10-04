@@ -31,7 +31,7 @@ session_start();
 		    
 			    	switch($_POST["formName"]) {
 			
-						case "users":
+						case "user":
 							include("register.php");
 							break;
 			

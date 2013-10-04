@@ -4,7 +4,7 @@
   	
 require_once("inc/form.php");  
 
-$form = new Form("users", array(
+$form = new Form("user", array(
 			  
        "name" => array(   
 
