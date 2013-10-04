@@ -8,7 +8,7 @@ session_start();
 <head> 
 	<meta charset="UTF-8">
 	<title>先駆者</title>
-	<link link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<script src="js/lib/three.min.js"></script>  
