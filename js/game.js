@@ -1,5 +1,5 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
 $(document).keydown(function (e) {
 											
@@ -45,6 +45,7 @@ $(window).resize(function() {
 			height: $(window).innerHeight() 
 		});
 		camera.aspect = container.width()/container.height();
+		bgCam.aspect = container.width()/container.height();
 		camera.updateProjectionMatrix();
 		renderer.setSize(container.width(), container.height());
 	}
@@ -56,6 +57,20 @@ $(document).ready(function() {
 });
 
 function startGame() {
+
+	var bgTexture = THREE.ImageUtils.loadTexture('img/horizon.jpg');
+	var bg = new THREE.Mesh(
+	  new THREE.PlaneGeometry(2, 2, 0),
+	  new THREE.MeshBasicMaterial({map: bgTexture})
+	);
+	// The bg plane shouldn't care about the z-buffer.
+	bg.material.depthTest = false;
+	bg.material.depthWrite = false;
+
+	bgScene = new THREE.Scene();
+	bgCam = new THREE.Camera();
+	bgScene.add(bgCam);
+	bgScene.add(bg);
 
 	trackPosition = new THREE.Vector3(0, 0, 0);
 	speedX = 0;
@@ -105,6 +120,10 @@ function startGame() {
 	var render = function() {
 		requestAnimationFrame(render);     
 											  
+		renderer.autoClear = false;
+		renderer.clear();
+		renderer.render(bgScene, bgCam);
+		
 		track.position = track.nextPosition();
 		track.updateBlocks();
 		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*speedZ);

@@ -1,4 +1,4 @@
-var scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight, mouseX, mouseY, mouseMoveX, mouseMoveY;
+var bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight, mouseX, mouseY, mouseMoveX, mouseMoveY;
 
 $(document).ready(function() {
 	
@@ -16,6 +16,20 @@ $(document).ready(function() {
 });
 
 function startBall() {
+
+	var bgTexture = THREE.ImageUtils.loadTexture('img/horizon.jpg');
+	var bg = new THREE.Mesh(
+	  new THREE.PlaneGeometry(2, 2, 0),
+	  new THREE.MeshBasicMaterial({map: bgTexture})
+	);
+	// The bg plane shouldn't care about the z-buffer.
+	bg.material.depthTest = false;
+	bg.material.depthWrite = false;
+
+	bgScene = new THREE.Scene();
+	bgCam = new THREE.Camera();
+	bgScene.add(bgCam);
+	bgScene.add(bg);
 
 	trackPosition = new THREE.Vector3(0, 0, 0);
 	speedX = .01;
@@ -54,13 +68,17 @@ function startBall() {
 	camera.position.z = 1.5;
 	camera.position.y = 1;
 	camera.lookAt(ball.position);       
-
+	
    	container.get(0).appendChild(renderer.domElement);
 	
 	var render = function() {
 		
 		requestAnimationFrame(render);   
 		    					  
+		renderer.autoClear = false;
+		renderer.clear();
+		renderer.render(bgScene, bgCam);
+		
 		if (mouseX && mouseY) {
 			
 			if (mouseX && mouseY) {

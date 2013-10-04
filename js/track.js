@@ -5,6 +5,7 @@ function Track() {
 	       
 	// call parent constructor
 	THREE.Object3D.call(this);
+	this.receiveShadow = true;
 	this.blocks = new Array();
 	this.activeRow = null;
 	this.frontRows = CONFIG.TRACK.FRONT_ROWS;
