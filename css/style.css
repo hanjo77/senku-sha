@@ -102,6 +102,14 @@ div.copyRight {
 
 /* Buttons */
 
+input.menuInput {
+	
+	margin: 0.5em;
+	padding: 1em;
+	text-align: center;
+	width: 10.5em;
+}
+
 a.menuButton, a.blockButton, label, input.button {
 	
 	border: 2px solid #990000;

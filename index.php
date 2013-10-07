@@ -32,11 +32,11 @@
 
 	$(document).ready(function() {
 
-		startLogo();
 		window.setTimeout(function() {
 			
 			window.location.href = "start.php";
-		}, 5000);
+		}.bind(this), 5000);
+		startLogo();
 	});
 
 	function startLogo() {
