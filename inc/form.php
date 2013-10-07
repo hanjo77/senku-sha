@@ -17,36 +17,40 @@ class Form {
 
     function add_field($field) { 
 	
-		$type = $field["type"];
-		$name = array_keys($this->fields, $field)[0];
-		$label = $field["label"];
-		$id = $name."Input";
-		$value = "";
-		$class = "";
-		$misc = "";
-		if (isset($field["misc"])) {
+		$name = array_keys($this->fields, $field);
+		if (sizeof($name) > 0) {
 			
-			$misc = $field["misc"];
-		}
-		if (isset($field["validators"])) {
+			$name = $name[0];
+			$type = $field["type"];
+			$label = $field["label"];
+			$id = $name."Input";
+			$value = "";
+			$class = "";
+			$misc = "";
+			if (isset($field["misc"])) {
+			
+				$misc = $field["misc"];
+			}
+			if (isset($field["validators"])) {
 			                      
-			foreach ($field["validators"] as $key=>$validator) {
+				foreach ($field["validators"] as $key=>$validator) {
 				                    
-				$class .= " ".$validator;
-			}             
-		}
-		if ($type != "password") {
+					$class .= " ".$validator;
+				}             
+			}
+			if ($type != "password") {
 			
-			if (isset($_POST[$name])) {
+				if (isset($name) && isset($_POST[$name])) {
 
-				$value = $_POST[$name];
-			}
-			else if (isset($field["value"])) {
+					$value = $_POST[$name];
+				}
+				else if (isset($field["value"])) {
 
-				$value = $field["value"];
+					$value = $field["value"];
+				}
 			}
+			include("templates/tmpl_input_text.php");
 		}
-		include("templates/tmpl_input_text.php");
     }
 
 	function display() {
