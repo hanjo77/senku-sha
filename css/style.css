@@ -1,5 +1,16 @@
 /* Global */
 
+#debug {
+	
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #000000;
+	padding: 1em;
+	z-index: 2;
+}
+
 html, body {
 	
 	font-family: 'Aldrich', sans-serif;

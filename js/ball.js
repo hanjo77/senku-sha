@@ -87,10 +87,10 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 
 	var pos = this.touchPoint();              
 	var posOnTrack = new THREE.Vector3( 
-		pos.x - trackPosition.x,
-		pos.y - trackPosition.y,
-		pos.z - trackPosition.z
-	);                        
+		(-trackPosition.x+(CONFIG.BLOCK_SIZE/2)),
+		-trackPosition.y,
+		(-trackPosition.z+(CONFIG.BLOCK_SIZE/2))
+	);
 	if (posOnTrack.x >= 0 && posOnTrack.y >= 0) {
 		
 		var block = track.blockForPosition(
@@ -101,6 +101,7 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 			
 			if (trackPosition.y <= 0) {
 				
+				// $("#debug").html(block.blockType.name);
 				switch (block.blockType.name) {
 					
 					case "jumper":

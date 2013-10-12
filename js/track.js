@@ -15,200 +15,6 @@ function Track() {
 	+ "01010\n"
 	+ "10101\n"
 	+ "01010\n"
-	+ "10101\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
 	+ "23232\n"
 	+ "32323\n"
 	+ "23432\n"
@@ -237,17 +43,8 @@ function Track() {
 	+ "32323\n"
 	+ "27672\n"
 	+ "32323\n"
-	+ "\n"
-	+ "\n"
+	+ "  2\n"
 	+ "38383\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
 	+ "23232\n"
 	+ "32323\n"
 	+ "23232\n"
@@ -280,7 +77,7 @@ function Track() {
 			}
 		}
 		this.blocks.push(blockRow);
-	}                         
+	} 
 	this.position = new THREE.Vector3(
 		-1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-3].length/2)), 
 		0, 
@@ -339,11 +136,18 @@ Track.prototype.updateBlocks = function() {
    
 Track.prototype.nextPosition = function() {
 	
-	var nextPosition = this.position;
-	nextPosition.x += speedX;
-	nextPosition.z += speedZ;    
+	var nextPosition = new THREE.Vector3(
+		this.position.x+speedX,
+		this.position.y,
+		this.position.z+speedZ
+	);
 	var floorPosY = 5;
 	var nextBlock = ball.blockUnderBall(nextPosition);
+	var timeRate = (timeDifference * 30) / 1000;
+	if (timeRate > 1) {
+		
+		timeRate = 1;
+	}
 	if (nextBlock) {
 		
 		floorPosY = (-1*(nextBlock.blockHeight/2)) - .01;
@@ -352,13 +156,15 @@ Track.prototype.nextPosition = function() {
 		
 		if (ball.isFalling) {
 			
-			speedY = -1*CONFIG.JUMP_SPEED;
+			nextY = -1*CONFIG.JUMP_SPEED;
+			speedY = nextY;
 			ball.isFalling = false;
 			ball.inAir = true;
 		}
-		else if (speedY < -0.1) {
+		else if ((speedY < -0.1) && (nextY >= nextPosition.y)) {
 			
-			speedY /= 2;		
+			speedY /= 2;
+			nextY += speedY;
 		}
 		else {
 			
@@ -375,19 +181,31 @@ Track.prototype.nextPosition = function() {
 				ball.isJumping = false;
 				speedY *= -1
 			}	
-			else if (speedY < CONFIG.GRAVITY) {
+			else if ((speedY < CONFIG.GRAVITY) && (nextY <= nextPosition.y)) {
 			
 				speedY *= 2;
+				nextY += speedY;
 			}
 		}
 		nextPosition.y += speedY;
 		if (nextBlock && nextPosition.y > floorPosY) {
 		
+			nextY = 0;
 			ball.inAir = false;
 			nextPosition.y = floorPosY;
 			speedY = CONFIG.GRAVITY;
 			nextPosition = nextBlock.getNextPositionToBall(nextPosition);
 		}		
+	}
+	if (timeRate) {
+		
+		tempSpeedX = (nextPosition.x - this.position.x)*timeRate;           
+		tempSpeedY = (nextPosition.y - this.position.y)*timeRate;           
+		tempSpeedZ = (nextPosition.z - this.position.z)*timeRate;           
+		nextPosition.x = this.position.x + tempSpeedX;          
+		nextPosition.y = this.position.y + tempSpeedY;          
+		nextPosition.z = this.position.z + tempSpeedZ;
+		
 	}
 	if (!nextBlock && (track.position.y >= 0)) {
 
@@ -397,11 +215,11 @@ Track.prototype.nextPosition = function() {
 			clearGame();
 		} 
 	}
-	if ((speedX > 0 && nextX < nextPosition.x) || (speedX < 0 && nextX > nextPosition.x)) {
+	/* if ((speedX > 0 && nextX < nextPosition.x) || (speedX < 0 && nextX > nextPosition.x)) {
 		
 		nextPosition.x = nextX;
 		speedX = nextPosition.x - track.position.x;
-	}
+	} */
 	return nextPosition;
 }
 
@@ -464,6 +282,6 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 	if (lambda && lambda != Infinity && lambda < 1) {
 		
 		nextPosition.y += (speedY - (lambda * speedY))-speedY;
-	}             
+	}
 	return nextPosition;
 }

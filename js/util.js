@@ -85,14 +85,11 @@ Util.editorClear = function() {
 Util.getBallPosition = function(nextPos) {
 	     
 	var pos = ball.touchPoint();
-	// console.log("nextPos");
-	// console.log(nextPos);
 	var result = new THREE.Vector3( 
-		pos.x - nextPos.x,
-		pos.y - nextPos.y,
-		pos.z - nextPos.z
-	);                   
-	// console.log("getBallPosition: " + result.x + " - " + result.y + " - " + result.z);
+			-nextPos.x,
+			-nextPos.y,
+			-nextPos.z
+		);
 	return result;                                                    
 }  
 
@@ -110,10 +107,10 @@ Util.getCollisions = function(block, nextPos) {
 	var frontRightIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(ball.geometry.radius, 2));
 	var backLeftIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(ball.geometry.radius, 2));
 	var backRightIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(ball.geometry.radius, 2));
-	var frontIntersection = ((Math.abs(ballPos.z-block.front) < ball.geometry.radius) && withinWidth);
-	var backIntersection = ((Math.abs(ballPos.z-block.back) < ball.geometry.radius) && withinWidth);
-	var leftIntersection = ((Math.abs(ballPos.x-block.left) < ball.geometry.radius) && withinHeight);
-	var rightIntersection = ((Math.abs(ballPos.x-block.right) < ball.geometry.radius) && withinHeight); 
+	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= ball.geometry.radius) && withinWidth);
+	var backIntersection = ((Math.abs(ballPos.z-block.front) <= ball.geometry.radius) && withinWidth);
+	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= ball.geometry.radius) && withinHeight);
+	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= ball.geometry.radius) && withinHeight); 
 	if (backRightIntersection) {
                    
 		types.push("frontLeft");                                      

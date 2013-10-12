@@ -18,4 +18,5 @@ session_start();
 	<div id="contentWrapper">
 		<div id="content"></div>
 	</div>
+	<div id="debug"></div>
 </body>
