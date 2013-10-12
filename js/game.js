@@ -1,5 +1,5 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var renderProcess, nextX, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var tempSpeedX, tempSpeedY, tempSpeedZ, lastFrameTime, timeBetweenFrames, renderProcess, nextX, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
 $(document).keyup(function (e) {
 											
@@ -103,18 +103,25 @@ function startGame() {
 	camera.lookAt(ball.position);       
 
    	container.get(0).appendChild(renderer.domElement);
+	lastFrameTime = new Date();
 	
-	var render = function() {
+	tempSpeedX = 0;
+	tempSpeedY = 0;
+	tempSpeedZ = 0;
+	
+	var render = function(time) {
 
 		renderProcess = requestAnimationFrame(render);     
-											  
+					
+		timeBetweenFrames = time-lastFrameTime;
+		lastFrameTime = time;
 		renderer.autoClear = false;
 		renderer.clear();
 		renderer.render(bgScene, bgCam);
 		track.position = track.nextPosition();
 		track.updateBlocks();
-		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*speedZ);
-		ball.rotateAroundWorldAxis(new THREE.Vector3(0,0,1), speedX);  
+		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*tempSpeedZ);
+		ball.rotateAroundWorldAxis(new THREE.Vector3(0,0,1), tempSpeedX);  
                              
 		renderer.render(scene, camera);
 		

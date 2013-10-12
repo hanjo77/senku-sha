@@ -339,7 +339,11 @@ Track.prototype.updateBlocks = function() {
    
 Track.prototype.nextPosition = function() {
 	
-	var nextPosition = this.position;
+	var nextPosition = new THREE.Vector3(
+		this.position.x,
+		this.position.y,
+		this.position.z
+	);
 	nextPosition.x += speedX;
 	nextPosition.z += speedZ;    
 	var floorPosY = 5;
@@ -402,6 +406,17 @@ Track.prototype.nextPosition = function() {
 		nextPosition.x = nextX;
 		speedX = nextPosition.x - track.position.x;
 	}
+	if (timeBetweenFrames) {
+		
+		var timeFactor = timeBetweenFrames*30/1000;
+		tempSpeedX = (nextPosition.x - this.position.x)*timeFactor;
+		tempSpeedY = (nextPosition.y - this.position.y)*timeFactor;
+		tempSpeedZ = (nextPosition.z - this.position.z)*timeFactor;
+		nextPosition.x = this.position.x + tempSpeedX;
+		nextPosition.y = this.position.y + tempSpeedY;
+		nextPosition.z = this.position.z + tempSpeedZ;
+	}
+	
 	return nextPosition;
 }
 
