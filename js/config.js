@@ -2,7 +2,7 @@ var CONFIG = {
 
 	BACKGROUND_COLOR: 0x000000,
 	BALL_RADIUS: 0.5,
-	BLOCK_SIZE: 1,
+	BLOCK_SIZE: 2,
 	BLOCK_HEIGHT: 0.1,
 	BLOCK_TYPES: [   
 		{       
@@ -21,7 +21,22 @@ var CONFIG = {
 			name: "blocker",
 			color: 0xea4dc4,
 			blocker: true,
-			height: 2
+			height: 1.5
+		}, {
+			name: "invertor",
+			color: 0x00cccc
+		}, {
+			name: "speedup",
+			color: 0x00cc00
+		}, {
+			name: "slowdown",
+			color: 0xcc0000
+		}, {
+			name: "jumper",
+			color: 0x0000cc
+		}, {
+			name: "warp",
+			color: 0xcccccc
 		}
 	],
 	KEYCODE: {
@@ -43,7 +58,8 @@ var CONFIG = {
 		
 		BLOCK_SIZE: 30
 	},
-	ACCELERATION: 0.01,
-	GRAVITY: 0.1,
-	JUMP_SPEED: 0.15
+	ACCELERATION: 0.2,
+	TRACK_SPEED: 0.4,
+	GRAVITY: 0.5,
+	JUMP_SPEED: 1
 }

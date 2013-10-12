@@ -14,11 +14,11 @@ if (isset($_GET["logout"])) {
 <h1>先駆者</h1>
 <h2>Senku-Sha</h2>
 <div class="buttonRows">
-	<a href="game.php" class="menuButton">Play</a> 
+	<a rel="game.php" class="menuButton">Play</a> 
 	<div class="buttonRow">
 	<?
                               
-	if (!isset($_SESSION["user_id"])) {
+	if (!isset($_SESSION["user_id"]) || $_SESSION["user_id"] <= 0) {
 
 		?>
 		<a rel="register.php" class="menuButton">Register</a>

@@ -2,6 +2,11 @@
 
 <?   
   	
+if (!isset($_SESSION)) {
+	
+	session_start();
+}
+
 require_once("inc/form.php");
 require_once("inc/user.php");
 
@@ -39,7 +44,7 @@ if (isset($_POST["submit"])) {
 		$_SESSION["user_id"] = $logged_in
 		?>
 
-		<script> Util.exit(); </script>
+		<script> Util.changeContent("menu.php"); </script>
 
 		<?
 	}

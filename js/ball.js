@@ -22,6 +22,7 @@ function Ball() {
 	this.lastBlock = null;
 	this.isJumping = false;
 	this.isFalling = true;
+	this.inAir = false;
 }
 
 // inherit Mesh
@@ -89,11 +90,25 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 		pos.x - trackPosition.x,
 		pos.y - trackPosition.y,
 		pos.z - trackPosition.z
-	);                           
-	if (posOnTrack.x >= 0 && posOnTrack.z >= 0 && posOnTrack.y >= 0) {
+	);                        
+	if (posOnTrack.x >= 0 && posOnTrack.y >= 0) {
 		
-		var block = track.blockForPosition(parseInt(posOnTrack.x, 10), parseInt(posOnTrack.z, 10));
+		var block = track.blockForPosition(
+			parseInt(posOnTrack.x/CONFIG.BLOCK_SIZE, 10), 
+			parseInt(posOnTrack.z/CONFIG.BLOCK_SIZE, 10)
+		);
 		if (block) {
+			
+			if (trackPosition.y <= 0) {
+				
+				switch (block.blockType.name) {
+					
+					case "jumper":
+						this.isJumping = true;
+						speedY = -1*CONFIG.JUMP_SPEED;
+						break;
+				}
+			}		
 			
 			this.lastBlock = block;
 			return block;

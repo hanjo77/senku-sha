@@ -12,6 +12,8 @@ html, body {
 	display:table;
 	color: #ffffff;
 	text-transform: uppercase;
+	background-image: url(../img/horizon.jpg);
+	background-position: center center;
 }
 
 #content {
@@ -98,6 +100,15 @@ div.copyRight {
 	margin: 0;
 	padding: 0;
 	z-index: 1;
+}
+
+#introOverlay {
+	
+	position: absolute;
+	text-align: center;
+	font-size: 2em;
+	text-shadow: 0 0 20px #fff;
+	color: #000;
 }
 
 /* Buttons */

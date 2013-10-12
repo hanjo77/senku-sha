@@ -9,11 +9,6 @@ Util.removeChilds = function(obj) {
 		Util.removeChilds(obj.children[child]);
 	}
 	
-	if (obj.parent) {
-	
-		obj.parent.remove(obj);
-	}
-	
 	if (obj.geometry) {
 		
 		obj.geometry.dispose();
@@ -33,6 +28,11 @@ Util.removeChilds = function(obj) {
 	
 		obj.dispose();
 	}
+	
+	/* if (obj.parent) {
+	
+		obj.parent.remove(obj);
+	} */
 }
 
 Util.menuButton = function(name, content) {
@@ -42,7 +42,12 @@ Util.menuButton = function(name, content) {
 
 Util.blockButton = function(blockTypeIndex) {
 
-	return $('<a id="' + blockTypeIndex + '" class="blockButton" style="background-color: #' + CONFIG.BLOCK_TYPES[blockTypeIndex].color.toString(16) + '">&nbsp;</a>');
+	var color = CONFIG.BLOCK_TYPES[blockTypeIndex].color.toString(16);
+	while (color.length < 6) {
+		
+		color = "0" + color;
+	} 
+	return $('<a id="' + blockTypeIndex + '" class="blockButton" style="background-color: #' + color + '">&nbsp;</a>');
 }         
 
 Util.exit = function() {
@@ -77,15 +82,17 @@ Util.editorClear = function() {
 	$('#display').html('');
 }
  
-Util.getBallPosition = function(trackPosition) {
+Util.getBallPosition = function(nextPos) {
 	     
 	var pos = ball.touchPoint();
+	// console.log("nextPos");
+	// console.log(nextPos);
 	var result = new THREE.Vector3( 
-		pos.x - Math.round(trackPosition.x*1000)/1000,
-		pos.y - Math.round(trackPosition.y*1000)/1000,
-		pos.z - Math.round(trackPosition.z*1000)/1000
+		pos.x - nextPos.x,
+		pos.y - nextPos.y,
+		pos.z - nextPos.z
 	);                   
-	// console.log("getBallPosition: " + pos.x + " - " + result.x);
+	// console.log("getBallPosition: " + result.x + " - " + result.y + " - " + result.z);
 	return result;                                                    
 }  
 
@@ -110,50 +117,73 @@ Util.getCollisions = function(block, nextPos) {
 	if (backRightIntersection) {
                    
 		types.push("frontLeft");                                      
-		console.log ("hit frontLeft");
+		// console.log ("hit frontLeft");
 	}
 	else if (backLeftIntersection) {
 
 		types.push("frontRight");
-		console.log ("hit frontRight");
+		// console.log ("hit frontRight");
 	}
 	else if (frontRightIntersection) {
 
 		types.push("backLeft");
-		console.log ("hit backLeft");
+		// console.log ("hit backLeft");
 	}
 	else if (frontLeftIntersection) {
 
 		types.push("backRight");
-		console.log ("hit backRight");
+		// console.log ("hit backRight");
 	}        
 	
 	if (leftIntersection) {
 
 		types.push("right");
-		console.log ("hit right");
+		// console.log ("hit right");
 	}
 	else if (rightIntersection) {
 
 		types.push("left");
-		console.log ("hit left");
+		// console.log ("hit left");
 	}
 	else if (frontIntersection) {
                       
 		types.push("back");
-		console.log ("hit back");
+		// console.log ("hit back");
 	}
 	else if (backIntersection) {
                                                       
 		types.push("front");
-		console.log ("hit front");
+		// console.log ("hit front");
 	}      
 	
 	return types;
 }
 
+Util.addBackground = function() {
+	
+	var bgTexture = THREE.ImageUtils.loadTexture('img/horizon.jpg');
+	var bg = new THREE.Mesh(
+	  new THREE.PlaneGeometry(2, 2, 0),
+	  new THREE.MeshBasicMaterial({map: bgTexture})
+	);
+	// The bg plane shouldn't care about the z-buffer.
+	bg.material.depthTest = false;
+	bg.material.depthWrite = false;
+
+	bgScene = new THREE.Scene();
+	bgCam = new THREE.Camera();
+	bgScene.add(bgCam);
+	bgScene.add(bg);
+}
+
 Util.changeContent = function(page) {
 	
+	if (page == "game.php") {
+		
+		$("#bgBall").html("");
+		cancelAnimationFrame(renderProcess);
+	}
+	$('#content').html("");
 	$.ajax({ url: page }).done(function( data ) {
                        
 		var contentDiv = $('#content');
@@ -163,7 +193,11 @@ Util.changeContent = function(page) {
 			                   
 			editor = new Editor();
 		}
-		Util.initHandlers();  
+		
+		if (page != "game.php") {
+			
+			Util.initHandlers();  
+		}
 		var hash = "#";
 		var content = page.substring(0, page.indexOf("."));
 		if (content != "menu") {
@@ -172,12 +206,28 @@ Util.changeContent = function(page) {
 		}
 		location.href = location.href.substring(0, location.href.indexOf("#")) + hash;
 		Validation.formIsValid($('form').get(0));
-		
+		Util.updateWindow();		
 	});
+}
+
+Util.handleHash = function() {
+	
+	var hash = "intro";
+	var hashPos = window.location.href.indexOf("#")+1;
+	if (hashPos > 0) {
+
+		var hash = window.location.href.substring(hashPos);	
+		if (hash == "" || hash == "menu") {
+
+			hash = "menu";
+			startBall();
+		}
+	} 
+	Util.changeContent(hash + ".php");
 }           
 
 Util.initHandlers = function() {
-	    
+	 	   
 	$("#content").center();
 
 	$('#btnCancel').click(function(e) {
@@ -207,7 +257,45 @@ Util.initHandlers = function() {
 
 	$('#btnSubmit').click(function(e) {
 	   
-		return Validation.formIsValid();
+		if (Validation.formIsValid()) {
+			
+			var postData = null;
+			var postUrl = "";
+			var formId = e.target.parentNode.parentNode.id;
+			switch (formId) {
+				
+				case "userForm":
+					postUrl = "register.php";
+					postData = {
+						
+						name: $("#nameInput").val(),
+						password: $("#passwordInput").val(),
+						email: $("#emailInput").val(),
+						submit: $("#btnSubmit").val()
+					};
+					break;
+					
+				case "loginForm":
+					postUrl = "login.php";
+					postData = {
+						
+						name: $("#nameInput").val(),
+						password: $("#passwordInput").val(),
+						submit: $("#btnSubmit").val()
+					};
+					break;
+			}
+			$.ajax({
+
+				url: postUrl,
+				type: "POST",
+				data: postData
+			}).done(function(result) {
+
+				$("#content").html(result);
+			});
+		}
+		return false;
 	});
 
 	$('#controls a').click(function(e) {
@@ -261,28 +349,37 @@ Util.initHandlers = function() {
 	
 	$(window).resize(function() {
          
-		if (renderer) {
-
-			camera.aspect = container.width()/container.height();
-			camera.updateProjectionMatrix();
-			renderer.setSize(container.width(), container.height());
-		}
-		$("#content").center();
-		if (editor) {
-			
-			editor.updateOffset();
-			editor.drawBlocks();
-		}
+		Util.updateWindow();
 	});
 
 	window.setTimeout(function() { Validation.formIsValid() }, 1000);
 }
 
+Util.updateWindow = function() {
+	
+	if (renderer) {
+
+		camera.aspect = container.width()/container.height();
+		camera.updateProjectionMatrix();
+		renderer.setSize(container.width(), container.height());
+	}
+	$("#content").center();
+	if (editor) {
+		
+		editor.updateOffset();
+		editor.drawBlocks();
+	}
+}
+
 jQuery.fn.center = function () {
-    this.css("position","absolute"); 
-    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
-                                                $(window).scrollTop()) + "px");
-    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
-                                                $(window).scrollLeft()) + "px");
+    this.css({
+    	
+		position: "absolute",
+		height: "auto",
+		top: Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+                                                $(window).scrollTop()) + "px",
+		left: Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+                                                $(window).scrollLeft()) + "px"
+	});
     return this;
 }

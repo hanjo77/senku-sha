@@ -53,8 +53,13 @@ Editor.prototype.drawBlocks = function() {
 					
 					var color = CONFIG.BLOCK_TYPES[this.blocks[row][col]].color;
 					if (color) {
-					                                                              
-						this.appendBlock([col, row], '#'+color.toString(16))
+					                 
+						color = color.toString(16);
+						while (color.length < 6) {
+							
+							color = "0" + color;
+						}                                             
+						this.appendBlock([col, row], '#'+color)
 					} 
 				}
 			}

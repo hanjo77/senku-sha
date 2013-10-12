@@ -83,7 +83,7 @@ class Form {
 			}
 		}
 		$db_util = new DBUtil();
-		$result = $db_util->query("INSERT INTO `".$this->table."` (".$fields.") VALUES (".$values.")");		
+		$result = $db_util->insert("INSERT INTO `".$this->table."` (".$fields.") VALUES (".$values.")");		
 		return $result;	
 	}
 }

@@ -1,34 +1,35 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var renderProcess, nextX, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
-$(document).keydown(function (e) {
+$(document).keyup(function (e) {
 											
 	if (renderer) {
 	
 		switch (e.keyCode) {      
 
 			case CONFIG.KEYCODE.LEFT:
-				speedX += CONFIG.ACCELERATION;
+				nextX += CONFIG.BLOCK_SIZE;
+				speedX = CONFIG.ACCELERATION;
 				break;
 												 
-			case CONFIG.KEYCODE.RIGHT:         
-				speedX -= CONFIG.ACCELERATION;
+			case CONFIG.KEYCODE.RIGHT:
+				nextX -= CONFIG.BLOCK_SIZE;
+				speedX = -1*CONFIG.ACCELERATION;         
 				break;
 										  
 			case CONFIG.KEYCODE.UP:                
-				speedZ += CONFIG.ACCELERATION;
+				speedZ = CONFIG.TRACK_SPEED;
 				break;
 
 			case CONFIG.KEYCODE.DOWN:              
-				speedZ -= CONFIG.ACCELERATION;
+				speedZ = -1*CONFIG.TRACK_SPEED;
 				break;   
 
 			case CONFIG.KEYCODE.SPACE:
-				if (!ball.isJumping) {
+				if (!ball.inAir) {
 
 					speedY = -1*CONFIG.JUMP_SPEED;
 					ball.isJumping = true;
-					ball.isFalling = false;
 				}
 				break;   
 		}
@@ -51,26 +52,11 @@ $(window).resize(function() {
 	}
 })
 
-$(document).ready(function() {
-	
-	startGame();
-});
+startGame();
 
 function startGame() {
 
-	var bgTexture = THREE.ImageUtils.loadTexture('img/horizon.jpg');
-	var bg = new THREE.Mesh(
-	  new THREE.PlaneGeometry(2, 2, 0),
-	  new THREE.MeshBasicMaterial({map: bgTexture})
-	);
-	// The bg plane shouldn't care about the z-buffer.
-	bg.material.depthTest = false;
-	bg.material.depthWrite = false;
-
-	bgScene = new THREE.Scene();
-	bgCam = new THREE.Camera();
-	bgScene.add(bgCam);
-	bgScene.add(bg);
+	Util.addBackground()
 
 	trackPosition = new THREE.Vector3(0, 0, 0);
 	speedX = 0;
@@ -78,7 +64,7 @@ function startGame() {
 	speedZ = 0; 
 
 	scene = new THREE.Scene();
-	container = $("#game");
+	container = $("#content");
 	container.css({
 		
 		width: $(window).innerWidth(),
@@ -104,12 +90,13 @@ function startGame() {
 	
 	scene.fog = new THREE.Fog(CONFIG.BACKGROUND_COLOR, CONFIG.TRACK.FOG_NEAR, CONFIG.TRACK.FOG_FAR);
 
+	track = new Track();
+	nextX = track.position.x;
+	scene.add(track); 
+	
 	ball = new Ball();
 	scene.add(ball);          
 
-	track = new Track();
-	scene.add(track); 
-	
 	camera = new THREE.PerspectiveCamera(60, container.width()/container.height(), .01, 1000);
 	camera.position.y = 2;
 	camera.position.z = 5;
@@ -118,52 +105,19 @@ function startGame() {
    	container.get(0).appendChild(renderer.domElement);
 	
 	var render = function() {
-		requestAnimationFrame(render);     
+
+		renderProcess = requestAnimationFrame(render);     
 											  
 		renderer.autoClear = false;
 		renderer.clear();
 		renderer.render(bgScene, bgCam);
-		
 		track.position = track.nextPosition();
 		track.updateBlocks();
 		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*speedZ);
 		ball.rotateAroundWorldAxis(new THREE.Vector3(0,0,1), speedX);  
-                                 
-		if (ball.isFalling){
-				
-			var posY = 0;
-			if (ball.blockUnderBall(track.position)) {
-				
-				posY = -1*(ball.blockUnderBall(track.position).blockHeight/2);
-			}     
-			if (track.position.y < posY) {
-				
-				speedY = (speedY == 0 ? 0.005 : Math.abs(speedY)*1.1);
-				ball.isJumping = true;
-			}
-			else if (ball.isJumping) {
-					 
-				track.position.y = posY;
-				ball.isJumping = false;
-				speedY = 0;
-			}
-		}
-		if (ball.isJumping) {
-			
-			if (!ball.isFalling) {
-					  
-				if (speedY < -0.01) {
-					
-					speedY = speedY*.9;
-				}
-				else {
-					
-					ball.isFalling = true;
-				}
-			}
-		}
-                                        		
+                             
 		renderer.render(scene, camera);
+		
 	};
 
 	render();
@@ -171,6 +125,11 @@ function startGame() {
 
 function clearGame() {
 
+	ball = null;
+	$(document).unbind();
+	$(window).unbind();
 	Util.removeChilds(scene);
-	window.location.href = "index.php";
+	cancelAnimationFrame(renderProcess);
+	Util.changeContent("menu.php");
+	startBall();
 }

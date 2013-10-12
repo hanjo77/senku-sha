@@ -1,37 +1,9 @@
-var bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight, mouseX, mouseY, mouseMoveX, mouseMoveY;
-
-$(document).ready(function() {
-	
-	startBall();
-	var hashPos = window.location.href.indexOf("#")+1;
-	if (hashPos > 0) {
-		                                
-	    var hash = window.location.href.substring(hashPos);
- 		console.log(hash);
-		if (hash && hash != "login" && hash != "register") {
-			
-			Util.changeContent(hash + ".php");
-		}
-	}
-});
+var renderProcess, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight, mouseX, mouseY, mouseMoveX, mouseMoveY;
 
 function startBall() {
 
-	var bgTexture = THREE.ImageUtils.loadTexture('img/horizon.jpg');
-	var bg = new THREE.Mesh(
-	  new THREE.PlaneGeometry(2, 2, 0),
-	  new THREE.MeshBasicMaterial({map: bgTexture})
-	);
-	// The bg plane shouldn't care about the z-buffer.
-	bg.material.depthTest = false;
-	bg.material.depthWrite = false;
+	Util.addBackground()
 
-	bgScene = new THREE.Scene();
-	bgCam = new THREE.Camera();
-	bgScene.add(bgCam);
-	bgScene.add(bg);
-
-	trackPosition = new THREE.Vector3(0, 0, 0);
 	speedX = .01;
 	speedY = .01;
 	speedZ = .01;
@@ -73,7 +45,7 @@ function startBall() {
 	
 	var render = function() {
 		
-		requestAnimationFrame(render);   
+		renderProcess = requestAnimationFrame(render);   
 		    					  
 		renderer.autoClear = false;
 		renderer.clear();
