@@ -68,13 +68,13 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 		var neighbours = this.neighbourBlocks();
 		for (var type in neighbours) {
 			
-			if (neighbours[type] && neighbours[type].blockType.name == "blocker") {
+			if (neighbours[type]) {
 				
 				nextPos = neighbours[type].getNextPositionToBall(nextPos, type);
 			}
 		}
 	}
-	else {
+	if (this.blockType.name == "blocker") {
 		
 		var ballPos = Util.getBallPosition(nextPos);     
 		var floorIntersection = (track.position.y > (-1*this.blockHeight/2));

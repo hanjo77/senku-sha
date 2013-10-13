@@ -221,7 +221,69 @@ Util.handleHash = function() {
 		}
 	} 
 	Util.changeContent(hash + ".php");
-}           
+}  
+
+Util.getSecondsUntil = function(endTime) {
+	
+	if (endTime) {
+		
+		var difference = endTime-new Date().getTime();
+		if (difference >= 0) {
+			
+			return Math.floor(difference/1000);
+		}
+	}
+	return null;
+}         
+
+Util.updateInfoHTML = function() {
+	
+	var hasContent = false;
+	var info = "<table><tr><th class=\"right\">duration</th><th class=\"left\">state</th></tr><tr>";
+	
+		var duration = Util.getSecondsUntil(invertorEndTime);
+		if (duration) {
+		
+			hasContent = true;
+			info += "<tr class=\"inverted\"><td class=\"right\">";
+			info += duration;
+			info += "</td><td class=\"left\">inverted controls</td></tr>";
+		}
+	
+		duration = Util.getSecondsUntil(speedupEndTime);
+		if (duration) {
+		
+			hasContent = true;
+			info += "<tr class=\"speedup\"><td class=\"right\">";
+			info += duration;
+			info += "</td><td class=\"left\">speed up</td></tr>";
+		}
+	
+		duration = Util.getSecondsUntil(slowdownEndTime);
+		if (duration) {
+		
+			hasContent = true;
+			info += "<tr class=\"slowdown\"><td class=\"right\">";
+			info += duration;
+			info += "</td><td class=\"left\">slow down</td></tr>";
+		}
+	
+	info += "</table>";
+	var obj = $("#info");
+	if (hasContent) {
+		
+		obj.html(info);
+		obj.css({
+			display: "block"
+		});
+	}
+	else {
+		
+		obj.css({
+			display: "none"
+		});
+	}
+}
 
 Util.initHandlers = function() {
 	 	   

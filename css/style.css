@@ -11,6 +11,79 @@
 	z-index: 2;
 }
 
+#info {
+	
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 1em;
+	z-index: 2;
+	text-align: center;
+	background-color: #999999;
+	opacity: .5;
+	margin: 1em 30%;
+	width: 40%;
+	display: block;
+	padding: 0;
+	border: 0px solid #000000;
+}
+
+#info table {
+	
+	width: 100%;
+	opacity: 2;
+	color: #ffffff;
+	border: 0;
+	border-collapse: collapse;
+}
+
+#info table * {
+	margin: 0;
+	padding: .5em;
+	text-shadow: 0 0 5px #000;
+	border: 0;
+}
+
+#info table tr {
+	margin: 0;
+	padding: 0;
+	border-bottom: 0px solid #000000;
+}
+
+#info table .slowdown * {
+	
+	background-color: #ff0000;
+}
+
+#info table .speedup * {
+	
+	background-color: #00ff00;
+}
+
+#info table .inverted * {
+	
+	background-color: #00ffff;
+}
+
+#info table th {
+	
+	font-weight: bold;
+}
+
+#info table .right {
+	
+	text-align: right;
+	display: block;
+	border-right: 0px solid #000000;
+}
+
+#info table .left {
+	
+	text-align: left;
+	width: 70%;
+}
+
 html, body {
 	
 	font-family: 'Aldrich', sans-serif;

@@ -1,5 +1,5 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var invertorEndTime, slowdownEndTime, speedupEndTime, controlDirection, trackSpeed, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
 $(document).keydown(function (e) {
 											
@@ -9,20 +9,20 @@ $(document).keydown(function (e) {
 
 			case CONFIG.KEYCODE.LEFT:
 				// nextX += CONFIG.BLOCK_SIZE;
-				speedX = CONFIG.ACCELERATION;
+				speedX = CONFIG.ACCELERATION*controlDirection;
 				break;
 												 
 			case CONFIG.KEYCODE.RIGHT:
 				// nextX -= CONFIG.BLOCK_SIZE;
-				speedX = -1*CONFIG.ACCELERATION;         
+				speedX = -1*CONFIG.ACCELERATION*controlDirection;         
 				break;
 										  
 			case CONFIG.KEYCODE.UP:                
-				speedZ = CONFIG.TRACK_SPEED;
+				speedZ = trackSpeed;
 				break;
 
 			case CONFIG.KEYCODE.DOWN:              
-				speedZ = -1*CONFIG.TRACK_SPEED;
+				speedZ = -1*trackSpeed;
 				break;   
 
 			case CONFIG.KEYCODE.SPACE:
@@ -76,7 +76,9 @@ startGame();
 function startGame() {
 
 	Util.addBackground()
-
+	
+	controlDirection = 1;
+	trackSpeed = CONFIG.TRACK_SPEED;
 	trackPosition = new THREE.Vector3(0, 0, 0);
 	speedX = 0;
 	speedY = 0;
@@ -160,4 +162,7 @@ function clearGame() {
 	cancelAnimationFrame(renderProcess);
 	Util.changeContent("menu.php");
 	startBall();
+	$("#info").css({
+		display: "none"
+	});	
 }

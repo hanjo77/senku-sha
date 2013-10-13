@@ -102,13 +102,55 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 			if (trackPosition.y <= 0) {
 				
 				// $("#debug").html(block.blockType.name);
+				var now = new Date().getTime();
 				switch (block.blockType.name) {
 					
 					case "jumper":
+						
 						this.isJumping = true;
 						speedY = -1*CONFIG.JUMP_SPEED;
 						break;
+					
+					case "slowdown":
+						
+						slowdownEndTime = now + 5000;
+						if (trackSpeed >= CONFIG.TRACK_SPEED) {
+							
+							trackSpeed /= 2;
+							window.setTimeout(function() {
+							
+								trackSpeed *= 2;	
+							}, 5000);
+						}
+						break;
+					
+					case "speedup":
+						
+						speedupEndTime = now + 5000;
+						if (trackSpeed <= CONFIG.TRACK_SPEED) {
+							
+							trackSpeed *= 2;
+							window.setTimeout(function() {
+							
+								trackSpeed /= 2;	
+							}, 5000);
+						}
+						break;
+					
+					case "invertor":
+						
+						invertorEndTime = now + 5000;
+						if (controlDirection == 1) {
+							
+							controlDirection = -1;
+							window.setTimeout(function() {
+							
+								controlDirection = 1;	
+							}, 5000);
+						}
+						break;
 				}
+				Util.updateInfoHTML();
 			}		
 			
 			this.lastBlock = block;
