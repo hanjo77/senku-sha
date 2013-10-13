@@ -62,7 +62,7 @@ Block.prototype.neighbourBlocks = function() {
 
 Block.prototype.getNextPositionToBall = function(nextPos, type) {
 	
-	if (!type) {
+	if (!type && warpEndTime <= 0) {
 		
 		$("#debug").html(this.blockType.name);
 		var neighbours = this.neighbourBlocks();

@@ -230,7 +230,7 @@ Util.getSecondsUntil = function(endTime) {
 		var difference = endTime-new Date().getTime();
 		if (difference >= 0) {
 			
-			return Math.floor(difference/1000);
+			return Math.ceil(difference/1000);
 		}
 	}
 	return null;

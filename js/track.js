@@ -267,6 +267,19 @@ Track.prototype.nextPosition = function() {
 			nextPosition = nextBlock.getNextPositionToBall(nextPosition);
 		}		
 	}
+	if (!nextBlock && (track.position.y >= 0) && warpEndTime <= 0) {
+
+    	nextPosition = this.getBallBlockFallingPosition(nextPosition);
+		if (nextPosition.y > 2) {
+
+			clearGame();
+		} 
+	}
+	if (warpEndTime > 0 && nextPosition.y > 0) {
+		
+		nextPosition.y = 0;
+	}
+	
 	if (timeRate) {
 		
 		tempSpeedX = (nextPosition.x - this.position.x)*timeRate;           
@@ -276,14 +289,6 @@ Track.prototype.nextPosition = function() {
 		nextPosition.y = this.position.y + tempSpeedY;          
 		nextPosition.z = this.position.z + tempSpeedZ;
 		
-	}
-	if (!nextBlock && (track.position.y >= 0)) {
-
-    	nextPosition = this.getBallBlockFallingPosition(nextPosition);
-		if (nextPosition.y > 2) {
-
-			clearGame();
-		} 
 	}
 	/* if ((speedX > 0 && nextX < nextPosition.x) || (speedX < 0 && nextX > nextPosition.x)) {
 		
