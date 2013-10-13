@@ -268,6 +268,15 @@ Util.updateInfoHTML = function() {
 			info += "</td><td class=\"left\">slow down</td></tr>";
 		}
 	
+		duration = Util.getSecondsUntil(warpEndTime);
+		if (duration) {
+		
+			hasContent = true;
+			info += "<tr class=\"warp\"><td class=\"right\">";
+			info += duration;
+			info += "</td><td class=\"left\">warp</td></tr>";
+		}
+	
 	info += "</table>";
 	var obj = $("#info");
 	if (hasContent) {

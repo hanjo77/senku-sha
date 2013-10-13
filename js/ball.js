@@ -117,9 +117,13 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						if (trackSpeed >= CONFIG.TRACK_SPEED) {
 							
 							trackSpeed /= 2;
-							window.setTimeout(function() {
+							slowdownTimer = window.setTimeout(function() {
 							
-								trackSpeed *= 2;	
+								if (warpEndTime <= 0) {
+									
+									trackSpeed *= 2;
+									slowdownEndTime = 0;	
+								}
 							}, 5000);
 						}
 						break;
@@ -130,9 +134,13 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						if (trackSpeed <= CONFIG.TRACK_SPEED) {
 							
 							trackSpeed *= 2;
-							window.setTimeout(function() {
+							speedupTimer = window.setTimeout(function() {
 							
-								trackSpeed /= 2;	
+								if (warpEndTime <= 0) {
+									
+									trackSpeed /= 2;
+									speedupEndTime = 0;	
+								}
 							}, 5000);
 						}
 						break;
@@ -143,11 +151,25 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						if (controlDirection == 1) {
 							
 							controlDirection = -1;
-							window.setTimeout(function() {
+							invertorTimer = window.setTimeout(function() {
 							
-								controlDirection = 1;	
+								controlDirection = 1;
+								invertorEndTime = 0;	
 							}, 5000);
 						}
+						break;
+					
+					case "warp":
+						
+						warpEndTime = now + 5000;
+						speedupEndTime = 0;
+						slowdownEndTime = 0;
+						trackSpeed = 1.3;
+						warpTimer = window.setTimeout(function() {
+						
+							trackSpeed = CONFIG.TRACK_SPEED;
+							warpEndTime = 0;	
+						}, 5000);
 						break;
 				}
 				Util.updateInfoHTML();

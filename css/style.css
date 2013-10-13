@@ -33,7 +33,7 @@
 	
 	width: 100%;
 	opacity: 2;
-	color: #ffffff;
+	color: #000000;
 	border: 0;
 	border-collapse: collapse;
 }
@@ -64,6 +64,11 @@
 #info table .inverted * {
 	
 	background-color: #00ffff;
+}
+
+#info table .warp * {
+	
+	background-color: #ffffff;
 }
 
 #info table th {
