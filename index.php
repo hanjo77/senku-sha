@@ -20,4 +20,14 @@ session_start();
 	</div>
 	<div id="info"></div>
 	<div id="debug"></div>
+	<div id="noWebGL">
+		<h2>Sorry!</h2>
+		<p>Your browser currently does not seem to support WebGL.</p>
+		<p>For an optimal viewing experience, please try</p>
+		<p><a href="http://chrome.google.com" class="linkButton" target="_blank">Google&nbsp;Chrome</a></p>
+	</div>
+	<noscript>
+		<h2>Sorry!</h2>
+		<p>Your browser currently does not allow JavaScript.</p>
+	</noscript>
 </body>

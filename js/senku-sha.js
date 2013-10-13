@@ -20,5 +20,39 @@ function importScript(url) {
 
 window.onload = function() {
 	
-	Util.handleHash();
+	var canvas = !! window.CanvasRenderingContext2D;
+	var webgl = (
+		
+		function () { 
+		
+			try { 
+			
+				var canvas = document.createElement( 'canvas' );
+				return !! window.WebGLRenderingContext 
+					&& ( canvas.getContext( 'webgl' ) 
+					|| canvas.getContext( 'experimental-webgl' )
+				 );
+			 } catch( e ) { 
+			 
+				 return false; 
+			 } 
+	 	}
+	)();
+
+	if (!webgl || !canvas) {
+		
+		$("#noWebGL").css({
+			display: "table-cell"
+		});
+		$("#bgBall").css({
+			display: "none"
+		});
+		$("#contentWrapper").css({
+			display: "none"
+		});
+	}
+	else {
+		
+		Util.handleHash();
+	}
 };

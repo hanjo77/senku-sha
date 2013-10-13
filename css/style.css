@@ -1,5 +1,14 @@
 /* Global */
 
+noscript, #noWebGL {
+	
+	display: none;
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
 #debug {
 	
 	display: none;
@@ -102,6 +111,7 @@ html, body {
 	color: #ffffff;
 	text-transform: uppercase;
 	background-image: url(../img/horizon.jpg);
+	background-size: 100% 100%;
 	background-position: center center;
 }
 
@@ -202,15 +212,14 @@ div.copyRight {
 
 /* Buttons */
 
-input.menuInput {
+a.linkButton, input.menuInput {
 	
 	margin: 0.5em;
 	padding: 1em;
 	text-align: center;
-	width: 10.5em;
 }
 
-a.menuButton, a.blockButton, label, input.button {
+a.menuButton, a.linkButton, a.blockButton, label, input.button {
 	
 	border: 2px solid #990000;
 	background: #000000;
@@ -219,13 +228,24 @@ a.menuButton, a.blockButton, label, input.button {
 	box-shadow: 0 0 10px #000;
 }
   
-a.menuButton, input.button {
+a.linkButton, a.menuButton, input.button {
                            
 	font-size: 2em;
 	padding: 0.5em 0;
 	width: 6em;
 	margin-top: .2em;
 	cursor: pointer;
+}
+
+a.linkButton {
+	
+	width: auto;
+	padding: 0.5em;
+}
+
+input.menuInput {
+	
+	width: 10.5em;
 }
 
 input.button {
