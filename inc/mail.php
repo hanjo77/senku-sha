@@ -17,14 +17,14 @@ class Mail {
 	
 		$phpmailer = new PHPMailer();
 
-		$phpmailer->IsSMTP(); // telling the class to use SMTP
-		$phpmailer->Host = "ssl://smtp.gmail.com"; // SMTP server
-		$phpmailer->SMTPAuth = true;                  // enable SMTP authentication
-		$phpmailer->Port  = 465;          // set the SMTP port for the GMAIL server; 465 for ssl and 587 for tls
-		$phpmailer->Username = "senku.sha.game@gmail.com"; // Gmail account username
-		$phpmailer->Password = "53nku-5h4";        // Gmail account password
-
-		$phpmailer->SetFrom('senku-sha@hanjo.dyndns.info', 'Senku-Sha'); //set from name
+		$phpmailer->IsSMTP();
+		$phpmailer->Host = "ssl://smtp.gmail.com";
+		$phpmailer->SMTPAuth = true;
+		$phpmailer->Port  = 465;
+		$phpmailer->Username = "********";
+		$phpmailer->Password = "********";
+		
+		$phpmailer->SetFrom('mymail@domain.com', 'Senku-Sha'); //set from name
 
 		$phpmailer->Subject = $subject;
 		$phpmailer->MsgHTML($message);

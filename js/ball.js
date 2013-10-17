@@ -113,10 +113,11 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 					
 					case "slowdown":
 						
-						slowdownEndTime = now + 5000;
-						if (trackSpeed >= CONFIG.TRACK_SPEED) {
+						if (trackSpeed >= CONFIG.TRACK_SPEED && warpEndTime <= 0) {
 							
+							slowdownEndTime = now + 5000;
 							trackSpeed /= 2;
+							window.clearTimeout(slowdownTimer);
 							slowdownTimer = window.setTimeout(function() {
 							
 								if (warpEndTime <= 0) {
@@ -130,10 +131,11 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 					
 					case "speedup":
 						
-						speedupEndTime = now + 5000;
-						if (trackSpeed <= CONFIG.TRACK_SPEED) {
+						if (trackSpeed <= CONFIG.TRACK_SPEED && warpEndTime <= 0) {
 							
+							speedupEndTime = now + 5000;
 							trackSpeed *= 2;
+							window.clearTimeout(speedupTimer);
 							speedupTimer = window.setTimeout(function() {
 							
 								if (warpEndTime <= 0) {
@@ -147,10 +149,11 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 					
 					case "invertor":
 						
-						invertorEndTime = now + 5000;
-						if (controlDirection == 1) {
+						if (controlDirection == 1 && warpEndTime <= 0) {
 							
+							invertorEndTime = now + 5000;
 							controlDirection = -1;
+							window.clearTimeout(invertorTimer);
 							invertorTimer = window.setTimeout(function() {
 							
 								controlDirection = 1;
@@ -165,6 +168,7 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						speedupEndTime = 0;
 						slowdownEndTime = 0;
 						trackSpeed = 1.3;
+						window.clearTimeout(warpTimer);
 						warpTimer = window.setTimeout(function() {
 						
 							trackSpeed = CONFIG.TRACK_SPEED;

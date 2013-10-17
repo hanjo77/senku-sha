@@ -1,5 +1,5 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var warpTimer, warpEndTime, invenrtorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var warpTimer, warpEndTime, invertorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
 $(document).keydown(function (e) {
 											
@@ -78,6 +78,7 @@ function startGame() {
 	Util.addBackground()
 	
 	controlDirection = 1;
+	warpEndTime = 0;
 	trackSpeed = CONFIG.TRACK_SPEED;
 	trackPosition = new THREE.Vector3(0, 0, 0);
 	speedX = 0;
