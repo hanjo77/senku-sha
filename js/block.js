@@ -79,29 +79,30 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 		var ballPos = Util.getBallPosition(nextPos);     
 		var floorIntersection = (track.position.y > (-1*this.blockHeight/2));
 		var collisionTypes = Util.getCollisions(this, nextPos);
-		// console.log(type + " - " + this.blockType.name);
-		// console.log(collisionTypes);
-		// console.log(floorIntersection);
 		if (floorIntersection) {
 
 			for (var i = 0; i < collisionTypes.length; i++) {
 
 				switch(collisionTypes[i]) {
 
-					/* case "frontLeft":
+					case "frontLeft":
 
 						if (speedX > 0 || speedZ > 0) {
 		
 							if (Math.abs(speedX) > Math.abs(speedZ)) {
 
-								nextPos.z = -1*((Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(this.right-ballPos.x, 2)))+this.back)-ball.geometry.radius);
-								speedZ = nextPos.z - track.position.z;                                             
+								nextPos.z = (this.back+ball.geometry.radius)*-1;
+								speedZ = 0;                                             
+								canMove.back = false;                                             
+								tempSpeedZ = speedZ;
 							}
 							else {
 
-								nextPos.x = (-1*(Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(this.back-ballPos.z, 2)))+this.right))+ball.geometry.radius;
-								speedX = nextPos.x - track.position.x;
-							} 
+								nextPos.x = (this.right+ball.geometry.radius)*-1;
+								speedX = 0;                                             
+								canMove.left = false;                                             
+								tempSpeedX = speedX;
+ 							} 
 						}
 						break;    
 
@@ -111,13 +112,17 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 
 							if (Math.abs(speedX) > Math.abs(speedZ)) {
 
-								nextPos.z = -1*((Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(this.left-ballPos.x, 2)))+this.back)-ball.geometry.radius);
-								speedZ = nextPos.z - track.position.z;                                             
+								nextPos.z = (this.back+ball.geometry.radius)*-1;
+								speedZ = 0;                                             
+								canMove.back = false;                                             
+								tempSpeedZ = speedZ;
 							}
 							else {
 
-								nextPos.x = ball.geometry.radius+(Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(ballPos.z-this.back, 2)))-this.left);
-								speedX = nextPos.x - track.position.x;
+								nextPos.x = (this.left-ball.geometry.radius)*-1;
+								speedX = 0;
+								canMove.right = false;                                             
+								tempSpeedX = speedX;
 							}
 						}
 						break;    
@@ -128,13 +133,17 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 		
 							if (Math.abs(speedX) > Math.abs(speedZ)) {
 
-								nextPos.z = (Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(this.right-ballPos.x, 2)))-this.front)+ball.geometry.radius;
-								speedZ = CONFIG.TRACK_SPEED;
+								nextPos.z = (this.front-ball.geometry.radius)*-1;
+								speedZ = 0;                                             
+								canMove.front = false;                                             
+								tempSpeedZ = speedZ;
 							}
 							else {
 
-								nextPos.x = -1*((Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(ballPos.z-this.front, 2)))+this.right)-ball.geometry.radius);
-								speedX = 0;
+								nextPos.x = (this.right+ball.geometry.radius)*-1;
+								speedX = 0;                                             
+								canMove.left = false;                                             
+								tempSpeedX = speedX;
 							}
 						}
 						break;    
@@ -145,26 +154,30 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 		
 							if (Math.abs(speedX) > Math.abs(speedZ)) {
 
-								nextPos.z = ball.geometry.radius+(Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(this.left-ballPos.x, 2)))-this.front);
-								speedZ = 0;
+								nextPos.z = (this.front-ball.geometry.radius)*-1;
+								speedZ = 0;                                             
+								canMove.front = false;                                             
+								tempSpeedZ = speedZ;
 							}
 							else {
 
-								nextPos.x = ball.geometry.radius+(Math.sqrt(Math.abs(Math.pow(ball.geometry.radius, 2)-Math.pow(ballPos.z-this.front, 2)))-this.left);
-								speedX = 0;                                    
+								nextPos.x = (this.left-ball.geometry.radius)*-1;
+								speedX = 0;
+								canMove.right = false;                                             
+								tempSpeedX = speedX;
 							}
 						}
 						break;
-*/
+						
 					case "right":
 
 						// console.log(speedX)
 						if (speedX <= 0) {
 		
-							// console.log(this.left + " - " + nextPos.x)
 							nextPos.x = (this.left-ball.geometry.radius)*-1;
-							$("#debug").html("right");
-							speedX = 0;                                             
+							speedX = 0;
+							canMove.right = false;                                             
+							tempSpeedX = speedX;
 						}
 						break;    
 
@@ -173,8 +186,9 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 						if (speedX >= 0) {
 		
 							nextPos.x = (this.right+ball.geometry.radius)*-1;
-							$("#debug").html("left");
 							speedX = 0;                                             
+							canMove.left = false;                                             
+							tempSpeedX = speedX;
 						}
 						break;    
 
@@ -182,10 +196,10 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 
 						if (speedZ >= 0) {
 		
-							// console.log(this.back);
 							nextPos.z = (this.back+ball.geometry.radius)*-1;
-							$("#debug").html("back");
 							speedZ = 0;                                             
+							canMove.back = false;                                             
+							tempSpeedZ = speedZ;
 						}
 						break;    
 
@@ -194,8 +208,9 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 						if (speedZ <= 0) {
 		
 							nextPos.z = (this.front-ball.geometry.radius)*-1;
-							$("#debug").html("front");
 							speedZ = 0;                                             
+							canMove.front = false;                                             
+							tempSpeedZ = speedZ;
 						}
 						break;    
 				}		

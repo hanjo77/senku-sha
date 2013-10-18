@@ -99,79 +99,80 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 		);
 		if (block) {
 			
-			if (trackPosition.y <= 0) {
+			if (trackPosition.y <= 0 && !this.inAir) {
 				
-				// $("#debug").html(block.blockType.name);
-				var now = new Date().getTime();
+				var now = new Date().getTime();					
 				switch (block.blockType.name) {
-					
+				
 					case "jumper":
-						
-						this.isJumping = true;
-						speedY = -1*CONFIG.JUMP_SPEED;
-						break;
 					
-					case "slowdown":
-						
-						if (trackSpeed >= CONFIG.TRACK_SPEED && warpEndTime <= 0) {
+						if (warpEndTime <= 0) {
 							
+							this.isJumping = true;
+						}
+						break;
+				
+					case "slowdown":
+					
+						if (speedModifier >= 1 && warpEndTime <= 0) {
+						
 							slowdownEndTime = now + 5000;
-							trackSpeed /= 2;
+							speedModifier /= 2;
 							window.clearTimeout(slowdownTimer);
 							slowdownTimer = window.setTimeout(function() {
-							
+						
 								if (warpEndTime <= 0) {
-									
-									trackSpeed *= 2;
+								
+									speedModifier *= 2;
 									slowdownEndTime = 0;	
 								}
 							}, 5000);
 						}
 						break;
-					
+				
 					case "speedup":
+					
+						if (speedModifier <= 1 && warpEndTime <= 0) {
 						
-						if (trackSpeed <= CONFIG.TRACK_SPEED && warpEndTime <= 0) {
-							
 							speedupEndTime = now + 5000;
-							trackSpeed *= 2;
+							speedModifier *= 2;
 							window.clearTimeout(speedupTimer);
 							speedupTimer = window.setTimeout(function() {
-							
+						
 								if (warpEndTime <= 0) {
-									
-									trackSpeed /= 2;
+								
+									speedModifier /= 2;
 									speedupEndTime = 0;	
 								}
 							}, 5000);
 						}
 						break;
-					
+				
 					case "invertor":
-						
+					
 						if (controlDirection == 1 && warpEndTime <= 0) {
-							
+						
 							invertorEndTime = now + 5000;
 							controlDirection = -1;
 							window.clearTimeout(invertorTimer);
 							invertorTimer = window.setTimeout(function() {
-							
+						
 								controlDirection = 1;
 								invertorEndTime = 0;	
 							}, 5000);
 						}
 						break;
-					
+				
 					case "warp":
-						
+					
 						warpEndTime = now + 5000;
 						speedupEndTime = 0;
 						slowdownEndTime = 0;
-						trackSpeed = 1.3;
+						speedModifier = 4;
 						window.clearTimeout(warpTimer);
 						warpTimer = window.setTimeout(function() {
-						
-							trackSpeed = CONFIG.TRACK_SPEED;
+					
+							speedModifier = 1;
 							warpEndTime = 0;	
 						}, 5000);
 						break;

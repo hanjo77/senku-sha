@@ -207,79 +207,12 @@ Track.prototype.updateBlocks = function() {
 Track.prototype.nextPosition = function() {
 	
 	var nextPosition = new THREE.Vector3(
-		this.position.x+speedX,
+		this.position.x+(speedX*speedModifier),
 		this.position.y,
-		this.position.z+speedZ
+		this.position.z+(speedZ*speedModifier)
 	);
 	var floorPosY = 5;
-	var nextBlock = ball.blockUnderBall(nextPosition);
-	var timeRate = (timeDifference * 30) / 1000;
-	if (timeRate > 1) {
-		
-		timeRate = 1;
-	}
-	if (nextBlock) {
-		
-		floorPosY = (-1*(nextBlock.blockHeight/2)) - .01;
-	}
-	if (ball.isJumping) {
-		
-		if (ball.isFalling) {
-			
-			nextY = -1*CONFIG.JUMP_SPEED;
-			speedY = nextY;
-			ball.isFalling = false;
-			ball.inAir = true;
-		}
-		else if ((speedY < -0.1) && (nextY >= nextPosition.y)) {
-			
-			speedY /= 2;
-			nextY += speedY;
-		}
-		else {
-			
-			ball.isFalling = true;
-		}
-		nextPosition.y += speedY;
-	}
-	if (ball.isFalling){
-		
-		if (ball.inAir) {
-			
-			if (ball.isJumping) {
-			
-				ball.isJumping = false;
-				speedY *= -1
-			}	
-			else if ((speedY < CONFIG.GRAVITY) && (nextY <= nextPosition.y)) {
-			
-				speedY *= 2;
-				nextY += speedY;
-			}
-		}
-		nextPosition.y += speedY;
-		if (nextBlock && nextPosition.y > floorPosY) {
-		
-			nextY = 0;
-			ball.inAir = false;
-			nextPosition.y = floorPosY;
-			speedY = CONFIG.GRAVITY;
-			nextPosition = nextBlock.getNextPositionToBall(nextPosition);
-		}		
-	}
-	if (!nextBlock && (track.position.y >= 0) && warpEndTime <= 0) {
-
-    	nextPosition = this.getBallBlockFallingPosition(nextPosition);
-		if (nextPosition.y > 2) {
-
-			clearGame();
-		} 
-	}
-	if (warpEndTime > 0 && nextPosition.y > 0) {
-		
-		nextPosition.y = 0;
-	}
-	
+	var timeRate = timeDifference / 1000;
 	if (timeRate) {
 		
 		tempSpeedX = (nextPosition.x - this.position.x)*timeRate;           
@@ -290,11 +223,95 @@ Track.prototype.nextPosition = function() {
 		nextPosition.z = this.position.z + tempSpeedZ;
 		
 	}
-	/* if ((speedX > 0 && nextX < nextPosition.x) || (speedX < 0 && nextX > nextPosition.x)) {
+	var nextBlock = ball.blockUnderBall(nextPosition);
+	if (nextBlock) {
 		
-		nextPosition.x = nextX;
-		speedX = nextPosition.x - track.position.x;
-	} */
+		floorPosY = (-1*(nextBlock.blockHeight/2)) - .01;
+	}
+	if (ball.isJumping) {
+	
+		if (ball.isFalling) {
+		
+			nextY = -1*CONFIG.JUMP_SPEED;
+			speedY = nextY;
+			ball.isFalling = false;
+			ball.inAir = true;
+		}
+		else if ((speedY < CONFIG.FALLING_SPEED_TRIGGER) && (nextY >= nextPosition.y)) {
+		
+			speedY /= CONFIG.JUMP_ACCELERATION;
+			nextY += speedY;
+		}
+		else if (speedY >= CONFIG.FALLING_SPEED_TRIGGER) {
+		
+			ball.isFalling = true;
+		}
+	}
+	if (ball.isFalling){
+	
+		if (ball.inAir) {
+		
+			if (ball.isJumping) {
+		
+				ball.isJumping = false;
+				speedY *= -1
+			}	
+			else if ((speedY < CONFIG.GRAVITY) && (nextY <= nextPosition.y)) {
+		
+				speedY *= CONFIG.JUMP_ACCELERATION;
+				nextY += speedY;
+			}
+		}
+	}
+	
+	if (timeRate) {
+		
+		tempSpeedY = speedY*timeRate;           
+		nextPosition.y = this.position.y + tempSpeedY;          
+	}
+	
+	if (ball.isFalling){
+		
+		if (nextBlock && nextPosition.y >= floorPosY) {
+	
+			nextY = 0;
+			ball.inAir = false;
+			nextPosition.y = floorPosY;
+			speedY = CONFIG.GRAVITY;
+			canMove = {
+		
+				back: true,
+				front: true,
+				left: true,
+				right: true
+			};
+			if (warpEndTime <= 0) {
+				
+				nextPosition = nextBlock.getNextPositionToBall(nextPosition);
+			}
+		}
+	}	
+		
+	if (!nextBlock && (track.position.y > 0)) {
+
+		if (warpEndTime <= 0) {
+			
+	    	nextPosition = this.getBallBlockFallingPosition(nextPosition);
+			if (nextPosition.y > 2) {
+
+				clearGame();
+			} 
+		}
+		else {
+			
+			nextY = 0;
+			speedY = 0;
+			tempSpeedY = 0;
+			ball.inAir = false;
+			nextPosition.y = (floorPosY >= 5 ? 0 : floorPosY);
+		}
+	}
+	
 	return nextPosition;
 }
 
@@ -319,6 +336,7 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 		nextPosition.y+speedY, 
 		nextPosition.z
 	));
+	var timeRate = timeDifference/1000;
 	var blockPos = lastBlock.position;
 	var lambda = null;
 	for (var i = 0; i < collisionTypes.length; i++) {
@@ -329,6 +347,7 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 			case "backLeft":
 			case "backRight":     
 			
+				speedZ = CONFIG.ACCELERATION*timeRate;
 				lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.z-lastBlock.front, 2))/(this.position.y+CONFIG.GRAVITY);
 				break;                                                              
 			
@@ -336,6 +355,7 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 			case "frontLeft":
 			case "frontRight":     
 
+				speedZ = -1*CONFIG.ACCELERATION*timeRate;
 				lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.z-lastBlock.back, 2))/(this.position.y+CONFIG.GRAVITY);
 				break;                                                              
 
@@ -343,6 +363,7 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 			case "backLeft":
 			case "frontLeft":     
 
+				speedX = -1*CONFIG.ACCELERATION*timeRate;
 				lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.x-lastBlock.right, 2))/(this.position.y+CONFIG.GRAVITY);
 				break;                                                              
 
@@ -350,9 +371,12 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 			case "backRight":
 			case "frontRight":
                  
+				speedX = CONFIG.ACCELERATION*timeRate;
 				lambda = Math.sqrt(Math.pow(ball.geometry.radius, 2) - Math.pow(ballPos.x-lastBlock.left, 2))/(this.position.y+CONFIG.GRAVITY);
 				break
 		}
+		nextPosition.x += speedX;
+		nextPosition.z += speedZ;
 	}
 	if (lambda && lambda != Infinity && lambda < 1) {
 		

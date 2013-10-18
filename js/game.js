@@ -1,37 +1,46 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var warpTimer, warpEndTime, invertorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var canMove, warpTimer, warpEndTime, invertorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, speedModifier, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
 $(document).keydown(function (e) {
-											
+		
 	if (renderer) {
 	
-		switch (e.keyCode) {      
+		switch (e.which) {      
 
 			case CONFIG.KEYCODE.LEFT:
-				// nextX += CONFIG.BLOCK_SIZE;
-				speedX = CONFIG.ACCELERATION*controlDirection;
+				if (canMove.left) {
+					
+					speedX = CONFIG.ACCELERATION*controlDirection;
+				}
 				break;
 												 
 			case CONFIG.KEYCODE.RIGHT:
-				// nextX -= CONFIG.BLOCK_SIZE;
-				speedX = -1*CONFIG.ACCELERATION*controlDirection;         
+				if (canMove.right) {
+					
+					speedX = -1*CONFIG.ACCELERATION*controlDirection;  
+				}
 				break;
 										  
 			case CONFIG.KEYCODE.UP:                
-				speedZ = trackSpeed;
+				if (canMove.back) {
+					
+					speedZ = trackSpeed;
+				}
 				break;
 
 			case CONFIG.KEYCODE.DOWN:              
-				speedZ = -1*trackSpeed;
-				break;   
+				if (canMove.front) {
+				
+					speedZ = -1*trackSpeed;
+				}
+				break;
 
 			case CONFIG.KEYCODE.SPACE:
 				if (!ball.inAir) {
 
-					speedY = -1*CONFIG.JUMP_SPEED;
 					ball.isJumping = true;
 				}
-				break;   
+				break;
 		}
 	}
 });  
@@ -44,13 +53,13 @@ $(document).keyup(function (e) {
 
 			case CONFIG.KEYCODE.LEFT:			 
 			case CONFIG.KEYCODE.RIGHT:
-				speedX = 0;         
+				speedX = 0;
 				break;
 										  
 			case CONFIG.KEYCODE.UP:                
 			case CONFIG.KEYCODE.DOWN:              
 				speedZ = 0;
-				break;   
+				break;
 		}
 	}
 });  
@@ -77,6 +86,7 @@ function startGame() {
 
 	Util.addBackground()
 	
+	speedModifier = 1;
 	controlDirection = 1;
 	warpEndTime = 0;
 	trackSpeed = CONFIG.TRACK_SPEED;
@@ -87,6 +97,13 @@ function startGame() {
 	tempSpeedX = 0;
 	tempSpeedY = 0;
 	tempSpeedZ = 0; 
+	canMove = {
+		
+		back: true,
+		front: true,
+		left: true,
+		right: true
+	};
 
 	timeDifference = 0;
 	lastFrameTime = new Date();
