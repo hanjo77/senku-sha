@@ -117,13 +117,13 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						if (speedModifier >= 1 && warpEndTime <= 0) {
 						
 							slowdownEndTime = now + 5000;
-							speedModifier /= 2;
+							speedModifier /= 1.5;
 							window.clearTimeout(slowdownTimer);
 							slowdownTimer = window.setTimeout(function() {
 						
 								if (warpEndTime <= 0) {
 								
-									speedModifier *= 2;
+									speedModifier *= 1.5;
 									slowdownEndTime = 0;	
 								}
 							}, 5000);
@@ -135,13 +135,13 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						if (speedModifier <= 1 && warpEndTime <= 0) {
 						
 							speedupEndTime = now + 5000;
-							speedModifier *= 2;
+							speedModifier *= 1.5;
 							window.clearTimeout(speedupTimer);
 							speedupTimer = window.setTimeout(function() {
 						
 								if (warpEndTime <= 0) {
 								
-									speedModifier /= 2;
+									speedModifier /= 1.5;
 									speedupEndTime = 0;	
 								}
 							}, 5000);
@@ -168,13 +168,26 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 						warpEndTime = now + 5000;
 						speedupEndTime = 0;
 						slowdownEndTime = 0;
-						speedModifier = 4;
+						speedModifier = 2;
 						window.clearTimeout(warpTimer);
 						warpTimer = window.setTimeout(function() {
 					
 							speedModifier = 1;
 							warpEndTime = 0;	
 						}, 5000);
+						break;
+				
+					case "goalBright":
+					case "goalDark":
+					
+						if (startTime > 0) {
+							
+							var time = new Date();
+							time -= startTime;
+							time = Math.floor(time/1000);
+							console.log("Level finished - Time: " + time);
+							startTime = 0;
+						}
 						break;
 				}
 				Util.updateInfoHTML();

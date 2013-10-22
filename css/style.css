@@ -98,6 +98,11 @@ noscript, #noWebGL {
 	width: 70%;
 }
 
+body * {
+	
+	user-select: none;
+}
+
 html, body {
 	
 	font-family: 'Aldrich', sans-serif;
@@ -345,12 +350,13 @@ canvas {
 
 /* Editor */            
 
-.editorWrapper, .editorDisplayWrapper {
+.editorWrapper, .editorDisplayWrapper, #display {
 	
 	width: auto;	          
 	display: inline-block;
 	margin: 0;
 	padding: 0;
+	height: 28.3em;
 	overflow: hidden;
 }
 
@@ -358,6 +364,7 @@ canvas {
 	
 	display: block;
 	height: 6em;
+	width: 15em;
 	max-height: 6em;
 	position: absolute;
 	z-index: 100000;
@@ -378,6 +385,8 @@ canvas {
 #buttonDown {
 	       
 	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	bottom: 0;
+	display: none;
 } 
 
 #controls {
@@ -388,15 +397,27 @@ canvas {
    
 #editorDisplayWrapper {
 	
-	width: 27.3em;
+	width: 15em;
 	float: left;
-	height: 31em
+}
+
+#editorTable {
+	
+	width: 100%;
+	height: 100%;
+	border-collapse: collapse;
+	empty-cells: show;
+}
+
+#editorTable td {
+	
+	height: 3em;
+	width: 3em;
 }
 
 #display {
 	
 	border: 2px solid #990000;
-	height: 30em;
 	background: #000000;
 	box-shadow: 0 0 10px #000;
 }

@@ -1,5 +1,5 @@
 var trackPosition = new THREE.Vector3(0, 0, 0);
-var canMove, warpTimer, warpEndTime, invertorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, speedModifier, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+var lastY, lastZ, timeRate, startTime, canMove, warpTimer, warpEndTime, invertorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, speedModifier, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
 
 $(document).keydown(function (e) {
 		
@@ -26,12 +26,9 @@ $(document).keydown(function (e) {
 					
 					speedZ = trackSpeed;
 				}
-				break;
-
-			case CONFIG.KEYCODE.DOWN:              
-				if (canMove.front) {
-				
-					speedZ = -1*trackSpeed;
+				if (!startTime) {
+					
+					startTime = new Date();
 				}
 				break;
 
@@ -54,11 +51,6 @@ $(document).keyup(function (e) {
 			case CONFIG.KEYCODE.LEFT:			 
 			case CONFIG.KEYCODE.RIGHT:
 				speedX = 0;
-				break;
-										  
-			case CONFIG.KEYCODE.UP:                
-			case CONFIG.KEYCODE.DOWN:              
-				speedZ = 0;
 				break;
 		}
 	}
@@ -137,7 +129,6 @@ function startGame() {
 
 	track = new Track();
 	nextX = track.position.x;
-	// console.log(track.position);
 	scene.add(track); 
 	
 	ball = new Ball();
@@ -156,9 +147,11 @@ function startGame() {
 							
 		timeDifference = time-lastFrameTime;
 		lastFrameTime = time;				  
+		
 		renderer.autoClear = false;
 		renderer.clear();
 		renderer.render(bgScene, bgCam);
+		
 		track.position = track.nextPosition();
 		track.updateBlocks();
 		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*tempSpeedZ);

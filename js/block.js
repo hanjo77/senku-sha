@@ -171,7 +171,6 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 						
 					case "right":
 
-						// console.log(speedX)
 						if (speedX <= 0) {
 		
 							nextPos.x = (this.left-ball.geometry.radius)*-1;
@@ -197,7 +196,10 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 						if (speedZ >= 0) {
 		
 							nextPos.z = (this.back+ball.geometry.radius)*-1;
-							speedZ = 0;                                             
+							lastZ = nextPos.z;                                             
+							speedZ = -1;
+							tempSpeedZ = speedZ*timeRate;
+							nextPos.z += tempSpeedZ;
 							canMove.back = false;                                             
 							tempSpeedZ = speedZ;
 						}
@@ -209,8 +211,7 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 		
 							nextPos.z = (this.front-ball.geometry.radius)*-1;
 							speedZ = 0;                                             
-							canMove.front = false;                                             
-							tempSpeedZ = speedZ;
+							canMove.front = false;
 						}
 						break;    
 				}		

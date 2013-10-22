@@ -4,9 +4,9 @@
 
 <div class="editorWrapper">
 	<div id="editorDisplayWrapper">
-		<a id="buttonUp">Up</a>
+		<a id="buttonUp">up</a>
 		<div id="display"></div>
-	   	<a id="buttonDown">Down</a>
+		<a id="buttonDown">down</a>
 	</div>
 	<div id="controls">
 		<input type="hidden" name="levelId" id="levelId" value="" />

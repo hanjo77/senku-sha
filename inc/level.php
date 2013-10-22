@@ -33,6 +33,20 @@ class Level {
 		}
 		return $id;	
 	}
+
+	function load($id) {
+		  
+		$this->id = $id; 
+		$data = "";
+		$db_util = new DBUtil();
+		$query = "SELECT `data` FROM `level` WHERE `id` = '".$id."'";
+		$result = $db_util->query($query);
+		while($record = mysql_fetch_array($result)) {
+ 		
+			$data = $record["data"];
+		}
+		return $data;	
+	}
 }
 
 ?>

@@ -10,129 +10,41 @@ function Track() {
 	this.activeRow = null;
 	this.frontRows = CONFIG.TRACK.FRONT_ROWS;
 	this.backRows = CONFIG.TRACK.BACK_ROWS;
-	var level = "01010\n"
-	+ "10101\n"
-	+ "01010\n"
-	+ "10101\n"
-	+ "01010\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23432\n"
-	+ "34443\n"
-	+ "23432\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "39993\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "25552\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "27672\n"
-	+ "32323\n"
-	+ "  2\n"
-	+ "38383\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n"
-	+ "32323\n"
-	+ "23232\n";
+	this.loadLevel(10);
+}
+
+// inherit Persion
+Track.prototype = new THREE.Object3D();
+Track.prototype.constructor = Track;       
+
+Track.prototype.loadLevel = function(levelId) {
+	
+	$.ajax({
+		
+		url: "load_level.php",
+		type: "POST",
+		data: {
+			
+			id: levelId
+		}
+	}).done(function(result) {
+		
+		track.initLevel(result);
+	});	
+}
+
+Track.prototype.initLevel = function(level) {
 	
 	var rows = level.split("\n");
-	
+
 	var blockRow;
    	for (var row = 0; row < rows.length; row++) {
-	        
+    
 		blockRow = new Array();
 	   	for (var col = 0; col < rows[row].length; col++) {
-            
+    
 			if (!isNaN(parseInt(rows[row].charAt(col), 10))) {
-				
+		
 				var type = parseInt(rows[row].charAt(col), 10);                       
 				var block = new Block(CONFIG.BLOCK_TYPES[type], new THREE.Vector3(
 					col*CONFIG.BLOCK_SIZE, 
@@ -142,7 +54,7 @@ function Track() {
 				blockRow.push(block);
 			}
 			else {
-				
+		
 				blockRow.push(null);
 			}
 		}
@@ -151,12 +63,9 @@ function Track() {
 	this.position = new THREE.Vector3(
 		-1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-3].length/2)), 
 		0, 
-		-1*CONFIG.BLOCK_SIZE*(this.blocks.length-3));
+		-1*CONFIG.BLOCK_SIZE*(this.blocks.length-3)
+	);
 }
-
-// inherit Persion
-Track.prototype = new THREE.Object3D();
-Track.prototype.constructor = Track;       
 
 Track.prototype.blockForPosition = function(col, row) {
 	        
@@ -212,9 +121,34 @@ Track.prototype.nextPosition = function() {
 		this.position.z+(speedZ*speedModifier)
 	);
 	var floorPosY = 5;
-	var timeRate = timeDifference / 1000;
+	timeRate = timeDifference / 200;
 	if (timeRate) {
 		
+		if (speedZ < 0) {
+		
+			if ((nextPosition.z - lastZ) < speedZ) {
+			
+				speedZ /= 2;
+				lastZ = nextPosition.z;
+				if (speedZ > -0.5) {
+				
+					speedZ *= -1;
+				}
+			}
+		}
+		else if (speedZ > 0 && speedZ < CONFIG.TRACK_SPEED*speedModifier && canMove.back) {
+
+			if ((nextPosition.z - lastZ) > speedZ) {
+			
+				speedZ *= 2;
+				lastZ = nextPosition.z;
+			}
+		}
+		else if (startTime && speedZ == 0 && canMove.back) {
+
+			speedZ = CONFIG.TRACK_SPEED*speedModifier;
+		}
+		tempSpeedZ = speedZ*timeRate;
 		tempSpeedX = (nextPosition.x - this.position.x)*timeRate;           
 		tempSpeedY = (nextPosition.y - this.position.y)*timeRate;           
 		tempSpeedZ = (nextPosition.z - this.position.z)*timeRate;           
@@ -311,7 +245,7 @@ Track.prototype.nextPosition = function() {
 			nextPosition.y = (floorPosY >= 5 ? 0 : floorPosY);
 		}
 	}
-	
+		
 	return nextPosition;
 }
 
@@ -336,7 +270,6 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 		nextPosition.y+speedY, 
 		nextPosition.z
 	));
-	var timeRate = timeDifference/1000;
 	var blockPos = lastBlock.position;
 	var lambda = null;
 	for (var i = 0; i < collisionTypes.length; i++) {

@@ -63,6 +63,21 @@ CREATE TABLE IF NOT EXISTS `level` (
   FOREIGN KEY `FK_LEVEL_CREATOR_USER_ID` (`creator`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=1 ;
 
+--
+-- Table `hiscore`
+--
+
+CREATE TABLE IF NOT EXISTS `hiscore` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time` int(32) NOT NULL,
+  `user` int(32) NOT NULL,
+  `level` int(32) NOT NULL,
+  `date` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY `FK_HISCORE_USER_USER_ID` (`user`) REFERENCES `user` (`id`)
+  FOREIGN KEY `FK_HISCORE_LEVEL_LEVEL_ID` (`level`) REFERENCES `level` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=1 ;
+
 
 --
 -- Give rights to user for database
