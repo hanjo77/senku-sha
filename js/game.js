@@ -1,179 +1,188 @@
-var trackPosition = new THREE.Vector3(0, 0, 0);
-var lastY, lastZ, timeRate, startTime, canMove, warpTimer, warpEndTime, invertorTimer, invertorEndTime, slowdownTimer, slowdownEndTime, speedupTimer, speedupEndTime, controlDirection, trackSpeed, speedModifier, tempSpeedX, tempSpeedY, tempSpeedZ, timeDifference, lastFrameTime, renderProcess, nextX, nextY, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight;
+function Game() {
 
-$(document).keydown(function (e) {
-		
-	if (renderer) {
+	this.renderProcess;
+	this.renderer;
+	this.container;
+	this.camera;
+	this.scene;
+	this.timeRate;
+	this.startTime;
+	this.warpEndTime;
+	this.invertorTimer;
+	this.invertorEndTime;
+	this.slowdownTimer;
+	this.warpTimer; 
+	this.slowdownEndTime;
+	this.speedupTimer;
+	this.speedupEndTime;
+	this.controlDirection;
+	this.timeDifference;
+	this.lastFrameTime;
+	this.renderProcess;
+	this.spotLight;
+	this.pointLight;
+	this.ball;
+	this.track;
+	this.bgBall;
+	this.trackPosition = new THREE.Vector3(0, 0, 0);
 	
-		switch (e.which) {      
+	this.addHandlers();
+	this.startGame();
+}
 
-			case CONFIG.KEYCODE.LEFT:
-				if (canMove.left) {
-					
-					speedX = CONFIG.ACCELERATION*controlDirection;
-				}
-				break;
-												 
-			case CONFIG.KEYCODE.RIGHT:
-				if (canMove.right) {
-					
-					speedX = -1*CONFIG.ACCELERATION*controlDirection;  
-				}
-				break;
-										  
-			case CONFIG.KEYCODE.UP:                
-				if (canMove.back) {
-					
-					speedZ = trackSpeed;
-				}
-				if (!startTime) {
-					
-					startTime = new Date();
-				}
-				break;
+Game.prototype.addHandlers = function() {
 
-			case CONFIG.KEYCODE.SPACE:
-				if (!ball.inAir) {
-
-					ball.isJumping = true;
-				}
-				break;
-		}
-	}
-});  
-
-$(document).keyup(function (e) {
-											
-	if (renderer) {
-	
-		switch (e.keyCode) {      
-
-			case CONFIG.KEYCODE.LEFT:			 
-			case CONFIG.KEYCODE.RIGHT:
-				speedX = 0;
-				break;
-		}
-	}
-});  
-
-$(window).resize(function() {
-						 
-	if (renderer) {
-	
-		container.css({
+	$(document).keydown(function (e) {
 			
-			width: $(window).innerWidth(),
-			height: $(window).innerHeight() 
-		});
-		camera.aspect = container.width()/container.height();
-		bgCam.aspect = container.width()/container.height();
-		camera.updateProjectionMatrix();
-		renderer.setSize(container.width(), container.height());
-	}
-})
-
-startGame();
-
-function startGame() {
-
-	Util.addBackground()
-	
-	speedModifier = 1;
-	controlDirection = 1;
-	warpEndTime = 0;
-	trackSpeed = CONFIG.TRACK_SPEED;
-	trackPosition = new THREE.Vector3(0, 0, 0);
-	speedX = 0;
-	speedY = 0;
-	speedZ = 0; 
-	tempSpeedX = 0;
-	tempSpeedY = 0;
-	tempSpeedZ = 0; 
-	canMove = {
+		if (game && game.ball && game.track) {
 		
-		back: true,
-		front: true,
-		left: true,
-		right: true
-	};
+			switch (e.which) {      
 
-	timeDifference = 0;
-	lastFrameTime = new Date();
+				case CONFIG.KEYCODE.LEFT:
+					if (game.ball.canMove.left) {
+						
+						game.track.speedX = CONFIG.ACCELERATION*game.controlDirection;
+					}
+					break;
+													 
+				case CONFIG.KEYCODE.RIGHT:
+					if (game.ball.canMove.right) {
+						
+						game.track.speedX = -1*CONFIG.ACCELERATION*game.controlDirection;  
+					}
+					break;
+											  
+				case CONFIG.KEYCODE.UP:                
+					if (game.ball.canMove.back) {
+						
+						game.track.speedZ = game.track.trackSpeed;
+					}
+					if (!game.startTime) {
+						
+						game.startTime = new Date();
+					}
+					break;
+
+				case CONFIG.KEYCODE.SPACE:
+					if (!game.ball.inAir) {
+
+						game.ball.isJumping = true;
+					}
+					break;
+			}
+		}
+	});  
+
+	$(document).keyup(function (e) {
+											
+		if (game && game.ball && game.track) {
+		
+			switch (e.keyCode) {      
+
+				case CONFIG.KEYCODE.LEFT:			 
+				case CONFIG.KEYCODE.RIGHT:
+					game.track.speedX = 0;
+					break;
+			}
+		}
+	});  
+
+	$(window).resize(function() {
+							 
+		if (game && renderer) {
+		
+			container.css({
+				
+				width: $(window).innerWidth(),
+				height: $(window).innerHeight() 
+			});
+			camera.aspect = container.width()/container.height();
+			camera.updateProjectionMatrix();
+			renderer.setSize(container.width(), container.height());
+		}
+	});
+}
+
+Game.prototype.startGame = function() {
 	
-	scene = new THREE.Scene();
-	container = $("#content");
-	container.css({
+	this.controlDirection = 1;
+	this.warpEndTime = 0;
+	this.trackPosition = new THREE.Vector3(0, 0, 0);
+
+	this.timeDifference = 0;
+	this.lastFrameTime = new Date();
+	
+	this.scene = new THREE.Scene();
+	this.container = $("#content");
+	this.container.css({
 		
 		width: $(window).innerWidth(),
 		height: $(window).innerHeight() 
 	});
 	
-	pointLight = new THREE.PointLight(0xffffff);
-	pointLight.position.set(0,5,7);     
-	scene.add(pointLight);     
+	this.pointLight = new THREE.PointLight(0xffffff);
+	this.pointLight.position.set(0,5,7);     
+	this.scene.add(this.pointLight);     
 
-	spotLight = new THREE.SpotLight(0xffffff);
-	spotLight.position.set(0,5,0);
-	spotLight.shadowCameraNear = 0.01;		
-	spotLight.castShadow = true;
-	spotLight.shadowDarkness = 0.5;  
-	scene.add(spotLight);
+	this.spotLight = new THREE.SpotLight(0xffffff);
+	this.spotLight.position.set(0,5,0);
+	this.spotLight.shadowCameraNear = 0.01;		
+	this.spotLight.castShadow = true;
+	this.spotLight.shadowDarkness = 0.5;  
+	this.scene.add(this.spotLight);
 
-	renderer = new THREE.WebGLRenderer();
-	renderer.setSize(container.width(), container.height());
-	renderer.shadowMapEnabled = true;
-	renderer.shadowMapSoft = true;
-	renderer.setClearColor( CONFIG.BACKGROUND_COLOR, 0 );     
+	this.renderer = new THREE.WebGLRenderer();
+	this.renderer.setSize(this.container.width(), this.container.height());
+	this.renderer.shadowMapEnabled = true;
+	this.renderer.shadowMapSoft = true;
+	this.renderer.setClearColor( CONFIG.BACKGROUND_COLOR, 0 );     
 	
-	scene.fog = new THREE.Fog(CONFIG.BACKGROUND_COLOR, CONFIG.TRACK.FOG_NEAR, CONFIG.TRACK.FOG_FAR);
+	this.scene.fog = new THREE.Fog(CONFIG.BACKGROUND_COLOR, CONFIG.TRACK.FOG_NEAR, CONFIG.TRACK.FOG_FAR);
 
-	track = new Track();
-	nextX = track.position.x;
-	scene.add(track); 
+	this.track = new Track();
+	this.track.nextX = this.track.position.x;
+	this.scene.add(this.track); 
 	
-	ball = new Ball();
-	scene.add(ball);          
+	this.ball = new Ball();
+	this.scene.add(this.ball);          
 
-	camera = new THREE.PerspectiveCamera(60, container.width()/container.height(), .01, 1000);
-	camera.position.y = 2;
-	camera.position.z = 5;
-	camera.lookAt(ball.position);       
+	this.camera = new THREE.PerspectiveCamera(60, this.container.width()/this.container.height(), .01, 1000);
+	this.camera.position.y = 2;
+	this.camera.position.z = 5;
+	this.camera.lookAt(this.ball.position);       
 
-   	container.get(0).appendChild(renderer.domElement);
+   	this.container.get(0).appendChild(this.renderer.domElement);
 	
-	var render = function(time) {
-
-		renderProcess = requestAnimationFrame(render);     
-							
-		timeDifference = time-lastFrameTime;
-		lastFrameTime = time;				  
-		
-		renderer.autoClear = false;
-		renderer.clear();
-		renderer.render(bgScene, bgCam);
-		
-		track.position = track.nextPosition();
-		track.updateBlocks();
-		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*tempSpeedZ);
-		ball.rotateAroundWorldAxis(new THREE.Vector3(0,0,1), tempSpeedX);  
-                             
-		renderer.render(scene, camera);
-		
-	};
-
-	render();
+	this.render();
 }
 
-function clearGame() {
+Game.prototype.render = function(time) {
 
-	ball = null;
-	$(document).unbind();
-	$(window).unbind();
-	Util.removeChilds(scene);
-	cancelAnimationFrame(renderProcess);
+	this.renderProcess = requestAnimationFrame(this.render.bind(this));     
+													
+	this.timeDifference = time-this.lastFrameTime;
+	this.lastFrameTime = time;				  
+	this.timeRate = this.timeDifference / 200;
+	
+	if (this.track && this.ball) {
+	
+		this.track.position = this.track.nextPosition();
+		this.track.updateBlocks();
+		this.ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*this.track.tempSpeedZ);
+		this.ball.rotateAroundWorldAxis(new THREE.Vector3(0,0,1), this.track.tempSpeedX);  
+	}
+						 
+	this.renderer.render(this.scene, this.camera);
+}
+
+Game.prototype.clearGame = function() {
+
+	cancelAnimationFrame(this.renderProcess);
+	$("*").unbind();
 	Util.changeContent("menu.php");
-	startBall();
+	bgBall = new BackgroundBall();
 	$("#info").css({
 		display: "none"
 	});	
+	delete this;
 }

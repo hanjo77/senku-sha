@@ -23,6 +23,13 @@ function Ball() {
 	this.isJumping = false;
 	this.isFalling = true;
 	this.inAir = false;
+	this.canMove = {
+		
+		back: true,
+		front: true,
+		left: true,
+		right: true
+	};
 }
 
 // inherit Mesh
@@ -93,20 +100,20 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 	);
 	if (posOnTrack.x >= 0 && posOnTrack.y >= 0) {
 		
-		var block = track.blockForPosition(
+		var block = game.track.blockForPosition(
 			parseInt(posOnTrack.x/CONFIG.BLOCK_SIZE, 10), 
 			parseInt(posOnTrack.z/CONFIG.BLOCK_SIZE, 10)
 		);
 		if (block) {
 			
-			if (trackPosition.y <= 0 && !this.inAir) {
+			if (game && trackPosition.y <= 0 && !this.inAir) {
 				
 				var now = new Date().getTime();					
 				switch (block.blockType.name) {
 				
 					case "jumper":
 					
-						if (warpEndTime <= 0) {
+						if (game.warpEndTime <= 0) {
 							
 							this.isJumping = true;
 						}
@@ -114,17 +121,17 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 				
 					case "slowdown":
 					
-						if (speedModifier >= 1 && warpEndTime <= 0) {
+						if (game.track.speedModifier >= 1 && game.warpEndTime <= 0) {
 						
-							slowdownEndTime = now + 5000;
-							speedModifier /= 1.5;
-							window.clearTimeout(slowdownTimer);
-							slowdownTimer = window.setTimeout(function() {
+							game.slowdownEndTime = now + 5000;
+							game.track.speedModifier /= 1.5;
+							window.clearTimeout(game.slowdownTimer);
+							game.slowdownTimer = window.setTimeout(function() {
 						
-								if (warpEndTime <= 0) {
+								if (game.warpEndTime <= 0) {
 								
-									speedModifier *= 1.5;
-									slowdownEndTime = 0;	
+									game.track.speedModifier *= 1.5;
+									game.slowdownEndTime = 0;	
 								}
 							}, 5000);
 						}
@@ -132,17 +139,17 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 				
 					case "speedup":
 					
-						if (speedModifier <= 1 && warpEndTime <= 0) {
+						if (game.track.speedModifier <= 1 && game.warpEndTime <= 0) {
 						
-							speedupEndTime = now + 5000;
-							speedModifier *= 1.5;
-							window.clearTimeout(speedupTimer);
-							speedupTimer = window.setTimeout(function() {
+							game.speedupEndTime = now + 5000;
+							game.track.speedModifier *= 1.5;
+							window.clearTimeout(game.speedupTimer);
+							game.speedupTimer = window.setTimeout(function() {
 						
-								if (warpEndTime <= 0) {
+								if (game.warpEndTime <= 0) {
 								
-									speedModifier /= 1.5;
-									speedupEndTime = 0;	
+									game.track.speedModifier /= 1.5;
+									game.speedupEndTime = 0;	
 								}
 							}, 5000);
 						}
@@ -150,43 +157,43 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 				
 					case "invertor":
 					
-						if (controlDirection == 1 && warpEndTime <= 0) {
+						if (game.controlDirection == 1 && game.warpEndTime <= 0) {
 						
-							invertorEndTime = now + 5000;
-							controlDirection = -1;
-							window.clearTimeout(invertorTimer);
-							invertorTimer = window.setTimeout(function() {
+							game.invertorEndTime = now + 5000;
+							game.controlDirection = -1;
+							window.clearTimeout(game.invertorTimer);
+							game.invertorTimer = window.setTimeout(function() {
 						
-								controlDirection = 1;
-								invertorEndTime = 0;	
+								game.controlDirection = 1;
+								game.invertorEndTime = 0;	
 							}, 5000);
 						}
 						break;
 				
 					case "warp":
 					
-						warpEndTime = now + 5000;
-						speedupEndTime = 0;
-						slowdownEndTime = 0;
-						speedModifier = 2;
-						window.clearTimeout(warpTimer);
-						warpTimer = window.setTimeout(function() {
+						game.warpEndTime = now + 5000;
+						game.speedupEndTime = 0;
+						game.slowdownEndTime = 0;
+						game.track.speedModifier = 2;
+						window.clearTimeout(game.warpTimer);
+						game.warpTimer = window.setTimeout(function() {
 					
-							speedModifier = 1;
-							warpEndTime = 0;	
+							game.track.speedModifier = 1;
+							game.warpEndTime = 0;	
 						}, 5000);
 						break;
 				
 					case "goalBright":
 					case "goalDark":
 					
-						if (startTime > 0) {
+						if (game.startTime > 0) {
 							
 							var time = new Date();
-							time -= startTime;
+							time -= game.startTime;
 							time = Math.floor(time/1000);
 							console.log("Level finished - Time: " + time);
-							startTime = 0;
+							game.startTime = 0;
 						}
 						break;
 				}

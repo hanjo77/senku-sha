@@ -1,70 +1,76 @@
-var renderProcess, bgScene, bgCam, scene, renderer, camera, container, ball, track, speedX, speedY, speedZ, spotLight, pointLight, mouseX, mouseY, mouseMoveX, mouseMoveY;
 
-function startBall() {
+function BackgroundBall() {
 
-	Util.addBackground()
-
-	speedX = .01;
-	speedY = .01;
-	speedZ = .01;
-		
-	mouseX = 0;
-	mouseY = 0;                                                      
-
-	scene = new THREE.Scene();
-	container = $("#bgBall");
+	this.renderProcess;
+	this.renderer;
+	this.container;
+	this.camera;
+	this.scene;
+	this.ball;
+	this.speedX;
+	this.speedY;
+	this.speedZ;
+	this.spotLight;
+	this.pointLight;
+	this.mouseMoveX;
+	this.mouseMoveY;
 	
-	pointLight = new THREE.PointLight(0xffffff);
-	pointLight.position.set(0,5,7);     
-	scene.add(pointLight);     
+	this.start();
+}
 
-	spotLight = new THREE.SpotLight(0xffffff);
-	spotLight.position.set(0,5,0);
-	spotLight.shadowCameraNear = 0.01;		
-	spotLight.castShadow = true;
-	spotLight.shadowDarkness = 0.5;  
-	scene.add(spotLight);
+BackgroundBall.prototype.start = function() {
 
-	renderer = new THREE.WebGLRenderer();
-	renderer.setSize(container.width(), container.height());
-	renderer.shadowMapEnabled = true;
-	renderer.shadowMapSoft = true;
-	renderer.setClearColor( CONFIG.BACKGROUND_COLOR, 0 );     
+	this.speedX = .01;
+	this.speedY = .01;
+	this.speedZ = .01;                                                
+
+	this.scene = new THREE.Scene();
+	this.container = $("#bgBall");
 	
-	scene.fog = new THREE.Fog(CONFIG.BACKGROUND_COLOR, CONFIG.TRACK.FOG_NEAR, CONFIG.TRACK.FOG_FAR);
+	this.pointLight = new THREE.PointLight(0xffffff);
+	this.pointLight.position.set(0,5,7);     
+	this.scene.add(this.pointLight);     
 
-	ball = new Ball();
-	scene.add(ball);          
+	this.spotLight = new THREE.SpotLight(0xffffff);
+	this.spotLight.position.set(0,5,0);
+	this.spotLight.shadowCameraNear = 0.01;		
+	this.spotLight.castShadow = true;
+	this.spotLight.shadowDarkness = 0.5;  
+	this.scene.add(this.spotLight);
 
-	camera = new THREE.PerspectiveCamera(45, container.width()/container.height(), 1, 1000); 
-	camera.position.z = 1.5;
-	camera.position.y = 1;
-	camera.lookAt(ball.position);       
+	this.renderer = new THREE.WebGLRenderer();
+	this.renderer.setSize(this.container.width(), this.container.height());
+	this.renderer.shadowMapEnabled = true;
+	this.renderer.shadowMapSoft = true;
+	this.renderer.setClearColor( CONFIG.BACKGROUND_COLOR, 0 );     
 	
-   	container.get(0).appendChild(renderer.domElement);
+	this.scene.fog = new THREE.Fog(CONFIG.BACKGROUND_COLOR, CONFIG.TRACK.FOG_NEAR, CONFIG.TRACK.FOG_FAR);
+
+	this.ball = new Ball();
+	this.scene.add(this.ball);          
+
+	this.camera = new THREE.PerspectiveCamera(45, this.container.width()/this.container.height(), 1, 1000); 
+	this.camera.position.z = 1.5;
+	this.camera.position.y = 1;
+	this.camera.lookAt(this.ball.position);       
 	
-	var render = function() {
-		
-		renderProcess = requestAnimationFrame(render);   
-		    					  
-		renderer.autoClear = false;
-		renderer.clear();
-		renderer.render(bgScene, bgCam);
-		
-		if (mouseX && mouseY) {
-			
-			if (mouseX && mouseY) {
+   	this.container.get(0).appendChild(this.renderer.domElement);
+	
+	this.render();
+}
 
-				speedX = (mouseX-($(document).width()/2))/10000;
-				speedZ = (mouseY-($(document).height()/2))/10000;
-			}
-		}
+BackgroundBall.prototype.render = function() {
 		
-		ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), speedZ);
-		ball.rotateAroundWorldAxis(new THREE.Vector3(0,1,0), speedX);  
-                                                                         		
-		renderer.render(scene, camera);
-	};
-
-	render();
+	this.renderProcess = requestAnimationFrame(this.render.bind(this));   
+									
+	if (mouseX && mouseY) {
+		
+		this.speedX = (mouseX-($(document).width()/2))/10000;
+		this.speedZ = (mouseY-($(document).height()/2))/10000;
+	}
+	
+	this.ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), this.speedZ);
+	this.ball.rotateAroundWorldAxis(new THREE.Vector3(0,1,0), this.speedX);
+																			
+	this.renderer.render(this.scene, this.camera);
 }

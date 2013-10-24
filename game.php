@@ -1,1 +1,3 @@
-<script type="text/javascript" src="js/game.js"></script>
+<script>
+game = new Game();
+</script>

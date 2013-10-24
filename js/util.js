@@ -84,7 +84,7 @@ Util.editorClear = function() {
  
 Util.getBallPosition = function(nextPos) {
 	     
-	var pos = ball.touchPoint();
+	var pos = game.ball.touchPoint();
 	var result = new THREE.Vector3( 
 			-nextPos.x,
 			-nextPos.y,
@@ -97,20 +97,20 @@ Util.getCollisions = function(block, nextPos) {
 	    
 	var types = [];                              
 	var ballPos = Util.getBallPosition(nextPos);                                              
-	var movesLeft = (speedX > 0);
-	var movesRight = (speedX < 0);
-	var movesForward = (speedZ > 0);
-	var movesBack = (speedZ < 0);
+	var movesLeft = (game.track.speedX > 0);
+	var movesRight = (game.track.speedX < 0);
+	var movesForward = (game.track.speedZ > 0);
+	var movesBack = (game.track.speedZ < 0);
 	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
 	var withinHeight = (ballPos.z > block.front) && (ballPos.z < block.back);
-	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= ball.geometry.radius) && withinWidth);
-	var backIntersection = ((Math.abs(ballPos.z-block.front) <= ball.geometry.radius) && withinWidth);
-	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= ball.geometry.radius) && withinHeight);
-	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= ball.geometry.radius) && withinHeight); 
-	var frontLeftIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(ball.geometry.radius, 2));
-	var frontRightIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(ball.geometry.radius, 2));
-	var backLeftIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(ball.geometry.radius, 2));
-	var backRightIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(ball.geometry.radius, 2));
+	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= game.ball.geometry.radius) && withinWidth);
+	var backIntersection = ((Math.abs(ballPos.z-block.front) <= game.ball.geometry.radius) && withinWidth);
+	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= game.ball.geometry.radius) && withinHeight);
+	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= game.ball.geometry.radius) && withinHeight); 
+	var frontLeftIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(game.ball.geometry.radius, 2));
+	var frontRightIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(game.ball.geometry.radius, 2));
+	var backLeftIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(game.ball.geometry.radius, 2));
+	var backRightIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(game.ball.geometry.radius, 2));
 	if (backRightIntersection) {
                    
 		types.push("frontLeft");                                      
@@ -148,28 +148,15 @@ Util.getCollisions = function(block, nextPos) {
 	return types;
 }
 
-Util.addBackground = function() {
-	
-	var bgTexture = THREE.ImageUtils.loadTexture('img/horizon.jpg');
-	var bg = new THREE.Mesh(
-	  new THREE.PlaneGeometry(2, 2, 0),
-	  new THREE.MeshBasicMaterial({map: bgTexture})
-	);
-	bg.material.depthTest = false;
-	bg.material.depthWrite = false;
-
-	bgScene = new THREE.Scene();
-	bgCam = new THREE.Camera();
-	bgScene.add(bgCam);
-	bgScene.add(bg);
-}
-
 Util.changeContent = function(page) {
 	
 	if (page == "game.php") {
 		
 		$("#bgBall").html("");
-		cancelAnimationFrame(renderProcess);
+		if (bgBall) {
+		
+			cancelAnimationFrame(bgBall.renderProcess);
+		}
 	}
 	$('#content').html("");
 	$.ajax({ url: page }).done(function( data ) {
@@ -208,7 +195,7 @@ Util.handleHash = function() {
 		if (hash == "" || hash == "menu") {
 
 			hash = "menu";
-			startBall();
+			bgBall = new BackgroundBall();
 		}
 	} 
 	Util.changeContent(hash + ".php");
@@ -232,7 +219,7 @@ Util.updateInfoHTML = function() {
 	var hasContent = false;
 	var info = "<table><tr><th class=\"right\">duration</th><th class=\"left\">state</th></tr><tr>";
 	
-		var duration = Util.getSecondsUntil(invertorEndTime);
+		var duration = Util.getSecondsUntil(game.invertorEndTime);
 		if (duration) {
 		
 			hasContent = true;
@@ -241,7 +228,7 @@ Util.updateInfoHTML = function() {
 			info += "</td><td class=\"left\">inverted controls</td></tr>";
 		}
 	
-		duration = Util.getSecondsUntil(speedupEndTime);
+		duration = Util.getSecondsUntil(game.speedupEndTime);
 		if (duration) {
 		
 			hasContent = true;
@@ -250,7 +237,7 @@ Util.updateInfoHTML = function() {
 			info += "</td><td class=\"left\">speed up</td></tr>";
 		}
 	
-		duration = Util.getSecondsUntil(slowdownEndTime);
+		duration = Util.getSecondsUntil(game.slowdownEndTime);
 		if (duration) {
 		
 			hasContent = true;
@@ -259,7 +246,7 @@ Util.updateInfoHTML = function() {
 			info += "</td><td class=\"left\">slow down</td></tr>";
 		}
 	
-		duration = Util.getSecondsUntil(warpEndTime);
+		duration = Util.getSecondsUntil(game.warpEndTime);
 		if (duration) {
 		
 			hasContent = true;
@@ -446,11 +433,20 @@ Util.initEditorHandlers = function() {
 
 Util.updateWindow = function() {
 	
-	if (renderer) {
+	var obj = null;
+	if (game) {
+	
+		obj = game;
+	}
+	else if (bgBall) {
+	
+		obj = bgBall;
+	}
+	if (obj && obj.renderer) {
 
-		camera.aspect = container.width()/container.height();
-		camera.updateProjectionMatrix();
-		renderer.setSize(container.width(), container.height());
+		obj.camera.aspect = obj.container.width()/obj.container.height();
+		obj.camera.updateProjectionMatrix();
+		obj.renderer.setSize(obj.container.width(), obj.container.height());
 	}
 	$("#content").center();
 }

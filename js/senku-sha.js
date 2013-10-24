@@ -12,6 +12,7 @@ importScript("bg_ball.js");
 importScript("block.js");
 importScript("track.js");
 importScript("intro.js");
+importScript("game.js");
 
 function importScript(url) {
 
@@ -56,3 +57,7 @@ window.onload = function() {
 		Util.handleHash();
 	}
 };
+
+// Global vars
+
+var mouseX, mouseY, bgBall, intro, game, editor;

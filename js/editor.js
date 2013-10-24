@@ -1,8 +1,7 @@
-var editor = null;
 
 function Editor() {
                              						             
-	this.activeButton = null;
+	this.activeButton;
 	this.topPos = 0;
 	this.maxRow = 10;
 	this.blocks = new Array();
