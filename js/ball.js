@@ -106,7 +106,7 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 		);
 		if (block) {
 			
-			if (game && trackPosition.y <= 0 && !this.inAir) {
+			if (game && trackPosition.y <= 0 && !this.inAir && !game.isInGoal) {
 				
 				var now = new Date().getTime();					
 				switch (block.blockType.name) {
@@ -192,12 +192,19 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 							var time = new Date();
 							time -= game.startTime;
 							time = Math.floor(time/1000);
-							console.log("Level finished - Time: " + time);
-							game.startTime = 0;
+							game.track.finishLevel(time);
 						}
 						break;
 				}
 				Util.updateInfoHTML();
+			}
+			else if (game && game.isInGoal) {
+				
+				if (block.blockType.name.indexOf("goal") == -1) {
+					
+					game.isInGoal = false;
+					game.startTime = new Date();
+				}
 			}		
 			
 			this.lastBlock = block;

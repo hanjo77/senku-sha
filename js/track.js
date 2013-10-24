@@ -18,18 +18,19 @@ function Track() {
 	this.nextX = null;
 	this.nextY = null;
 	this.receiveShadow = true;
-	this.blocks = new Array();
+	this.blocks = [];
 	this.activeRow = null;
+	this.isStarted;
 	this.frontRows = CONFIG.TRACK.FRONT_ROWS;
 	this.backRows = CONFIG.TRACK.BACK_ROWS;
-	this.loadLevel(10);
+	this.loadLevel();
 }
 
 // inherit Persion
 Track.prototype = new THREE.Object3D();
 Track.prototype.constructor = Track;       
 
-Track.prototype.loadLevel = function(levelId) {
+Track.prototype.loadLevel = function() {
 	
 	$.ajax({
 		
@@ -37,22 +38,63 @@ Track.prototype.loadLevel = function(levelId) {
 		type: "POST",
 		data: {
 			
-			id: levelId
+			id: (game ? game.currentLevel : 1)
 		}
 	}).done(function(result) {
 		
-		game.track.initLevel(result);
+		if (game) {
+			
+			game.track.initLevel(eval("(" + result + ")"));
+		}
 	});	
 }
 
-Track.prototype.initLevel = function(level) {
+Track.prototype.finishLevel = function(time) {
 	
+	this.isStarted = false;
+	game.isInGoal = true;
+	game.startTime = 0;
+	this.speedX = 0;
+	this.speedZ = 0;
+	this.tempSpeedX = 0;
+	this.tempSpeedZ = 0;
+	if (game.nextLevel) {
+		
+		game.currentLevel = game.nextLevel;
+		this.loadLevel();
+	}
+	else {
+		
+		this.nextX = -1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2));
+		this.nextZ = -2*CONFIG.BLOCK_SIZE;
+	}
+}
+
+Track.prototype.start = function() {
+	
+	this.isStarted = true;
+	if (game.ball.canMove.back) {
+		
+		this.speedZ = this.trackSpeed;
+	}
+	if (!game.startTime) {
+		
+		game.startTime = new Date();
+	}
+}
+   
+Track.prototype.initLevel = function(levelObj) {
+	
+	game.nextLevel = levelObj.nextLevel;
+	game.currentLevel = levelObj.currentLevel;
+	var level = levelObj.levelData;
 	var rows = level.split("\n");
 
 	var blockRow;
+	this.blocks = [];
    	for (var row = 0; row < rows.length; row++) {
     
-		blockRow = new Array();
+		blockRow = [];
 	   	for (var col = 0; col < rows[row].length; col++) {
     
 			if (!isNaN(parseInt(rows[row].charAt(col), 10))) {
@@ -72,11 +114,25 @@ Track.prototype.initLevel = function(level) {
 		}
 		this.blocks.push(blockRow);
 	} 
-	this.position = new THREE.Vector3(
-		-1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-3].length/2)), 
-		0, 
-		-1*CONFIG.BLOCK_SIZE*(this.blocks.length-3)
-	);
+	if (!this.isInitialized) {
+		
+		this.position = new THREE.Vector3(
+			-1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2)), 
+			0, 
+			-1*CONFIG.BLOCK_SIZE*(this.blocks.length-4)
+		);
+		this.isInitialized = true;
+	}
+	else {
+		
+		this.position.z = -1*CONFIG.BLOCK_SIZE*(this.blocks.length-2);
+		this.nextX = -1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2));
+		this.nextZ = -1*CONFIG.BLOCK_SIZE*(this.blocks.length-4);
+		while (this.children.length > 0) {
+		
+			this.remove(this.children[0]);
+		}
+	}
 }
 
 Track.prototype.blockForPosition = function(col, row) {
@@ -127,7 +183,39 @@ Track.prototype.updateBlocks = function() {
 		}                
 	}
 }
-   
+
+Track.prototype.nextGoalPosition = function() {
+	
+	var nextPos = new THREE.Vector3(
+		this.position.x,
+		this.position.y,
+		this.position.z
+	);
+	if (game && game.timeRate) {
+	
+		var speed = CONFIG.TRACK_SPEED*game.timeRate;
+		var distX = this.nextX-this.position.x;
+		var distZ = this.nextZ-this.position.z;
+		var distance = Math.sqrt(Math.pow(distX, 2)+Math.pow(distZ, 2));
+		if (distance < speed) {
+			
+			nextPos = new THREE.Vector3(this.nextX, 0, this.nextZ);
+		}
+		else {
+			
+			nextPos.add(new THREE.Vector3(
+			
+				speed*distX/distance,
+				0,
+				speed*distZ/distance
+			));
+		}
+		this.tempSpeedX = nextPos.x-this.position.x;
+		this.tempSpeedZ = nextPos.z-this.position.z;
+	}
+	return nextPos;
+}
+
 Track.prototype.nextPosition = function() {
 	
 	var nextPosition = new THREE.Vector3(

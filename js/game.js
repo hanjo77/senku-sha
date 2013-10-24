@@ -25,6 +25,9 @@ function Game() {
 	this.track;
 	this.bgBall;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
+	this.currentLevel;
+	this.nextLevel = 1;
+	this.isInGoal = true;
 	
 	this.addHandlers();
 	this.startGame();
@@ -53,14 +56,7 @@ Game.prototype.addHandlers = function() {
 					break;
 											  
 				case CONFIG.KEYCODE.UP:                
-					if (game.ball.canMove.back) {
-						
-						game.track.speedZ = game.track.trackSpeed;
-					}
-					if (!game.startTime) {
-						
-						game.startTime = new Date();
-					}
+					game.track.start();
 					break;
 
 				case CONFIG.KEYCODE.SPACE:
@@ -166,7 +162,14 @@ Game.prototype.render = function(time) {
 	
 	if (this.track && this.ball) {
 	
-		this.track.position = this.track.nextPosition();
+		if (this.isInGoal && !this.track.isStarted) {
+			
+			this.track.position = this.track.nextGoalPosition();
+		}
+		else {
+			
+			this.track.position = this.track.nextPosition();
+		}
 		this.track.updateBlocks();
 		this.ball.rotateAroundWorldAxis(new THREE.Vector3(1,0,0), -1*this.track.tempSpeedZ);
 		this.ball.rotateAroundWorldAxis(new THREE.Vector3(0,0,1), this.track.tempSpeedX);  
