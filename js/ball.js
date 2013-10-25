@@ -189,19 +189,17 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 					
 						if (game.startTime > 0) {
 							
-							var time = new Date();
-							time -= game.startTime;
-							time = Math.floor(time/1000);
-							game.track.finishLevel(time);
+							game.track.finishLevel();
 						}
 						break;
 				}
-				Util.updateInfoHTML();
 			}
 			else if (game && game.isInGoal) {
 				
 				if (block.blockType.name.indexOf("goal") == -1) {
 					
+					console.log(block.blockType.name);
+					game.startTime = 0;
 					game.isInGoal = false;
 					game.startTime = new Date();
 				}

@@ -101,44 +101,40 @@ Util.getCollisions = function(block, nextPos) {
 	var movesRight = (game.track.speedX < 0);
 	var movesForward = (game.track.speedZ > 0);
 	var movesBack = (game.track.speedZ < 0);
-	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
-	var withinHeight = (ballPos.z > block.front) && (ballPos.z < block.back);
+	var withinWidth = (ballPos.x >= block.left) && (ballPos.x <= block.right);
+	var withinHeight = (ballPos.z >= block.front) && (ballPos.z <= block.back);
 	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= game.ball.geometry.radius) && withinWidth);
 	var backIntersection = ((Math.abs(ballPos.z-block.front) <= game.ball.geometry.radius) && withinWidth);
 	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= game.ball.geometry.radius) && withinHeight);
 	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= game.ball.geometry.radius) && withinHeight); 
-	var frontLeftIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(game.ball.geometry.radius, 2));
-	var frontRightIntersection = (Math.pow(ballPos.z-block.front, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(game.ball.geometry.radius, 2));
-	var backLeftIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.left, 2) < Math.pow(game.ball.geometry.radius, 2));
-	var backRightIntersection = (Math.pow(ballPos.z-block.back, 2) + Math.pow(ballPos.x-block.right, 2) < Math.pow(game.ball.geometry.radius, 2));
-	if (backRightIntersection) {
-                   
-		types.push("frontLeft");                                      
-	}
-	else if (backLeftIntersection) {
-
-		types.push("frontRight");
-	}
-	else if (frontRightIntersection) {
-
-		types.push("backLeft");
-	}
-	else if (frontLeftIntersection) {
-
-		types.push("backRight");
-	}
-	
 	if (leftIntersection) {
 
+		if (backIntersection) {
+			
+			types.push("frontRight");
+		}
+		else if (frontIntersection) {
+			
+			types.push("backRight");
+		}
 		types.push("right");
 	}
 	else if (rightIntersection) {
 
+		if (backIntersection) {
+			
+			types.push("frontLeft");
+		}
+		else if (frontIntersection) {
+			
+			types.push("backLeft");
+		}
 		types.push("left");
 	}
 	else if (frontIntersection) {
                       
 		types.push("back");
+		console.log(ballPos.z + " " + block.front + " " + block.back);
 	}
 	else if (backIntersection) {
                                                       
@@ -217,45 +213,77 @@ Util.getSecondsUntil = function(endTime) {
 Util.updateInfoHTML = function() {
 	
 	var hasContent = false;
-	var info = "<table><tr><th class=\"right\">duration</th><th class=\"left\">state</th></tr><tr>";
-	
+	var info = "";
+	var timeContent = "";
+	var lifeContent = "";
+	if (game.isInGoal) {
+		
+		hasContent = true;
+		if (game.nextLevel) {
+			
+			info += "<h2>Level completed!</h2>";
+		}
+		else {
+			
+			info += "<h2>Game completed!</h2>";
+		}
+	}
+	else {
+				
+		info = "<table><tr><th class=\"right\">duration</th><th class=\"left\">state</th></tr><tr>";
 		var duration = Util.getSecondsUntil(game.invertorEndTime);
 		if (duration) {
-		
+	
 			hasContent = true;
 			info += "<tr class=\"inverted\"><td class=\"right\">";
 			info += duration;
 			info += "</td><td class=\"left\">inverted controls</td></tr>";
 		}
-	
+
 		duration = Util.getSecondsUntil(game.speedupEndTime);
 		if (duration) {
-		
+	
 			hasContent = true;
 			info += "<tr class=\"speedup\"><td class=\"right\">";
 			info += duration;
 			info += "</td><td class=\"left\">speed up</td></tr>";
 		}
-	
+
 		duration = Util.getSecondsUntil(game.slowdownEndTime);
 		if (duration) {
-		
+	
 			hasContent = true;
 			info += "<tr class=\"slowdown\"><td class=\"right\">";
 			info += duration;
 			info += "</td><td class=\"left\">slow down</td></tr>";
 		}
-	
+
 		duration = Util.getSecondsUntil(game.warpEndTime);
 		if (duration) {
-		
+	
 			hasContent = true;
 			info += "<tr class=\"warp\"><td class=\"right\">";
 			info += duration;
 			info += "</td><td class=\"left\">warp</td></tr>";
 		}
-	
-	info += "</table>";
+				
+		info += "</table>";
+		
+		if (!hasContent) {
+			
+			info = "";
+		}
+		hasContent = true;
+		if (game.track.isStopped && game.lives <= 0) {
+			
+			info = "<h2>Game Over</h2>";
+		}
+		else {
+			
+			timeContent = "Time:&nbsp;" + game.levelTime;
+			lifeContent = "Lives:&nbsp;" + game.lives;
+		}
+	}
 	var obj = $("#info");
 	if (hasContent) {
 		
@@ -270,6 +298,11 @@ Util.updateInfoHTML = function() {
 			display: "none"
 		});
 	}
+	$("#timeDisplay").html(timeContent);
+	$("#lifeDisplay").html(lifeContent);
+	$("#lifeDisplay").css({
+			display: "block"
+		});
 }
 
 Util.initHandlers = function() {

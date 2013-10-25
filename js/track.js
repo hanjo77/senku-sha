@@ -15,12 +15,14 @@ function Track() {
 	this.tempSpeedX = 0;
 	this.tempSpeedY = 0;
 	this.tempSpeedZ = 0;
+	this.oldSpeedY;
 	this.nextX = null;
 	this.nextY = null;
 	this.receiveShadow = true;
 	this.blocks = [];
 	this.activeRow = null;
 	this.isStarted;
+	this.isStopped;
 	this.frontRows = CONFIG.TRACK.FRONT_ROWS;
 	this.backRows = CONFIG.TRACK.BACK_ROWS;
 	this.loadLevel();
@@ -49,15 +51,27 @@ Track.prototype.loadLevel = function() {
 	});	
 }
 
-Track.prototype.finishLevel = function(time) {
+Track.prototype.finishLevel = function() {
 	
 	this.isStarted = false;
-	game.isInGoal = true;
-	game.startTime = 0;
 	this.speedX = 0;
 	this.speedZ = 0;
 	this.tempSpeedX = 0;
 	this.tempSpeedZ = 0;
+	this.speedModifier = 1;
+	game.isInGoal = true;
+	game.warpEndTime = null;
+	game.invertorEndTime = null;
+	game.slowdownEndTime = null;
+	game.speedupEndTime = null;
+	game.controlDirection = 1;
+	game.container.append('<div class="over></div>')
+	window.clearTimeout(game.invertorTimer);
+	window.clearTimeout(game.slowdownTimer);
+	window.clearTimeout(game.warpTimer);
+	window.clearTimeout(game.speedupTimer);
+	Util.updateInfoHTML();
+	
 	if (game.nextLevel) {
 		
 		game.currentLevel = game.nextLevel;
@@ -66,7 +80,7 @@ Track.prototype.finishLevel = function(time) {
 	else {
 		
 		this.nextX = -1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2));
-		this.nextZ = -2*CONFIG.BLOCK_SIZE;
+		this.nextZ = -4*CONFIG.BLOCK_SIZE;
 	}
 }
 
@@ -119,7 +133,7 @@ Track.prototype.initLevel = function(levelObj) {
 		this.position = new THREE.Vector3(
 			-1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2)), 
 			0, 
-			-1*CONFIG.BLOCK_SIZE*(this.blocks.length-4)
+			-1*CONFIG.BLOCK_SIZE*(this.blocks.length-6)
 		);
 		this.isInitialized = true;
 	}
@@ -127,7 +141,7 @@ Track.prototype.initLevel = function(levelObj) {
 		
 		this.position.z = -1*CONFIG.BLOCK_SIZE*(this.blocks.length-2);
 		this.nextX = -1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2));
-		this.nextZ = -1*CONFIG.BLOCK_SIZE*(this.blocks.length-4);
+		this.nextZ = -1*CONFIG.BLOCK_SIZE*(this.blocks.length-6);
 		while (this.children.length > 0) {
 		
 			this.remove(this.children[0]);
@@ -218,14 +232,19 @@ Track.prototype.nextGoalPosition = function() {
 
 Track.prototype.nextPosition = function() {
 	
-	var nextPosition = new THREE.Vector3(
-		this.position.x+(this.speedX*this.speedModifier),
-		this.position.y,
-		this.position.z+(this.speedZ*this.speedModifier)
-	);
-	var floorPosY = 5;
-	if (game) {
+	var nextPosition;
+	if (this.isStopped) {
+		
+		nextPosition = this.position;
+	}
+	else if (game) {
 	
+		nextPosition = new THREE.Vector3(
+			this.position.x+(this.speedX*this.speedModifier),
+			this.position.y,
+			this.position.z+(this.speedZ*this.speedModifier)
+		);
+		var floorPosY = 5;
 		if (game.timeRate) {
 		
 			if (this.speedZ < 0) {
@@ -335,9 +354,36 @@ Track.prototype.nextPosition = function() {
 			if (game.warpEndTime <= 0) {
 				
 				nextPosition = this.getBallBlockFallingPosition(nextPosition);
-				if (nextPosition.y > 2) {
+				if (nextPosition.y > 1 && !this.isStopped) {
 
-					game.clearGame();
+					// game.clearGame();
+					this.oldSpeedY = this.speedY;
+					this.speedX = 0;
+					this.speedY = 0;
+					this.speedZ = 0;
+					this.isStopped = true;
+					if (game.lives > 0) {
+						
+						game.lives--;
+						window.setTimeout(function() {
+						
+							game.track.speedZ = CONFIG.TRACK_SPEED*game.track.speedModifier;
+							game.track.speedY = -1;
+							game.track.position.y = 0;
+							game.track.position.z -= CONFIG.BLOCK_SIZE;
+							console.log(game.track.speedY);
+							game.ball.isJumping = true;
+							game.track.isStopped = false;
+						}, 1000);
+					}
+					else {
+						
+						Util.updateInfoHTML();							
+						window.setTimeout(function() {
+							
+							game.clearGame();
+						}, 5000);
+					}
 				} 
 			}
 			else {
@@ -350,7 +396,7 @@ Track.prototype.nextPosition = function() {
 			}
 		}
 	}
-		
+			
 	return nextPosition;
 }
 

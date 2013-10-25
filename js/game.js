@@ -24,10 +24,12 @@ function Game() {
 	this.ball;
 	this.track;
 	this.bgBall;
+	this.levelTime;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
 	this.currentLevel;
 	this.nextLevel = 1;
 	this.isInGoal = true;
+	this.lives = CONFIG.LIVES;
 	
 	this.addHandlers();
 	this.startGame();
@@ -160,7 +162,7 @@ Game.prototype.render = function(time) {
 	this.lastFrameTime = time;				  
 	this.timeRate = this.timeDifference / 200;
 	
-	if (this.track && this.ball) {
+	if (this.track && this.ball && !this.track.isStopped) {
 	
 		if (this.isInGoal && !this.track.isStarted) {
 			
@@ -168,6 +170,13 @@ Game.prototype.render = function(time) {
 		}
 		else {
 			
+			if (!this.isInGoal) {
+				
+				this.levelTime = new Date();
+				this.levelTime -= this.startTime;
+				this.levelTime = Math.floor(this.levelTime/1000);
+				Util.updateInfoHTML();
+			}
 			this.track.position = this.track.nextPosition();
 		}
 		this.track.updateBlocks();

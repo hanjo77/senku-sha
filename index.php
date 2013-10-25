@@ -18,7 +18,9 @@ session_start();
 	<div id="contentWrapper">
 		<div id="content"></div>
 	</div>
+	<div id="timeDisplay"></div>
 	<div id="info"></div>
+	<div id="lifeDisplay"></div>
 	<div id="debug"></div>
 	<div id="noWebGL">
 		<h2>Sorry!</h2>
