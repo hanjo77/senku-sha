@@ -1,11 +1,16 @@
-<div id="levelSelection">
+<?
+
+session_start();         
+
+
+?><div id="levelSelection">
 <h3>Choose<br />your level:</h3>
 <ul>
 <?
 
 	require_once("inc/level.php");
 
-	$level = new Level($_POST["id"]);
+	$level = new Level(0);
 	$result = $level->list_levels($_SESSION["user_id"]);
 	while($record = mysql_fetch_array($result)) {
 
