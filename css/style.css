@@ -390,12 +390,12 @@ canvas {
 #buttonUp, #buttonDown {
 	
 	display: block;
-	height: 6em;
+	height: 3.2em;
+	max-height: 3.2em;
 	width: 15.3em;
-	max-height: 6em;
 	position: absolute;
 	z-index: 100000;
-	line-height: 6em; 
+	line-height: 3.2em; 
 	color: #ffffff;
 	margin: 0;
 	padding: 0;

@@ -142,7 +142,7 @@ Editor.prototype.loadLevel = function(data) {
 						
 						blockRow.push(type);
 						colObj.attr("class", type);
-						colObj.css("backgroundColor", $("#" + type).css("backgroundColor"));  
+						colObj.css("backgroundColor", Util.getHexColorFromInt(CONFIG.BLOCK_TYPES[type].color));  
 					}
 					else {
 					
