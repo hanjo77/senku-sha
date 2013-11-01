@@ -9,7 +9,7 @@
 		<a id="buttonDown">down</a>
 	</div>
 	<div id="controls">
-		<input type="hidden" name="levelId" id="levelId" value="" />
+		<input type="hidden" name="levelId" id="levelId" value="<?= $_GET["id"] ?>" />
 		<input type="text" name="levelTitle" id="levelTitle" class="menuInput" placeholder="Level Title" />
 	</div>
 </div>

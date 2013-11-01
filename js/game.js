@@ -26,7 +26,7 @@ function Game() {
 	this.bgBall;
 	this.levelTime;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
-	this.currentLevel;
+	this.currentLevel = 1;
 	this.nextLevel = 1;
 	this.isInGoal = true;
 	this.lives = CONFIG.LIVES;
@@ -104,6 +104,8 @@ Game.prototype.addHandlers = function() {
 Game.prototype.startGame = function() {
 	
 	this.controlDirection = 1;
+	this.currentLevel = 1;
+	this.nextLevel = 1;
 	this.warpEndTime = 0;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
 
@@ -191,6 +193,7 @@ Game.prototype.clearGame = function() {
 
 	cancelAnimationFrame(this.renderProcess);
 	$("*").unbind();
+	this.currentLevel = 1;
 	Util.changeContent("menu.php");
 	bgBall = new BackgroundBall();
 	$("#info").css({

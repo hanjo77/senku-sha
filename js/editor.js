@@ -1,36 +1,52 @@
 
-function Editor() {
+function Editor(levelId) {
                              						             
 	this.activeButton;
 	this.topPos = 0;
-	this.maxRow = 10;
+	this.maxRow = 11;
 	this.blocks = new Array();
 	this.controlsContainer = $('#controls');
 	this.displayContainer = $('#display');
 	this.displayContainer.append("<table id=\"editorTable\"></table>");
 	this.table = $("#editorTable");
-	for (var i = 2; i < CONFIG.BLOCK_TYPES.length; i++) {
+	for (var i = 0; i < CONFIG.BLOCK_TYPES.length; i++) {
 		
-		this.controlsContainer.append(Util.blockButton(i));
+		if (CONFIG.BLOCK_TYPES[i].editor) {
+			
+			this.controlsContainer.append(Util.blockButton(CONFIG.BLOCK_TYPES[i]));
+		}
 	}
-	for (var i = 0; i < this.maxRow; i++) {
+	console.log(levelId);
+	if (levelId > 0) {
 	
-		var tableRow = this.getEmptyTableRow(i);
-		if (i == 0) {
-			
-			this.table.append(tableRow);
-			this.blocks.push([]);
-		}
-		else {
-			
-			$('#editorTable tr:first').before(tableRow);
-			this.blocks.unshift([]);
-		}
-		this.table.css({
-			marginBottom: 0
-		})
+		Util.loadLevel(levelId);
 	}
-	this.blockHeight = $("#tableCell_0_0").height();
+	else {
+	
+		for (var i = 0; i < this.maxRow; i++) {
+		
+			var tableRow = this.getEmptyTableRow(i);
+			if (i == 0) {
+				
+				this.table.append(tableRow);
+				this.blocks.push([]);
+			}
+			else {
+				
+				$('#editorTable tr:first').before(tableRow);
+				this.blocks.unshift([]);
+			}
+			this.table.css({
+				marginBottom: 0
+			})
+		}
+		this.blockHeight = $("#tableCell_0_0").outerHeight();
+		$("#buttonUp").css({
+			
+			display: "block"
+		});
+	}
+	this.controlsContainer.append(Util.menuButton("editorLoad", "LOAD"));
 	this.controlsContainer.append(Util.menuButton("editorSave", "SAVE"));
 	this.controlsContainer.append(Util.menuButton("editorClear", "CLEAR"));
 	this.controlsContainer.append(Util.menuButton("exit", "EXIT"));
@@ -78,10 +94,13 @@ Editor.prototype.scrollUp = function() {
 		display: "block"
 	});
 	var nextPos = tableOffset + this.blockHeight;
+	console.log(nextPos + " - " + this.maxRow);
 	if (this.topPos < nextPos) {
 		
 		$('#editorTable tr:first').before(this.getEmptyTableRow(this.maxRow));
-		this.blocks.unshift([]);
+console.log(this.blocks);		
+		this.blocks.push([]);
+console.log(this.blocks);		
 		this.topPos -= this.blockHeight;
 		this.maxRow++;
 		Util.initEditorHandlers();
@@ -95,31 +114,58 @@ Editor.prototype.scrollUp = function() {
 	}
 }
 
-Editor.prototype.drawBlocks = function() {
+Editor.prototype.loadLevel = function(data) {
 	   
-	// this.displayContainer.html(""); 
-	for (var row = 0; row < this.blocks.length; row++) {
-		
-		if (this.blocks[row]) {
+	this.blocks = [];
+	var rows = 0;
+	this.displayContainer.html("<table id=\"editorTable\"></table>");
+	this.table = $("#editorTable");
+	if (data && data.title && data.data) {
+	
+		$("#levelTitle").val(data.title);
+		var levelData = data.data.split("\n");
+		for (var row = 0; row < levelData.length; row++) {
 			
-			for (var col = 0; col < this.blocks[row].length; col++) {
-				
-				if (this.blocks[row][col]) {
+			var blockRow = [];
+			var rowData = levelData[row];
+			if (rowData.trim() != "") {
+			
+				this.table.append("<tr></tr>");
+				var rowObj = $("#editorTable tr").last();
+				for (var col = 0; col < 5; col++) {
 					
-					var color = CONFIG.BLOCK_TYPES[this.blocks[row][col]].color;
-					if (color) {
-					                 
-						color = color.toString(16);
-						while (color.length < 6) {
-							
-							color = "0" + color;
-						}                                             
-						this.appendBlock([col, row], '#'+color)
-					} 
+					var type = rowData.charAt(col);
+					var id = "tableCell_" + this.blocks.length + "_" + col;
+					rowObj.append("<td id=\"" + id + "\"></td>");
+					var colObj = $("#" + id);
+					if (type && type != " ") {
+						
+						blockRow.push(type);
+						colObj.attr("class", type);
+						colObj.css("backgroundColor", $("#" + type).css("backgroundColor"));  
+					}
+					else {
+					
+						blockRow.push(" ");
+					}
 				}
+				this.blocks.push(blockRow);
 			}
 		}
+		this.blockHeight = $("#tableCell_0_0").outerHeight();
+		this.maxRow = this.blocks.length;
+		console.log(this.blockHeight + " - " + this.blocks.length);
+		this.topPos = -1*this.blockHeight*(this.blocks.length-10);
+		console.log(this.topPos);
+		this.table.css({
+			
+			marginTop: this.topPos
+		});
 	}
+	$("#buttonUp").css({
+		
+		display: "block"
+	});
 }
 
 Editor.prototype.addBlock = function(pos) {
@@ -132,10 +178,25 @@ Editor.prototype.addBlock = function(pos) {
 		
 			this.blocks[pos[0]] = new Array();
 		}
-		this.blocks[pos[0]][pos[1]] = this.activeButton.attr("id");
-		var color = this.activeButton.css("backgroundColor");
+		var buttonId = parseInt(this.activeButton.attr("id"), 10);
+		var blockType = CONFIG.BLOCK_TYPES[buttonId];
+		if (blockType.name == "empty") {
+			
+			buttonId = " ";
+		}
+		else if (blockType.alternatingId
+			&& (
+				(pos[0]%2 == 1 && pos[1]%2 == 1)
+				|| (pos[0]%2 == 0 && pos[1]%2 == 0)				
+			)) {
+			
+			blockType = CONFIG.BLOCK_TYPES[blockType.alternatingId];
+		}
+		this.blocks[pos[0]][pos[1]] = blockType.id;
+		var color = Util.getHexColorFromInt(blockType.color);
+		console.log(color);
 		block.attr("class", this.activeButton.attr("id"));
-		block.css("backgroundColor", color);                                                          
+		block.css("backgroundColor", color);   
 	}
 }
 
@@ -143,7 +204,7 @@ Editor.prototype.levelString = function() {
 	
 	var level = "";
 	for (var row = this.blocks.length-1; row >= 0; row--) {
-		
+	
 		if (this.blocks[row]) {
 			
 			for (var col = 0; col < this.blocks[row].length; col++) {
@@ -152,13 +213,21 @@ Editor.prototype.levelString = function() {
 					
 					level += this.blocks[row][col];
 				}
-				else {
+				else if (level != "") {
 					
 					level += " ";
 				}
 			}
 		}
-		level += "\n"
+		if (level != "") {
+		
+			level += "\n";
+		}
+	}
+	while (level.charAt(level.length-2) == '\n') {
+	
+		level = level.substring(0, level.length-1);
+		console.log(level);
 	}
 	return level;
 }

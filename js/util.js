@@ -40,15 +40,21 @@ Util.menuButton = function(name, content) {
 	return $('<a id="' + name + '" class="menuButton" onclick="Util.' + name + '()">' + content + '</a>');
 }         
 
-Util.blockButton = function(blockTypeIndex) {
+Util.blockButton = function(blockType) {
 
-	var color = CONFIG.BLOCK_TYPES[blockTypeIndex].color.toString(16);
+	var color = Util.getHexColorFromInt(blockType.color);
+	return $('<a id="' + blockType.id + '" class="blockButton" style="background-color: ' + color + '">&nbsp;</a>');
+}     
+
+Util.getHexColorFromInt = function(intColor) {
+	
+	var color = intColor.toString(16);
 	while (color.length < 6) {
-		
+	
 		color = "0" + color;
-	} 
-	return $('<a id="' + blockTypeIndex + '" class="blockButton" style="background-color: #' + color + '">&nbsp;</a>');
-}         
+	}
+	return "#" + color;
+}    
 
 Util.exit = function() {
 	   
@@ -77,6 +83,38 @@ Util.editorSave = function() {
 	});
 }
 
+Util.editorLoad = function() {
+
+	$.ajax({
+		
+		url: "level_selection.php"
+	}).done(function(result) {
+
+		$("#display").html(result);
+	});
+	$("#buttonUp, #buttonDown").css({
+		
+		display: "none"
+	});
+}
+
+Util.loadLevel = function(levelId) {
+
+	$("#levelId").val(levelId);
+	$.ajax({
+		
+		url: "load_editor_level.php",
+		type: "POST",
+		data: {
+			
+			id: levelId
+		}
+	}).done(function(result) {
+			
+		editor.loadLevel(eval("(" + result + ")"));
+	});
+}
+
 Util.editorClear = function() {
 
 	$('#display').html('');
@@ -101,12 +139,21 @@ Util.getCollisions = function(block, nextPos) {
 	var movesRight = (game.track.speedX < 0);
 	var movesForward = (game.track.speedZ > 0);
 	var movesBack = (game.track.speedZ < 0);
-	var withinWidth = (ballPos.x >= block.left) && (ballPos.x <= block.right);
-	var withinHeight = (ballPos.z >= block.front) && (ballPos.z <= block.back);
-	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= game.ball.geometry.radius) && withinWidth);
-	var backIntersection = ((Math.abs(ballPos.z-block.front) <= game.ball.geometry.radius) && withinWidth);
-	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= game.ball.geometry.radius) && withinHeight);
-	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= game.ball.geometry.radius) && withinHeight); 
+	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
+	var withinHeight = (ballPos.z > block.front) && (ballPos.z < block.back);
+	var neighbours = block.neighbourBlocks();
+	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= game.ball.geometry.radius)
+		&& withinWidth
+		&& (!neighbours.back || neighbours.back.blockType.name != "blocker"));
+	var backIntersection = ((Math.abs(ballPos.z-block.front) <= game.ball.geometry.radius)
+		&& withinWidth
+		&& (!neighbours.front || neighbours.front.blockType.name != "blocker"));
+	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= game.ball.geometry.radius) 
+		&& withinHeight
+		&& (!neighbours.right || neighbours.right.blockType.name != "blocker"));
+	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= game.ball.geometry.radius) 
+		&& withinHeight
+		&& (!neighbours.left || neighbours.left.blockType.name != "blocker")); 
 	if (leftIntersection) {
 
 		if (backIntersection) {
@@ -157,12 +204,17 @@ Util.changeContent = function(page) {
 	$('#content').html("");
 	$.ajax({ url: page }).done(function( data ) {
                        
+		var id = 0;
 		var contentDiv = $('#content');
 		contentDiv.html(data);
 		contentDiv.center();
-		if (page == "editor.php") {
-			                   
-			editor = new Editor();
+		if (page.indexOf("editor.php") > -1) {
+			               
+			if (page.indexOf("id=") > -1) {
+			
+				id = page.substring(page.indexOf("id=") + 3);
+			}
+			editor = new Editor(id);
 		}
 		
 		if (page != "game.php") {
@@ -175,6 +227,10 @@ Util.changeContent = function(page) {
 			
 			hash = "#" + page.substring(0, page.indexOf("."));
 		}
+		if (id > 0) {
+		
+			hash += "_" + id;
+		}
 		location.href = location.href.substring(0, location.href.indexOf("#")) + hash;
 		Validation.formIsValid($('form').get(0));
 		Util.updateWindow();		
@@ -184,17 +240,24 @@ Util.changeContent = function(page) {
 Util.handleHash = function() {
 	
 	var hash = "intro";
+	var param = "";
 	var hashPos = window.location.href.indexOf("#")+1;
 	if (hashPos > 0) {
 
-		var hash = window.location.href.substring(hashPos);	
-		if (hash == "" || hash == "menu") {
+		var hash = window.location.href.substring(hashPos);
+		if (hash.indexOf("editor") > -1 && hash.indexOf("_") > -1) {
+		
+			var id = hash.substring(hash.indexOf("_") + 1);
+			param = "?id=" + id;
+			hash = "editor";
+		}
+		else if (hash == "" || hash == "menu") {
 
 			hash = "menu";
 			bgBall = new BackgroundBall();
 		}
 	} 
-	Util.changeContent(hash + ".php");
+	Util.changeContent(hash + ".php" + param);
 }  
 
 Util.getSecondsUntil = function(endTime) {
@@ -226,6 +289,10 @@ Util.updateInfoHTML = function() {
 		else {
 			
 			info += "<h2>Game completed!</h2>";
+			window.setTimeout(function() {
+				
+				game.clearGame();
+			}, 5000);
 		}
 	}
 	else {
@@ -277,6 +344,10 @@ Util.updateInfoHTML = function() {
 		if (game.track.isStopped && game.lives <= 0) {
 			
 			info = "<h2>Game Over</h2>";
+			window.setTimeout(function() {
+				
+				game.clearGame();
+			}, 5000);
 		}
 		else {
 			
@@ -403,10 +474,10 @@ Util.initHandlers = function() {
 		Util.updateWindow();
 	});
 
-	$('#controls a').click(function(e) {
+	$('#controls a.blockButton').click(function(e) {
           
 		var obj = $(e.target);
-		$('#controls a').removeClass("active");
+		$('#controls a.blockButton').removeClass("active");
 		if (!obj.hasClass("active")) {
 		                        
 			editor.activeButton = obj;

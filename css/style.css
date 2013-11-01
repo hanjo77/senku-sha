@@ -383,7 +383,7 @@ canvas {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
-	height: 28.3em;
+	height: 31.4em;
 	overflow: hidden;
 }
 
@@ -391,7 +391,7 @@ canvas {
 	
 	display: block;
 	height: 6em;
-	width: 15em;
+	width: 15.3em;
 	max-height: 6em;
 	position: absolute;
 	z-index: 100000;
@@ -420,11 +420,19 @@ canvas {
 	
 	width: 14em;
 	float: left;
+	margin: 0;
+	padding: 0;
+}
+   
+#levelTitle {
+
+	margin-top: 0.2em;
 }
    
 #editorDisplayWrapper {
 	
 	width: 15em;
+	display: block;
 	float: left;
 }
 
@@ -447,4 +455,39 @@ canvas {
 	border: 2px solid #990000;
 	background: #000000;
 	box-shadow: 0 0 10px #000;
+	width: 15em;
+}
+
+#levelSelection {
+
+	background-color: #000000;
+}
+
+#levelSelection ul {
+
+	border-top: 2px solid #cc0000;
+	text-shadow: 0 0 5px #000;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#levelSelection ul li {
+
+	list-style: none;
+	border-bottom: 2px solid #cc0000;
+	margin: 0;
+	padding: 0;
+	text-shadow: 0;
+}
+
+#levelSelection ul li a {
+
+	padding: 0.5em;
+	display: block;
+}
+
+#levelSelection ul li a:hover {
+
+	background-color: #ffffff;
 }

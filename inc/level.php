@@ -16,6 +16,20 @@ class Level {
 			$this->id = $levelId;
 		}
     }
+	
+	function list_levels($user_id) {
+	
+		$db_util = new DBUtil();
+		if (isset($user_id)) {
+		
+			$query = "SELECT * FROM `level` WHERE `creator` = ".$user_id." ORDER BY `title` ASC";
+		}
+		else {
+		
+			$query = "SELECT * FROM `level` ORDER BY `title` ASC";
+		}
+		return $db_util->query($query);	
+	}
 
 	function save($title, $data, $user_id) {
 		   
@@ -33,6 +47,21 @@ class Level {
 		}
 		return $id;	
 	}
+	
+	function load_plain($id) {
+	
+		$data = "{\n";
+		$db_util = new DBUtil();
+		$query = "SELECT `title`, `data` FROM `level` WHERE `id` = ".$id;
+		$result = $db_util->query($query);
+		while($record = mysql_fetch_array($result)) {
+ 		
+			$data .= "\"data\": \"".str_replace("\n", "\\n", $record["data"])."\",\n"
+			."\"title\": \"".$record["title"]."\"\n";
+		}
+		$data .= "}";
+		return $data;
+	}
 
 	function load($id) {
 		  
@@ -49,19 +78,18 @@ class Level {
 				."01010\n";
 		$counter = 0;
 		$db_util = new DBUtil();
-		$query = "SELECT `id`, `data` FROM `level` WHERE `id` >= ".$id." ORDER BY `id` DESC LIMIT 0, 2";
+		$query = "SELECT `id`, `data` FROM `level` WHERE `id` >= ".$id." ORDER BY `id` ASC LIMIT 0, 2";
 		$result = $db_util->query($query);
 		$next_level = 0;
 		$current_level = $id;
 		while($record = mysql_fetch_array($result)) {
  		
-			$data .= $record["data"]
-				.$goal_area;
+			$data = $record["data"].$goal_area.$data;
+			$next_level = $record["id"];
 			if ($next_level == 0) {
 				
-				$next_level = $record["id"];
+				$current_level = $record["id"];
 			}
-			$current_level = $record["id"];
 			$counter++;
 		}
 		if ($counter < 2) {

@@ -379,10 +379,6 @@ Track.prototype.nextPosition = function() {
 					else {
 						
 						Util.updateInfoHTML();							
-						window.setTimeout(function() {
-							
-							game.clearGame();
-						}, 5000);
 					}
 				} 
 			}

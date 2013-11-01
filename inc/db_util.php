@@ -9,7 +9,6 @@ class DBUtil {
 	private static $password;
 	private static $connection;
 	
-	
 	public function __construct() {
                              
 		$this->url = "127.0.0.1"; 
