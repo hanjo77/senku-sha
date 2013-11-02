@@ -174,11 +174,7 @@ Editor.prototype.addBlock = function(pos) {
 		}
 		var buttonId = parseInt(this.activeButton.attr("id"), 10);
 		var blockType = CONFIG.BLOCK_TYPES[buttonId];
-		if (blockType.name == "empty") {
-			
-			buttonId = " ";
-		}
-		else if (blockType.alternatingId
+		if (blockType.alternatingId
 			&& (
 				(pos[0]%2 == 1 && pos[1]%2 == 1)
 				|| (pos[0]%2 == 0 && pos[1]%2 == 0)				
@@ -186,7 +182,13 @@ Editor.prototype.addBlock = function(pos) {
 			
 			blockType = CONFIG.BLOCK_TYPES[blockType.alternatingId];
 		}
-		this.blocks[pos[0]][pos[1]] = blockType.id;
+		var buttonId = blockType.id;
+		if (blockType.name == "empty") {
+			
+			buttonId = " ";
+		}
+
+		this.blocks[pos[0]][pos[1]] = buttonId;
 		var color = Util.getHexColorFromInt(blockType.color);
 		block.attr("class", this.activeButton.attr("id"));
 		block.css("backgroundColor", color);   

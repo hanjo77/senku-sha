@@ -239,8 +239,30 @@ Track.prototype.nextPosition = function() {
 	}
 	else if (game) {
 	
+		var moveX = 0;
+		if (game.fingers && game.fingers.length > 0) {
+			
+			moveX = game.fingers[0].tipPosition[0] / -50;
+		}
+		else if (game.isMouseControlled && game.mousePos) {
+			
+			moveX = (($(window).width() / 2) - game.mousePos[0]) / 50;
+			if (game.controlDirection < 0) {
+				
+				console.log (moveX);
+				moveX *= -1;
+			}
+		}
+		else {
+			
+			moveX = this.speedX*this.speedModifier;
+		}
+		if (Math.abs(moveX) > CONFIG.ACCELERATION) {
+			
+			moveX = moveX / Math.abs(moveX) * CONFIG.ACCELERATION;
+		}
 		nextPosition = new THREE.Vector3(
-			this.position.x+(this.speedX*this.speedModifier),
+			this.position.x + moveX,
 			this.position.y,
 			this.position.z+(this.speedZ*this.speedModifier)
 		);

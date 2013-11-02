@@ -25,14 +25,39 @@ function Game() {
 	this.track;
 	this.bgBall;
 	this.levelTime;
+	this.mousePos;
+	this.isMouseControlled;
+	this.fingers;
+	this.hands;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
 	this.currentLevel = 1;
 	this.nextLevel = 1;
 	this.isInGoal = true;
 	this.lives = CONFIG.LIVES;
 	
-	this.addHandlers();
 	this.startGame();
+	
+	Leap.loop(function(frame) {
+	
+		if (game) {
+			
+			game.hands = frame.hands;
+			game.fingers = frame.pointables;
+			if (game.fingers.length > 0) {
+				
+				if (!game.track.isStarted && game.fingers[0].tipVelocity[2] > 400) {
+						
+					console.log("z: " + game.fingers[0].tipVelocity[2]);
+					game.track.start();
+				}
+				else if (game.track.isStarted && !game.isInGoal && game.fingers[0].tipVelocity[1] > 400) {
+						
+					console.log("y: " + game.fingers[0].tipVelocity[1]);
+					game.ball.jump();
+				}
+			}
+		}
+	});
 }
 
 Game.prototype.addHandlers = function() {
@@ -62,10 +87,7 @@ Game.prototype.addHandlers = function() {
 					break;
 
 				case CONFIG.KEYCODE.SPACE:
-					if (!game.ball.inAir) {
-
-						game.ball.isJumping = true;
-					}
+					game.ball.jump();
 					break;
 			}
 		}
@@ -98,6 +120,24 @@ Game.prototype.addHandlers = function() {
 			game.camera.aspect = game.container.width()/game.container.height();
 			game.camera.updateProjectionMatrix();
 			game.renderer.setSize(game.container.width(), game.container.height());
+		}
+	});
+	
+	$(window).mousemove(function(e) {
+		
+		game.mousePos = [e.clientX, e.clientY];
+	});
+	
+	$(window).click(function(e) {
+		
+		game.isMouseControlled = true;
+		if (game.track.isStarted) {
+			
+			game.ball.jump();
+		}
+		else {
+			
+			game.track.start();
 		}
 	});
 }
@@ -156,6 +196,8 @@ Game.prototype.startGame = function() {
    	this.container.get(0).appendChild(this.renderer.domElement);
 	
 	this.render();
+
+	this.addHandlers();
 }
 
 Game.prototype.render = function(time) {

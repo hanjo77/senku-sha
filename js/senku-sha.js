@@ -1,3 +1,4 @@
+importScript("lib/leap.min.js");
 importScript("lib/three.min.js");  
 importScript("lib/jquery.min.js");
 importScript("lib/obj_mtl_loader.js");

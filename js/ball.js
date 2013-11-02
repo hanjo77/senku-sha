@@ -81,7 +81,15 @@ Ball.prototype.rotateAroundWorldAxis = function(axis, radians) {
     rotWorldMatrix.multiply(this.matrix);        // pre-multiply
     this.matrix = rotWorldMatrix;
     this.rotation.setFromRotationMatrix(this.matrix);
-}         
+} 
+
+Ball.prototype.jump = function() {
+	
+	if (!this.inAir) {
+
+		this.isJumping = true;
+	}
+}        
 
 /**
  * Finds block under the ball
