@@ -371,7 +371,6 @@ Track.prototype.nextPosition = function() {
 							game.track.speedY = -1;
 							game.track.position.y = 0;
 							game.track.position.z -= CONFIG.BLOCK_SIZE;
-							console.log(game.track.speedY);
 							game.ball.isJumping = true;
 							game.track.isStopped = false;
 						}, 1000);

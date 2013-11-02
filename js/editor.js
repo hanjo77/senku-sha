@@ -16,7 +16,6 @@ function Editor(levelId) {
 			this.controlsContainer.append(Util.blockButton(CONFIG.BLOCK_TYPES[i]));
 		}
 	}
-	console.log(levelId);
 	if (levelId > 0) {
 	
 		Util.loadLevel(levelId);
@@ -94,13 +93,10 @@ Editor.prototype.scrollUp = function() {
 		display: "block"
 	});
 	var nextPos = tableOffset + this.blockHeight;
-	console.log(nextPos + " - " + this.maxRow);
 	if (this.topPos < nextPos) {
 		
 		$('#editorTable tr:first').before(this.getEmptyTableRow(this.maxRow));
-console.log(this.blocks);		
 		this.blocks.push([]);
-console.log(this.blocks);		
 		this.topPos -= this.blockHeight;
 		this.maxRow++;
 		Util.initEditorHandlers();
@@ -154,9 +150,7 @@ Editor.prototype.loadLevel = function(data) {
 		}
 		this.blockHeight = $("#tableCell_0_0").outerHeight();
 		this.maxRow = this.blocks.length;
-		console.log(this.blockHeight + " - " + this.blocks.length);
 		this.topPos = -1*this.blockHeight*(this.blocks.length-10);
-		console.log(this.topPos);
 		this.table.css({
 			
 			marginTop: this.topPos
@@ -194,7 +188,6 @@ Editor.prototype.addBlock = function(pos) {
 		}
 		this.blocks[pos[0]][pos[1]] = blockType.id;
 		var color = Util.getHexColorFromInt(blockType.color);
-		console.log(color);
 		block.attr("class", this.activeButton.attr("id"));
 		block.css("backgroundColor", color);   
 	}
@@ -227,7 +220,6 @@ Editor.prototype.levelString = function() {
 	while (level.charAt(level.length-2) == '\n') {
 	
 		level = level.substring(0, level.length-1);
-		console.log(level);
 	}
 	return level;
 }

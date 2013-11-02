@@ -44,25 +44,25 @@ noscript, #noWebGL {
 	color: #ff0000;
 }
 
-#lifeDisplay {
+#lifeDisplay, #timeDisplay {
 	
 	display: block;
 	top: 0;
-	right: 0;
-	text-align: right;
 	width: 100%;
 	position: absolute;
 	padding: 1em;
+	z-index: 4;
+}
+	
+#lifeDisplay {
+	
+	right: 0;
+	text-align: right;
 }
 
 #timeDisplay {
 	
-	display: block;
-	top: 0;
 	text-align: left;
-	width: 100%;
-	position: absolute;
-	padding: 1em;
 }
 
 #info table {

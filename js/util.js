@@ -181,7 +181,6 @@ Util.getCollisions = function(block, nextPos) {
 	else if (frontIntersection) {
                       
 		types.push("back");
-		console.log(ballPos.z + " " + block.front + " " + block.back);
 	}
 	else if (backIntersection) {
                                                       

@@ -198,7 +198,6 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 				
 				if (block.blockType.name.indexOf("goal") == -1) {
 					
-					console.log(block.blockType.name);
 					game.startTime = 0;
 					game.isInGoal = false;
 					game.startTime = new Date();

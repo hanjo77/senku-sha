@@ -87,16 +87,17 @@ Game.prototype.addHandlers = function() {
 
 	$(window).resize(function() {
 							 
-		if (game && renderer) {
+		if (game && game.renderer) {
 		
-			container.css({
+			game.container.css({
 				
 				width: $(window).innerWidth(),
-				height: $(window).innerHeight() 
+				height: $(window).innerHeight(),
+				background: "url(img/game_background.jpg)"
 			});
-			camera.aspect = container.width()/container.height();
-			camera.updateProjectionMatrix();
-			renderer.setSize(container.width(), container.height());
+			game.camera.aspect = game.container.width()/game.container.height();
+			game.camera.updateProjectionMatrix();
+			game.renderer.setSize(game.container.width(), game.container.height());
 		}
 	});
 }
@@ -117,7 +118,8 @@ Game.prototype.startGame = function() {
 	this.container.css({
 		
 		width: $(window).innerWidth(),
-		height: $(window).innerHeight() 
+		height: $(window).innerHeight(),
+		background: "url(img/game_background.jpg)"
 	});
 	
 	this.pointLight = new THREE.PointLight(0xffffff);
@@ -192,7 +194,12 @@ Game.prototype.render = function(time) {
 Game.prototype.clearGame = function() {
 
 	cancelAnimationFrame(this.renderProcess);
+	$(window).unbind();
 	$("*").unbind();
+	this.container.css({
+		
+		background: "none"
+	})
 	this.currentLevel = 1;
 	Util.changeContent("menu.php");
 	bgBall = new BackgroundBall();

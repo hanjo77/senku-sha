@@ -83,7 +83,6 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 
 			for (var i = 0; i < collisionTypes.length; i++) {
 
-				console.log(collisionTypes[i] + " - " + this.left + " - " + this.front);
 				switch(collisionTypes[i]) {
 
 					case "right":
