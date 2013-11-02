@@ -48,6 +48,14 @@ class Level {
 		return $id;	
 	}
 	
+	function delete($id) {
+		   
+		$db_util = new DBUtil();
+		$query = "DELETE FROM `level` WHERE id = '".$id."'";
+		$result = $db_util->query($query);
+		return $result;	
+	}
+	
 	function load_plain($id) {
 	
 		$data = "{\n";

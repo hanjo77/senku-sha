@@ -2,13 +2,8 @@
 function Editor(levelId) {
                              						             
 	this.activeButton;
-	this.topPos = 0;
-	this.maxRow = 11;
-	this.blocks = new Array();
 	this.controlsContainer = $('#controls');
 	this.displayContainer = $('#display');
-	this.displayContainer.append("<table id=\"editorTable\"></table>");
-	this.table = $("#editorTable");
 	for (var i = 0; i < CONFIG.BLOCK_TYPES.length; i++) {
 		
 		if (CONFIG.BLOCK_TYPES[i].editor) {
@@ -22,37 +17,113 @@ function Editor(levelId) {
 	}
 	else {
 	
-		for (var i = 0; i < this.maxRow; i++) {
-		
-			var tableRow = this.getEmptyTableRow(i);
-			if (i == 0) {
-				
-				this.table.append(tableRow);
-				this.blocks.push([]);
-			}
-			else {
-				
-				$('#editorTable tr:first').before(tableRow);
-				this.blocks.unshift([]);
-			}
-			this.table.css({
-				marginBottom: 0
-			})
-		}
+		this.clear();
 		this.blockHeight = $("#tableCell_0_0").outerHeight();
 		$("#buttonUp").css({
 			
 			display: "block"
 		});
 	}
-	this.controlsContainer.append(Util.menuButton("editorLoad", "LOAD"));
+	this.controlsContainer.append(Util.menuButton("editorLevelSelection", "LEVELS"));
 	this.controlsContainer.append(Util.menuButton("editorSave", "SAVE"));
 	this.controlsContainer.append(Util.menuButton("editorClear", "CLEAR"));
 	this.controlsContainer.append(Util.menuButton("exit", "EXIT"));
 	this.borderWidth = (this.displayContainer.outerWidth()-this.displayContainer.innerWidth())/2;
 		                                                           
 	this.blockButton = $('.blockButton').first();
-	Util.initEditorHandlers();
+}
+
+Editor.prototype.clear = function() {
+	
+	this.topPos = 0;
+	this.maxRow = 11;
+	this.blocks = [];
+	this.displayContainer.html("<table id=\"editorTable\"></table>");
+	this.table = $("#editorTable");
+	for (var i = 0; i < this.maxRow; i++) {
+	
+		var tableRow = this.getEmptyTableRow(i);
+		if (i == 0) {
+			
+			this.table.append(tableRow);
+			this.blocks.push([]);
+		}
+		else {
+			
+			$('#editorTable tr:first').before(tableRow);
+			this.blocks.unshift([]);
+		}
+		this.table.css({
+			marginBottom: 0
+		})
+	}
+	this.initHandlers();
+}
+
+Editor.prototype.initHandlers = function() {
+	
+	$('#buttonUp, #buttonDown, #editorDisplayWrapper *').unbind();
+	
+	$('#levelSelection ul li a').click(function(e) {
+		
+		$('#levelSelection ul li span').css({
+			
+			display: "none"
+		})
+		$('#levelSelection ul li a').removeClass("active");
+		$(e.target).addClass("active");
+		var parent = $(e.target).parent()[0];
+		if (parent.nodeName == "LI") {
+			
+			$(parent).children("span").css({
+				
+				display: "block"
+			})
+			console.log("Test");
+		}
+	})
+	
+	$('#editorDisplayWrapper td').mousedown(function(e) {
+        
+		editor.addBlock(e.target.id);
+		editor.mouseDown = true;
+		return false;
+	});
+	
+	$('#editorDisplayWrapper td').mouseup(function(e) {
+        
+		editor.mouseDown = false;
+		return false;
+	});
+	
+	$('#editorDisplayWrapper td').mousemove(function(e) {
+        
+		if (editor.mouseDown) {
+			
+			editor.addBlock(e.target.id);
+		}
+		return false;
+	});
+	
+	$('#buttonUp').click(function(e) {
+		
+		editor.scrollUp();
+	});
+	
+	$('#buttonDown').click(function(e) {
+		
+		editor.scrollDown();
+	});
+	
+	$('#buttonUp, #buttonDown').mouseenter(function(e) {
+		                
+		$(e.target).css({ opacity: 1 });
+	});
+	
+	$('#buttonUp, #buttonDown').mouseleave(function(e) {
+		                
+		$(e.target).css({ opacity: 0 });
+	});
 }
 
 Editor.prototype.getEmptyTableRow = function(rowId) {
@@ -93,21 +164,23 @@ Editor.prototype.scrollUp = function() {
 		display: "block"
 	});
 	var nextPos = tableOffset + this.blockHeight;
-	if (this.topPos < nextPos) {
+	console.log(this.topPos + " - " + nextPos);
+	if (nextPos > 0) {
 		
 		$('#editorTable tr:first').before(this.getEmptyTableRow(this.maxRow));
+		console.log("row added");
 		this.blocks.push([]);
-		this.topPos -= this.blockHeight;
 		this.maxRow++;
-		Util.initEditorHandlers();
+		this.initHandlers();
 	}
-	else if (nextPos >= this.topPos) {
+	else {
 		
 		this.table.css({
 		
 			marginTop: nextPos
 		});
 	}
+	this.topPos += this.blockHeight;
 }
 
 Editor.prototype.loadLevel = function(data) {
@@ -119,7 +192,6 @@ Editor.prototype.loadLevel = function(data) {
 	if (data && data.title && data.data) {
 	
 		$("#levelTitle").val(data.title);
-		console.log(data.data.trim());
 		var levelData = data.data.trim().split("\n");
 		for (var row = 0; row < levelData.length; row++) {
 			
@@ -133,9 +205,9 @@ Editor.prototype.loadLevel = function(data) {
 				var id = "tableCell_" + this.blocks.length + "_" + col;
 				rowObj.append("<td id=\"" + id + "\"></td>");
 				var colObj = $("#" + id);
+				colObj.attr("class", type);
 				if (type && type != " ") {
 					
-					colObj.attr("class", type);
 					colObj.css("backgroundColor", Util.getHexColorFromInt(CONFIG.BLOCK_TYPES[type].color));  
 					blockRow.push(type);
 				}
@@ -153,6 +225,7 @@ Editor.prototype.loadLevel = function(data) {
 			
 			marginTop: this.topPos
 		});
+		this.initHandlers();
 	}
 	$("#buttonUp").css({
 		
@@ -162,7 +235,7 @@ Editor.prototype.loadLevel = function(data) {
 
 Editor.prototype.addBlock = function(pos) {
 	                        
-	if (!isNaN(parseInt(this.activeButton.attr("id"), 10))) {
+	if (this.activeButton && !isNaN(parseInt(this.activeButton.attr("id"), 10))) {
 		
 		var block = $("#"+pos);
 		pos = pos.replace("tableCell_", "").split("_");

@@ -83,7 +83,7 @@ Util.editorSave = function() {
 	});
 }
 
-Util.editorLoad = function() {
+Util.editorLevelSelection = function() {
 
 	$.ajax({
 		
@@ -91,10 +91,28 @@ Util.editorLoad = function() {
 	}).done(function(result) {
 
 		$("#display").html(result);
+		editor.initHandlers();
 	});
 	$("#buttonUp, #buttonDown").css({
 		
 		display: "none"
+	});
+}
+
+Util.deleteLevel = function(levelId) {
+
+	$("#levelId").val(levelId);
+	$.ajax({
+		
+		url: "delete_level.php",
+		type: "POST",
+		data: {
+			
+			id: levelId
+		}
+	}).done(function(result) {
+			
+		Util.editorLevelSelection();
 	});
 }
 
@@ -117,7 +135,7 @@ Util.loadLevel = function(levelId) {
 
 Util.editorClear = function() {
 
-	$('#display').html('');
+	editor.clear();
 }
  
 Util.getBallPosition = function(nextPos) {
@@ -485,53 +503,6 @@ Util.initHandlers = function() {
 	});
 
 	window.setTimeout(function() { Validation.formIsValid() }, 1000);
-}
-
-Util.initEditorHandlers = function() {
-	
-	$('#editorDisplayWrapper *').unbind();
-	
-	$('#editorDisplayWrapper td').mousedown(function(e) {
-        
-		editor.addBlock(e.target.id);
-		editor.mouseDown = true;
-		return false;
-	});
-	
-	$('#editorDisplayWrapper td').mouseup(function(e) {
-        
-		editor.mouseDown = false;
-		return false;
-	});
-	
-	$('#editorDisplayWrapper td').mousemove(function(e) {
-        
-		if (editor.mouseDown) {
-			
-			editor.addBlock(e.target.id);
-		}
-		return false;
-	});
-	
-	$('#buttonUp').click(function(e) {
-		
-		editor.scrollUp();
-	});
-	
-	$('#buttonDown').click(function(e) {
-		
-		editor.scrollDown();
-	});
-	
-	$('#buttonUp, #buttonDown').mouseenter(function(e) {
-		                
-		$(e.target).css({ opacity: 1 });
-	});
-	
-	$('#buttonUp, #buttonDown').mouseleave(function(e) {
-		                
-		$(e.target).css({ opacity: 0 });
-	});
 }
 
 Util.updateWindow = function() {

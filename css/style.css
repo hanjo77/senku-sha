@@ -478,7 +478,7 @@ canvas {
 	border-bottom: 2px solid #cc0000;
 	margin: 0;
 	padding: 0;
-	text-shadow: 0;
+	text-shadow: none;
 }
 
 #levelSelection ul li a {
@@ -487,7 +487,28 @@ canvas {
 	display: block;
 }
 
-#levelSelection ul li a:hover {
+#levelSelection ul li span {
 
+	border-top: 2px solid #ff0000;
+	height: 2em;
+	display: none;
+	clear: both;
+}
+
+#levelSelection ul li span a {
+
+	width: 42.8%;
+	float: left;
+}
+
+#levelSelection .buttonLoad {
+
+	border-right: 2px solid #ff0000;
+}
+
+#levelSelection ul li a:hover, #levelSelection ul li a.active {
+
+	color: #ff0000;
+	border-color: #ff0000;
 	background-color: #ffffff;
 }
