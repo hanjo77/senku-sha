@@ -119,34 +119,32 @@ Editor.prototype.loadLevel = function(data) {
 	if (data && data.title && data.data) {
 	
 		$("#levelTitle").val(data.title);
-		var levelData = data.data.split("\n");
+		console.log(data.data.trim());
+		var levelData = data.data.trim().split("\n");
 		for (var row = 0; row < levelData.length; row++) {
 			
 			var blockRow = [];
-			var rowData = levelData[row];
-			if (rowData.trim() != "") {
-			
-				this.table.append("<tr></tr>");
-				var rowObj = $("#editorTable tr").last();
-				for (var col = 0; col < 5; col++) {
+			var rowData = levelData[row];			
+			this.table.append("<tr></tr>");
+			var rowObj = $("#editorTable tr").last();
+			for (var col = 0; col < 5; col++) {
+				
+				var type = rowData.charAt(col);
+				var id = "tableCell_" + this.blocks.length + "_" + col;
+				rowObj.append("<td id=\"" + id + "\"></td>");
+				var colObj = $("#" + id);
+				if (type && type != " ") {
 					
-					var type = rowData.charAt(col);
-					var id = "tableCell_" + this.blocks.length + "_" + col;
-					rowObj.append("<td id=\"" + id + "\"></td>");
-					var colObj = $("#" + id);
-					if (type && type != " ") {
-						
-						blockRow.push(type);
-						colObj.attr("class", type);
-						colObj.css("backgroundColor", Util.getHexColorFromInt(CONFIG.BLOCK_TYPES[type].color));  
-					}
-					else {
-					
-						blockRow.push(" ");
-					}
+					colObj.attr("class", type);
+					colObj.css("backgroundColor", Util.getHexColorFromInt(CONFIG.BLOCK_TYPES[type].color));  
+					blockRow.push(type);
 				}
-				this.blocks.push(blockRow);
+				else {
+				
+					blockRow.push(" ");
+				}
 			}
+			this.blocks.push(blockRow);
 		}
 		this.blockHeight = $("#tableCell_0_0").outerHeight();
 		this.maxRow = this.blocks.length;
@@ -198,7 +196,7 @@ Editor.prototype.addBlock = function(pos) {
 Editor.prototype.levelString = function() {
 	
 	var level = "";
-	for (var row = this.blocks.length-1; row >= 0; row--) {
+	for (var row = 0; row < this.blocks.length; row++) {
 	
 		if (this.blocks[row]) {
 			
