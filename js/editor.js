@@ -43,16 +43,16 @@ Editor.prototype.clear = function() {
 	for (var i = 0; i < this.maxRow; i++) {
 	
 		var tableRow = this.getEmptyTableRow(i);
-		if (i == 0) {
+		// if (i == 0) {
 			
 			this.table.append(tableRow);
 			this.blocks.push([]);
-		}
+			/* }
 		else {
 			
 			$('#editorTable tr:first').before(tableRow);
 			this.blocks.unshift([]);
-		}
+		} */
 		this.table.css({
 			marginBottom: 0
 		})
@@ -79,7 +79,6 @@ Editor.prototype.initHandlers = function() {
 				
 				display: "block"
 			})
-			console.log("Test");
 		}
 	})
 	
@@ -164,11 +163,9 @@ Editor.prototype.scrollUp = function() {
 		display: "block"
 	});
 	var nextPos = tableOffset + this.blockHeight;
-	console.log(this.topPos + " - " + nextPos);
 	if (nextPos > 0) {
 		
 		$('#editorTable tr:first').before(this.getEmptyTableRow(this.maxRow));
-		console.log("row added");
 		this.blocks.push([]);
 		this.maxRow++;
 		this.initHandlers();
@@ -220,6 +217,7 @@ Editor.prototype.loadLevel = function(data) {
 		}
 		this.blockHeight = $("#tableCell_0_0").outerHeight();
 		this.maxRow = this.blocks.length;
+		this.oddRows = (this.maxRow%2 == 1);
 		this.topPos = -1*this.blockHeight*(this.blocks.length-10);
 		this.table.css({
 			
@@ -246,10 +244,9 @@ Editor.prototype.addBlock = function(pos) {
 		var buttonId = parseInt(this.activeButton.attr("id"), 10);
 		var blockType = CONFIG.BLOCK_TYPES[buttonId];
 		if (blockType.alternatingId
-			&& (
-				(pos[0]%2 == 1 && pos[1]%2 == 1)
-				|| (pos[0]%2 == 0 && pos[1]%2 == 0)				
-			)) {
+			&& ((!this.oddRows && ((pos[0]%2 == 1 && pos[1]%2 == 1) || (pos[0]%2 == 0 && pos[1]%2 == 0)))
+				|| (this.oddRows && ((pos[0]%2 == 1 && pos[1]%2 == 0) || (pos[0]%2 == 0 && pos[1]%2 == 1))))
+			) {
 			
 			blockType = CONFIG.BLOCK_TYPES[blockType.alternatingId];
 		}

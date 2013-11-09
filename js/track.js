@@ -1,10 +1,12 @@
 /**
   *  Track - the playground
   **/
-function Track() {
+function Track(levelId, isTest) {
 	       
 	// call parent constructor
 	THREE.Object3D.call(this);
+	this.levelId = levelId;
+	this.isTest = isTest;
 	this.lastY = null;
 	this.lastZ = null;
 	this.trackSpeed = CONFIG.TRACK_SPEED;
@@ -40,7 +42,8 @@ Track.prototype.loadLevel = function() {
 		type: "POST",
 		data: {
 			
-			id: (game ? game.currentLevel : 1)
+			id: this.levelId,
+			test: this.isTest
 		}
 	}).done(function(result) {
 		
@@ -74,6 +77,7 @@ Track.prototype.finishLevel = function() {
 	
 	if (game.nextLevel) {
 		
+		this.levelId = game.nextLevel;
 		game.currentLevel = game.nextLevel;
 		this.loadLevel();
 	}
@@ -127,7 +131,17 @@ Track.prototype.initLevel = function(levelObj) {
 			}
 		}
 		this.blocks.push(blockRow);
-	} 
+	}
+	for (var row = 0; row < this.blocks.length; row++) {
+		
+		for (var col = 0; col < this.blocks[row].length; col++) {
+		
+			if (this.blocks[row][col]) {
+				
+				this.blocks[row][col].updateNeighbours();
+			}
+		}
+	}
 	if (!this.isInitialized) {
 		
 		this.position = new THREE.Vector3(
@@ -413,7 +427,7 @@ Track.prototype.nextPosition = function() {
 			}
 		}
 	}
-			
+		
 	return nextPosition;
 }
 
@@ -424,12 +438,12 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 	if (!lastBlock) {
 		
 		lastBlock = game.ball.lastBlock;
-		var neighbourBlocks = lastBlock.neighbourBlocks();
-		for (var block in neighbourBlocks) {
+		var neighbours = lastBlock.neighbours;
+		for (var block in neighbours) {
 
-			if (neighbourBlocks[block]) {
+			if (neighbours[block]) {
 				
-				nextPosition = this.getBallBlockFallingPosition(nextPosition, neighbourBlocks[block]);
+				nextPosition = this.getBallBlockFallingPosition(nextPosition, neighbours[block]);
 			}
 		}
 	}   

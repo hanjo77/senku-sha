@@ -11,7 +11,7 @@ noscript, #noWebGL {
 
 #debug {
 	
-	display: none;
+	display: block;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -29,13 +29,17 @@ noscript, #noWebGL {
 	padding: 1em;
 	z-index: 2;
 	text-align: center;
-	background-color: #999999;
-	opacity: .5;
+	background-color: rgba(196, 196, 196, .7);
 	margin: 1em 30%;
 	width: 40%;
 	display: block;
 	padding: 0;
 	border: 0px solid #000000;
+}
+
+#info a {
+	
+	margin: 0 0 1em;
 }
 
 #info h2 {
@@ -68,7 +72,6 @@ noscript, #noWebGL {
 #info table {
 	
 	width: 100%;
-	opacity: 2;
 	color: #000000;
 	border: 0;
 	border-collapse: collapse;
@@ -497,7 +500,7 @@ canvas {
 
 #levelSelection ul li span a {
 
-	width: 42.8%;
+	width: 26.1%;
 	float: left;
 }
 

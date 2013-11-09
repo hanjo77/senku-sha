@@ -120,15 +120,15 @@ Util.loadLevel = function(levelId) {
 
 	$("#levelId").val(levelId);
 	$.ajax({
-		
+	
 		url: "load_editor_level.php",
 		type: "POST",
 		data: {
-			
+		
 			id: levelId
 		}
 	}).done(function(result) {
-			
+		
 		editor.loadLevel(eval("(" + result + ")"));
 	});
 }
@@ -152,60 +152,93 @@ Util.getBallPosition = function(nextPos) {
 Util.getCollisions = function(block, nextPos) {
 	    
 	var types = [];                              
-	var ballPos = Util.getBallPosition(nextPos);                                              
+	var ballPos = Util.getBallPosition(nextPos); 
+	// console.log(ballPos);                                             
 	var movesLeft = (game.track.speedX > 0);
 	var movesRight = (game.track.speedX < 0);
 	var movesForward = (game.track.speedZ > 0);
 	var movesBack = (game.track.speedZ < 0);
 	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
-	var withinHeight = (ballPos.z > block.front) && (ballPos.z < block.back);
-	var neighbours = block.neighbourBlocks();
-	var frontIntersection = ((Math.abs(ballPos.z-block.back) <= game.ball.geometry.radius)
-		&& withinWidth
-		&& (!neighbours.back || neighbours.back.blockType.name != "blocker"));
-	var backIntersection = ((Math.abs(ballPos.z-block.front) <= game.ball.geometry.radius)
-		&& withinWidth
-		&& (!neighbours.front || neighbours.front.blockType.name != "blocker"));
-	var leftIntersection = ((Math.abs(ballPos.x-block.left) <= game.ball.geometry.radius) 
-		&& withinHeight
-		&& (!neighbours.right || neighbours.right.blockType.name != "blocker"));
-	var rightIntersection = ((Math.abs(ballPos.x-block.right) <= game.ball.geometry.radius) 
-		&& withinHeight
-		&& (!neighbours.left || neighbours.left.blockType.name != "blocker")); 
+	var withinLength = (ballPos.z > block.front - (CONFIG.BLOCK_SIZE/2)) && (ballPos.z < block.back - (CONFIG.BLOCK_SIZE/2));
+	console.log(withinLength);
+	var neighbours = block.neighbours;
+	// console.log(block.left + " " + block.right);
+	var frontIntersection = ((ballPos.z <= block.front + (CONFIG.BLOCK_SIZE/2) + game.ball.geometry.radius)
+		&& (ballPos.z > block.front)
+		&& withinWidth);
+	var backIntersection = ((ballPos.z >= (block.back + (CONFIG.BLOCK_SIZE/2)) - game.ball.geometry.radius)
+		&& (ballPos.z < block.back)
+		&& withinWidth);
+	var leftIntersection = ((ballPos.x >= block.right - game.ball.geometry.radius) 
+		&& (ballPos.x < block.left + (CONFIG.BLOCK_SIZE/2))
+		&& withinLength);
+	var rightIntersection = ((ballPos.x <= block.left + game.ball.geometry.radius ) 
+		&& (ballPos.x > block.right - (CONFIG.BLOCK_SIZE/2))
+		&& withinLength); 
 	if (leftIntersection) {
 
-		if (backIntersection) {
+		/* if (backIntersection) {
 			
 			types.push("frontRight");
 		}
 		else if (frontIntersection) {
 			
 			types.push("backRight");
-		}
-		types.push("right");
+		} */
+		types.push("left");
 	}
 	else if (rightIntersection) {
 
-		if (backIntersection) {
+		/* if (backIntersection) {
 			
 			types.push("frontLeft");
 		}
 		else if (frontIntersection) {
 			
 			types.push("backLeft");
-		}
-		types.push("left");
+		} */
+		types.push("right");
 	}
-	else if (frontIntersection) {
+	if (frontIntersection) {
                       
-		types.push("back");
+		types.push("front");
 	}
 	else if (backIntersection) {
                                                       
-		types.push("front");
+		types.push("back");
 	}      
-	
+	if (types.length > 0) console.log(types);
 	return types;
+}
+
+Util.activateLevel = function(levelId) {
+	
+	game.clearGame(levelId);
+	$.ajax({
+		
+		url: "activate_level.php",
+		type: "POST",
+		data: {
+			
+			id: levelId
+		}
+	}).done(function(result) {
+			
+		Util.editorLevelSelection();
+	});
+}
+
+Util.testLevel = function(levelId) {
+	
+	Util.changeContent("game.php?id=" + levelId);
+}
+
+Util.editLevel = function(levelId) {
+	
+	if (game) {
+		
+		game.clearGame(levelId, true);
+	}
 }
 
 Util.changeContent = function(page) {
@@ -225,12 +258,12 @@ Util.changeContent = function(page) {
 		var contentDiv = $('#content');
 		contentDiv.html(data);
 		contentDiv.center();
+		if (page.indexOf("id=") > -1) {
+		
+			id = page.substring(page.indexOf("id=") + 3);
+		}
 		if (page.indexOf("editor.php") > -1) {
 			               
-			if (page.indexOf("id=") > -1) {
-			
-				id = page.substring(page.indexOf("id=") + 3);
-			}
 			editor = new Editor(id);
 		}
 		
@@ -238,6 +271,7 @@ Util.changeContent = function(page) {
 			
 			Util.initHandlers();  
 		}
+				
 		var hash = "#";
 		var content = page.substring(0, page.indexOf("."));
 		if (content != "menu") {
@@ -262,11 +296,11 @@ Util.handleHash = function() {
 	if (hashPos > 0) {
 
 		var hash = window.location.href.substring(hashPos);
-		if (hash.indexOf("editor") > -1 && hash.indexOf("_") > -1) {
+		if (hash.indexOf("_") > -1) {
 		
 			var id = hash.substring(hash.indexOf("_") + 1);
 			param = "?id=" + id;
-			hash = "editor";
+			hash = hash.substring(0, hash.indexOf("_"));
 		}
 		else if (hash == "" || hash == "menu") {
 
@@ -296,6 +330,7 @@ Util.updateInfoHTML = function() {
 	var info = "";
 	var timeContent = "";
 	var lifeContent = "";
+	var realTest = true;
 	if (game.isInGoal) {
 		
 		hasContent = true;
@@ -306,10 +341,21 @@ Util.updateInfoHTML = function() {
 		else {
 			
 			info += "<h2>Game completed!</h2>";
-			window.setTimeout(function() {
+			if (game.isTest) {
+			
+				info += "<a onclick=\"Util.activateLevel(" + game.currentLevel + ")\" class=\"menuButton\">Activate</a>";
+				info += "<a onclick=\"Util.editLevel(" + game.currentLevel + ")\" class=\"menuButton\">Edit</a>";
+			}
+			else {
+												
+				window.setTimeout(function() {
 				
-				game.clearGame();
-			}, 5000);
+					game.clearGame();
+				}, 5000);
+				game.isTest = true;
+				realTest = false;
+			}
+			game.isFinished = true;
 		}
 	}
 	else {
@@ -361,10 +407,17 @@ Util.updateInfoHTML = function() {
 		if (game.track.isStopped && game.lives <= 0) {
 			
 			info = "<h2>Game Over</h2>";
-			window.setTimeout(function() {
+			if (game.isTest) {
 				
-				game.clearGame();
-			}, 5000);
+				info += "<a onclick=\"Util.editLevel(" + game.currentLevel + ")\" class=\"menuButton\">Edit</a>";
+			}
+			else {
+				
+				window.setTimeout(function() {
+				
+					game.clearGame();
+				}, 5000);
+			}
 		}
 		else {
 			

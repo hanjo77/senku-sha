@@ -6,7 +6,7 @@ session_start();
 if (isset($_POST["id"])) {
 
 	$level = new Level($_POST["id"]);
-	$result = $level->delete($_POST["id"]);
+	$result = $level->delete();
 	echo $result;
 }
 

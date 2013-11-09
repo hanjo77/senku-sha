@@ -1,5 +1,6 @@
-function Game() {
+function Game(levelId) {
 
+	console.log(levelId);
 	this.renderProcess;
 	this.renderer;
 	this.container;
@@ -29,9 +30,18 @@ function Game() {
 	this.isMouseControlled;
 	this.fingers;
 	this.hands;
+	this.isFinished;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
-	this.currentLevel = 1;
-	this.nextLevel = 1;
+	if (levelId) {
+		
+		this.currentLevel = levelId;
+		this.isTest = true;
+	}
+	else {
+		
+		this.currentLevel = 1;
+		this.nextLevel = 1;
+	}
 	this.isInGoal = true;
 	this.lives = CONFIG.LIVES;
 	
@@ -83,7 +93,10 @@ Game.prototype.addHandlers = function() {
 					break;
 											  
 				case CONFIG.KEYCODE.UP:                
-					game.track.start();
+					if (!game.isFinished) {
+						
+						game.track.start();
+					}
 					break;
 
 				case CONFIG.KEYCODE.SPACE:
@@ -144,9 +157,8 @@ Game.prototype.addHandlers = function() {
 
 Game.prototype.startGame = function() {
 	
+	this.isFinished = false;
 	this.controlDirection = 1;
-	this.currentLevel = 1;
-	this.nextLevel = 1;
 	this.warpEndTime = 0;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
 
@@ -181,7 +193,7 @@ Game.prototype.startGame = function() {
 	
 	this.scene.fog = new THREE.Fog(CONFIG.BACKGROUND_COLOR, CONFIG.TRACK.FOG_NEAR, CONFIG.TRACK.FOG_FAR);
 
-	this.track = new Track();
+	this.track = new Track(this.currentLevel, this.isTest);
 	this.track.nextX = this.track.position.x;
 	this.scene.add(this.track); 
 	
@@ -233,7 +245,7 @@ Game.prototype.render = function(time) {
 	this.renderer.render(this.scene, this.camera);
 }
 
-Game.prototype.clearGame = function() {
+Game.prototype.clearGame = function(editLevelId, edit) {
 
 	cancelAnimationFrame(this.renderProcess);
 	$(window).unbind();
@@ -242,11 +254,23 @@ Game.prototype.clearGame = function() {
 		
 		background: "none"
 	})
-	this.currentLevel = 1;
-	Util.changeContent("menu.php");
 	bgBall = new BackgroundBall();
 	$("#info").css({
 		display: "none"
 	});	
+	if (editLevelId) {
+		
+		var param = "";
+		if (edit) {
+			
+			param = "?id=" + this.currentLevel;
+		}
+		Util.changeContent("editor.php" + param);
+	}
+	else {
+		
+		Util.changeContent("menu.php");
+	}
+	this.currentLevel = 1;
 	delete this;
 }

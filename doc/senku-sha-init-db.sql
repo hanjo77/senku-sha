@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `name` varchar(255) COLLATE utf8_unicode_520_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_520_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_520_ci NOT NULL,
-  `active` bit(1) NOT NULL,
+  `active` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQUE_LEVEL_NAME` (`name`),
   UNIQUE KEY `UNIQUE_EMAIL` (`email`)
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `level` (
   `data` text COLLATE utf8_unicode_520_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_520_ci NOT NULL DEFAULT '',
   `creator` int(32) NOT NULL,
-  `active` bit(1) NOT NULL,
+  `active` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQUE_USER_TITLE` (`title`),
   FOREIGN KEY `FK_LEVEL_CREATOR_USER_ID` (`creator`) REFERENCES `user` (`id`)

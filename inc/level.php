@@ -48,10 +48,30 @@ class Level {
 		return $id;	
 	}
 	
-	function delete($id) {
+	function delete() {
 		   
 		$db_util = new DBUtil();
-		$query = "DELETE FROM `level` WHERE id = '".$id."'";
+		if (!isset($this->id) || $this->id == 0) {
+			
+			$query = "DELETE FROM `level` WHERE `id` = '".$this->id."'";
+			$result = $db_util->query($query);
+			return $result;	
+		}
+		return null;
+	}
+	
+	function activate() {
+		   
+		$db_util = new DBUtil();
+		$query = "UPDATE `level` SET `active` = 1 WHERE `id` = '".$this->id."'";
+		$result = $db_util->query($query);
+		return $result;	
+	}
+	
+	function deActivate() {
+		   
+		$db_util = new DBUtil();
+		$query = "UPDATE `level` SET `active` = 0 WHERE `id` = '".$this->id."'";
 		$result = $db_util->query($query);
 		return $result;	
 	}
@@ -71,7 +91,7 @@ class Level {
 		return $data;
 	}
 
-	function load($id) {
+	function load($id, $test) {
 		  
 		$this->id = $id; 
 		$data = "";
@@ -86,7 +106,14 @@ class Level {
 				."01010\n";
 		$counter = 0;
 		$db_util = new DBUtil();
-		$query = "SELECT `id`, `data` FROM `level` WHERE `id` >= ".$id." ORDER BY `id` ASC LIMIT 0, 2";
+		$only_active = " AND `active` = 1";
+		$limit = 2;
+		if ($test) {
+			
+			$only_active = "";
+			$limit = 1;
+		} 
+		$query = "SELECT `id`, `data` FROM `level` WHERE `id` >= ".$id.$only_active." ORDER BY `id` ASC LIMIT 0, ".$limit;
 		$result = $db_util->query($query);
 		$next_level = 0;
 		$current_level = $id;

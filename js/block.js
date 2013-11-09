@@ -22,8 +22,9 @@ function Block(type, pos) {
 	this.blockType = type;                
     this.left = this.position.x-(CONFIG.BLOCK_SIZE/2);
 	this.right = this.left+CONFIG.BLOCK_SIZE;
-	this.front = this.position.z-(CONFIG.BLOCK_SIZE/2);
+	this.front = this.position.z;
 	this.back = this.front+CONFIG.BLOCK_SIZE;
+	this.neighbours = {};
 }
 
 // inherit Mesh
@@ -31,16 +32,15 @@ Block.prototype = new THREE.Mesh();
 Block.prototype.constructor = Block;           
 
 /**
- * Returns an object containing the neighbour blocks
- * @returns This blocks neighbour blocks
+ * Updates the neighbour blocks
  * @type Object
  */
 
-Block.prototype.neighbourBlocks = function() {
+Block.prototype.updateNeighbours = function() {
                                                       
 	var col = parseInt(this.position.x/CONFIG.BLOCK_SIZE, 10);
 	var row = parseInt(this.position.z/CONFIG.BLOCK_SIZE, 10);
-	return {                                    
+	this.neighbours = {                                    
  	    frontLeft: game.track.blockForPosition(col-1, row-1),
 		frontRight: game.track.blockForPosition(col+1, row-1),
 		backLeft: game.track.blockForPosition(col-1, row+1),
@@ -49,7 +49,7 @@ Block.prototype.neighbourBlocks = function() {
 		left: game.track.blockForPosition(col-1, row),
 		right: game.track.blockForPosition(col+1, row),
 		back: game.track.blockForPosition(col, row+1)
-	};      
+	};
 }           
 
 /**
@@ -64,20 +64,18 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 	
 	if (!type && game.warpEndTime <= 0) {
 		
-		$("#debug").html(this.blockType.name);
-		var neighbours = this.neighbourBlocks();
-		for (var type in neighbours) {
+		for (var dir in this.neighbours) {
 			
-			if (neighbours[type]) {
+			if (this.neighbours[dir]) {
 				
-				nextPos = neighbours[type].getNextPositionToBall(nextPos, type);
+				nextPos = this.neighbours[dir].getNextPositionToBall(nextPos, dir);
 			}
 		}
 	}
 	if (this.blockType.name == "blocker") {
 		
 		var ballPos = Util.getBallPosition(nextPos);     
-		var floorIntersection = (game.track.position.y > (-1*this.blockHeight/2));
+		var floorIntersection = (game.track.position.y >= (-1*this.blockHeight/2)-.5);
 		var collisionTypes = Util.getCollisions(this, nextPos);
 		if (floorIntersection) {
 
@@ -98,6 +96,7 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 
 					case "left":
 
+						console.log(type);
 						if (game.track.speedX >= 0) {
 	
 							nextPos.x = (this.right+game.ball.geometry.radius)*-1;
@@ -107,27 +106,27 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 						}
 						break;    
 
-					case "back":
+					case "front":
 
-						if (game.track.speedZ >= 0) {
+						if ((!type || type == "front") && game.track.speedZ >= 0) {
 	
-							nextPos.z = (this.back+game.ball.geometry.radius)*-1;
+							nextPos.z = (this.back+(CONFIG.BLOCK_SIZE/2))*-1;
+							nextPos.y = 0;
 							game.track.lastZ = nextPos.z;                                             
-							game.track.speedZ = -1;
+							game.track.speedZ = 0;
 							game.track.tempSpeedZ = game.track.speedZ*game.timeRate;
 							nextPos.z += game.track.tempSpeedZ;
-							game.ball.canMove.back = false;                                             
-							// game.track.tempSpeedZ = game.track.speedZ;
+							game.ball.canMove.front = false;   
 						}
 						break;    
 
-					case "front":
+					case "back":
 
-						if (game.track.speedZ <= 0) {
+						if ((!type || type == "back") && game.track.speedZ <= 0) {
 	
 							nextPos.z = (this.front-game.ball.geometry.radius)*-1;
 							game.track.speedZ = 0;                                             
-							game.ball.canMove.front = false;
+							game.ball.canMove.back = false;
 						}
 						break;    
 
