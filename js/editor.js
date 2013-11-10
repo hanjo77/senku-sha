@@ -44,7 +44,7 @@ Editor.prototype.clear = function() {
 	for (var i = this.maxRow-1; i >= 0; i--) {
 	
 		var tableRow = this.getEmptyTableRow(i);
-		if (i == 0) {
+		if (i == this.maxRow-1) {
 			
 			this.table.append(tableRow);
 		}
