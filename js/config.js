@@ -16,6 +16,7 @@ var CONFIG = {
 			name: "goalDark",
 			color: 0x999999,
 			editor: false,
+			defaultId: 0
 		}, { 
 			id: 2,    
 			name: "normalBright",
@@ -27,6 +28,7 @@ var CONFIG = {
 			name: "normalDark",
 			color: 0xca8842,
 			editor: false,
+			defaultId: 2
 		}, {
 			id: 4,    
 			name: "blocker",

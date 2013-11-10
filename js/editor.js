@@ -205,8 +205,28 @@ Editor.prototype.loadLevel = function(data) {
 			var rowObj = $("#editorTable tr").first();
 			for (var col = 0; col < 5; col++) {
 				
+				var pos = [this.blocks.length, col];
 				var type = rowData.charAt(col);
-				var id = "tableCell_" + this.blocks.length + "_" + col;
+				var blockType = CONFIG.BLOCK_TYPES[parseInt(type, 10)];
+				console.log(blockType);
+				if (blockType 
+					&& blockType.alternatingId
+					&& ((pos[0]%2 == 1 && pos[1]%2 == 0) || (pos[0]%2 == 0 && pos[1]%2 == 1))
+					) {
+			
+					type = "" + blockType.alternatingId;
+					console.log("test");
+				}
+				if (blockType 
+					&& blockType.defaultId
+					&& ((pos[0]%2 == 1 && pos[1]%2 == 1) || (pos[0]%2 == 0 && pos[1]%2 == 0))
+					) {
+			
+					type = "" + blockType.defaultId;
+					console.log("test");
+				}
+				
+				var id = "tableCell_" + pos[0] + "_" + pos[1];
 				rowObj.append("<td id=\"" + id + "\"></td>");
 				var colObj = $("#" + id);
 				colObj.attr("class", type);
@@ -222,9 +242,9 @@ Editor.prototype.loadLevel = function(data) {
 			}
 			this.blocks.unshift(blockRow);
 		}
-		if (levelData.length < this.maxRow) {
+		if (levelData.length-1 < this.maxRow) {
 			
-			this.maxRow = levelData.length;
+			this.maxRow = levelData.length-1;
 			while (this.maxRow < CONFIG.EDITOR.ROWS) {
 				
 				var tableRow = this.getEmptyTableRow(this.maxRow);
@@ -237,12 +257,11 @@ Editor.prototype.loadLevel = function(data) {
 					$('#editorTable tr:first').before(tableRow);
 				}
 				this.blocks.unshift([]);
-				this.maxRow++
+				this.maxRow++;
 			}
 		}
 		this.blockHeight = $("#tableCell_0_0").outerHeight();
 		this.maxRow = this.blocks.length;
-		this.oddRows = (this.maxRow%2 == 1);
 		this.topPos = -1*this.blockHeight*(this.blocks.length-10);
 		this.table.css({
 			
@@ -266,6 +285,7 @@ Editor.prototype.addBlock = function(pos) {
 		
 		var block = $("#"+pos);
 		pos = pos.replace("tableCell_", "").split("_");
+		pos[0] = (this.maxRow-1)-pos[0];
 		if (!this.blocks[pos[0]]) {
 		
 			this.blocks[pos[0]] = new Array();
@@ -273,8 +293,7 @@ Editor.prototype.addBlock = function(pos) {
 		var buttonId = parseInt(this.activeButton.attr("id"), 10);
 		var blockType = CONFIG.BLOCK_TYPES[buttonId];
 		if (blockType.alternatingId
-			&& ((!this.oddRows && ((pos[0]%2 == 1 && pos[1]%2 == 1) || (pos[0]%2 == 0 && pos[1]%2 == 0)))
-				|| (this.oddRows && ((pos[0]%2 == 1 && pos[1]%2 == 0) || (pos[0]%2 == 0 && pos[1]%2 == 1))))
+			&& ((pos[0]%2 == 1 && pos[1]%2 == 1) || (pos[0]%2 == 0 && pos[1]%2 == 0))
 			) {
 			
 			blockType = CONFIG.BLOCK_TYPES[blockType.alternatingId];
@@ -285,19 +304,23 @@ Editor.prototype.addBlock = function(pos) {
 			buttonId = " ";
 		}
 
-		this.blocks[pos[0]][pos[1]] = buttonId;
+		this.blocks[pos[0]][pos[1]] = "" + buttonId;
 		var color = Util.getHexColorFromInt(blockType.color);
 		block.attr("class", this.activeButton.attr("id"));
 		block.css("backgroundColor", color);   
+		console.log(pos);
+		console.log(this.blocks);
 	}
 }
 
 Editor.prototype.levelString = function() {
 	
 	var level = "";
+	console.log(this.blocks);
+	var rowString = "";
 	for (var row = 0; row < this.blocks.length; row++) {
 	
-		var rowString = "";
+		console.log(this.blocks[row]);
 		if (this.blocks[row]) {
 			
 			for (var col = 0; col < this.blocks[row].length; col++) {
@@ -312,10 +335,23 @@ Editor.prototype.levelString = function() {
 				}
 			}
 		}
-		level += rowString + "\n";
+		if (rowString.trim() != "") {
+		
+			console.log("linestring " + rowString);
+			level += rowString + "\n";
+			console.log(level);
+			rowString = "";
+		}
+		else if (level == "") {
+			
+			rowString = "";			
+		}
+		else {
+			
+			rowString += "\n";
+		}
 	}
-	level = level.trim() + "\n";
-	console.log(level);
+	
 	return level;
 }
 
