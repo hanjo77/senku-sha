@@ -153,16 +153,14 @@ Util.getCollisions = function(block, nextPos) {
 	    
 	var types = [];                              
 	var ballPos = Util.getBallPosition(nextPos); 
-	// console.log(ballPos);                                             
 	var movesLeft = (game.track.speedX > 0);
 	var movesRight = (game.track.speedX < 0);
 	var movesForward = (game.track.speedZ > 0);
 	var movesBack = (game.track.speedZ < 0);
 	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
 	var withinLength = (ballPos.z > block.front - (CONFIG.BLOCK_SIZE/2)) && (ballPos.z < block.back - (CONFIG.BLOCK_SIZE/2));
-	console.log(withinLength);
 	var neighbours = block.neighbours;
-	// console.log(block.left + " " + block.right);
+
 	var frontIntersection = ((ballPos.z <= block.front + (CONFIG.BLOCK_SIZE/2) + game.ball.geometry.radius)
 		&& (ballPos.z > block.front)
 		&& withinWidth);
@@ -207,7 +205,6 @@ Util.getCollisions = function(block, nextPos) {
                                                       
 		types.push("back");
 	}      
-	if (types.length > 0) console.log(types);
 	return types;
 }
 

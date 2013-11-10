@@ -1,6 +1,5 @@
 function Game(levelId) {
 
-	console.log(levelId);
 	this.renderProcess;
 	this.renderer;
 	this.container;
@@ -57,12 +56,10 @@ function Game(levelId) {
 				
 				if (!game.track.isStarted && game.fingers[0].tipVelocity[2] > 400) {
 						
-					console.log("z: " + game.fingers[0].tipVelocity[2]);
 					game.track.start();
 				}
 				else if (game.track.isStarted && !game.isInGoal && game.fingers[0].tipVelocity[1] > 400) {
 						
-					console.log("y: " + game.fingers[0].tipVelocity[1]);
 					game.ball.jump();
 				}
 			}

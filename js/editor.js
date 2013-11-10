@@ -1,6 +1,7 @@
 
 function Editor(levelId) {
                              						             
+	this.maxRow = CONFIG.EDITOR.ROWS;
 	this.activeButton;
 	this.controlsContainer = $('#controls');
 	this.displayContainer = $('#display');
@@ -36,23 +37,22 @@ function Editor(levelId) {
 Editor.prototype.clear = function() {
 	
 	this.topPos = 0;
-	this.maxRow = 11;
 	this.blocks = [];
+	this.maxRow = CONFIG.EDITOR.ROWS;
 	this.displayContainer.html("<table id=\"editorTable\"></table>");
 	this.table = $("#editorTable");
 	for (var i = 0; i < this.maxRow; i++) {
 	
 		var tableRow = this.getEmptyTableRow(i);
-		// if (i == 0) {
+		if (i == 0) {
 			
 			this.table.append(tableRow);
-			this.blocks.push([]);
-			/* }
+		}
 		else {
 			
 			$('#editorTable tr:first').before(tableRow);
-			this.blocks.unshift([]);
-		} */
+		}
+		this.blocks.unshift([]);
 		this.table.css({
 			marginBottom: 0
 		})
@@ -169,6 +169,7 @@ Editor.prototype.scrollUp = function() {
 		this.blocks.push([]);
 		this.maxRow++;
 		this.initHandlers();
+		this.topPos -= this.blockHeight;
 	}
 	else {
 		
@@ -177,7 +178,6 @@ Editor.prototype.scrollUp = function() {
 			marginTop: nextPos
 		});
 	}
-	this.topPos += this.blockHeight;
 }
 
 Editor.prototype.loadLevel = function(data) {
@@ -189,13 +189,20 @@ Editor.prototype.loadLevel = function(data) {
 	if (data && data.title && data.data) {
 	
 		$("#levelTitle").val(data.title);
-		var levelData = data.data.trim().split("\n");
+		var levelData = data.data.split("\n");
 		for (var row = 0; row < levelData.length; row++) {
 			
 			var blockRow = [];
-			var rowData = levelData[row];			
-			this.table.append("<tr></tr>");
-			var rowObj = $("#editorTable tr").last();
+			var rowData = levelData[row];
+			if (row == 0) {
+				
+				this.table.append("<tr></tr>");
+			}
+			else {
+				
+				$('#editorTable tr:first').before("<tr></tr>");
+			}			
+			var rowObj = $("#editorTable tr").first();
 			for (var col = 0; col < 5; col++) {
 				
 				var type = rowData.charAt(col);
@@ -215,6 +222,24 @@ Editor.prototype.loadLevel = function(data) {
 			}
 			this.blocks.push(blockRow);
 		}
+		if (levelData.length < this.maxRow) {
+			
+			this.maxRow = levelData.length;
+			while (this.maxRow < CONFIG.EDITOR.ROWS) {
+				
+				var tableRow = this.getEmptyTableRow(this.maxRow);
+				if (row == 0) {
+			
+					this.table.append(tableRow);
+				}
+				else {
+			
+					$('#editorTable tr:first').before(tableRow);
+				}
+				this.blocks.push([]);
+				this.maxRow++
+			}
+		}
 		this.blockHeight = $("#tableCell_0_0").outerHeight();
 		this.maxRow = this.blocks.length;
 		this.oddRows = (this.maxRow%2 == 1);
@@ -224,6 +249,10 @@ Editor.prototype.loadLevel = function(data) {
 			marginTop: this.topPos
 		});
 		this.initHandlers();
+	}
+	else {
+		
+		this.clear();
 	}
 	$("#buttonUp").css({
 		
@@ -276,13 +305,13 @@ Editor.prototype.levelString = function() {
 					
 					level += this.blocks[row][col];
 				}
-				else if (level != "") {
+				else {
 					
 					level += " ";
 				}
 			}
 		}
-		if (level != "") {
+		if (level.trim() != "") {
 		
 			level += "\n";
 		}

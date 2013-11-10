@@ -263,7 +263,6 @@ Track.prototype.nextPosition = function() {
 			moveX = (($(window).width() / 2) - game.mousePos[0]) / 50;
 			if (game.controlDirection < 0) {
 				
-				console.log (moveX);
 				moveX *= -1;
 			}
 		}

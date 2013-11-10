@@ -96,7 +96,6 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 
 					case "left":
 
-						console.log(type);
 						if (game.track.speedX >= 0) {
 	
 							nextPos.x = (this.right+game.ball.geometry.radius)*-1;

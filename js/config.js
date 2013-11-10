@@ -83,7 +83,8 @@ var CONFIG = {
 	},
 	EDITOR: {
 		
-		BLOCK_SIZE: 30
+		BLOCK_SIZE: 30,
+		ROWS: 10
 	},
 	ACCELERATION: 1.5,
 	TRACK_SPEED: 1.5,
