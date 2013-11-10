@@ -41,7 +41,7 @@ Editor.prototype.clear = function() {
 	this.maxRow = CONFIG.EDITOR.ROWS;
 	this.displayContainer.html("<table id=\"editorTable\"></table>");
 	this.table = $("#editorTable");
-	for (var i = 0; i < this.maxRow; i++) {
+	for (var i = this.maxRow-1; i >= 0; i--) {
 	
 		var tableRow = this.getEmptyTableRow(i);
 		if (i == 0) {
@@ -190,11 +190,11 @@ Editor.prototype.loadLevel = function(data) {
 	
 		$("#levelTitle").val(data.title);
 		var levelData = data.data.split("\n");
-		for (var row = 0; row < levelData.length; row++) {
+		for (var row = levelData.length-2; row >= 0; row--) {
 			
 			var blockRow = [];
 			var rowData = levelData[row];
-			if (row == 0) {
+			if (row == levelData.length-2) {
 				
 				this.table.append("<tr></tr>");
 			}
@@ -220,7 +220,7 @@ Editor.prototype.loadLevel = function(data) {
 					blockRow.push(" ");
 				}
 			}
-			this.blocks.push(blockRow);
+			this.blocks.unshift(blockRow);
 		}
 		if (levelData.length < this.maxRow) {
 			
@@ -236,7 +236,7 @@ Editor.prototype.loadLevel = function(data) {
 			
 					$('#editorTable tr:first').before(tableRow);
 				}
-				this.blocks.push([]);
+				this.blocks.unshift([]);
 				this.maxRow++
 			}
 		}
@@ -297,29 +297,25 @@ Editor.prototype.levelString = function() {
 	var level = "";
 	for (var row = 0; row < this.blocks.length; row++) {
 	
+		var rowString = "";
 		if (this.blocks[row]) {
 			
 			for (var col = 0; col < this.blocks[row].length; col++) {
 				
 				if (this.blocks[row][col]) {
 					
-					level += this.blocks[row][col];
+					rowString += this.blocks[row][col];
 				}
 				else {
 					
-					level += " ";
+					rowString += " ";
 				}
 			}
 		}
-		if (level.trim() != "") {
-		
-			level += "\n";
-		}
+		level += rowString + "\n";
 	}
-	while (level.charAt(level.length-2) == '\n') {
-	
-		level = level.substring(0, level.length-1);
-	}
+	level = level.trim() + "\n";
+	console.log(level);
 	return level;
 }
 
