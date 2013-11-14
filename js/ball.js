@@ -3,6 +3,7 @@
  * @author Hanjo
  * @version $Rev$
  * @requires OtherClassName
+ * @constructor
  */
 
 function Ball() {
@@ -32,7 +33,7 @@ function Ball() {
 	};
 }
 
-// inherit Mesh
+// inherit THREE.Mesh
 Ball.prototype = new THREE.Mesh();
 Ball.prototype.constructor = Ball;
 

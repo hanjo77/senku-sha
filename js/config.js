@@ -1,3 +1,10 @@
+/**
+ * Configuration constants
+ * @author Hanjo
+ * @version $Rev$
+ */
+
+
 var CONFIG = {
 
 	BACKGROUND_COLOR: 0x000000,

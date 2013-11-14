@@ -1,9 +1,13 @@
 /**
-  *  Track - the playground
-  **/
+ * The track, playground and moving object of the game.
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
+
 function Track(levelId, isTest) {
 	       
-	// call parent constructor
 	THREE.Object3D.call(this);
 	this.levelId = levelId;
 	this.isTest = isTest;
@@ -30,9 +34,14 @@ function Track(levelId, isTest) {
 	this.loadLevel();
 }
 
-// inherit Persion
+// inherit THREE.Object3D
 Track.prototype = new THREE.Object3D();
 Track.prototype.constructor = Track;       
+
+/**
+ * Loads and initializes the level with the current level ID from the database.
+ * Requires that the levelId property is set.
+ */
 
 Track.prototype.loadLevel = function() {
 	
@@ -53,6 +62,10 @@ Track.prototype.loadLevel = function() {
 		}
 	});	
 }
+
+/**
+ * Called if level is finished
+ */
 
 Track.prototype.finishLevel = function() {
 	
@@ -88,6 +101,10 @@ Track.prototype.finishLevel = function() {
 	}
 }
 
+/**
+ * Starts the track
+ */
+
 Track.prototype.start = function() {
 	
 	this.isStarted = true;
@@ -101,6 +118,11 @@ Track.prototype.start = function() {
 	}
 }
    
+/**
+ * Initializes a level
+ * @param {String} levelObj ASCII-string of level-data
+ */
+
 Track.prototype.initLevel = function(levelObj) {
 	
 	game.nextLevel = levelObj.nextLevel;
@@ -163,6 +185,14 @@ Track.prototype.initLevel = function(levelObj) {
 	}
 }
 
+/**
+ * Returns the block at the given position
+ * @param {Number} col Column number
+ * @param {Number} row Row number
+ * @returns Block object
+ * @type Object
+ */
+
 Track.prototype.blockForPosition = function(col, row) {
 	        
 	var block = this.blocks[row] ? this.blocks[row][col] : null;
@@ -172,6 +202,11 @@ Track.prototype.blockForPosition = function(col, row) {
 	}
 	return null;                                                      
 } 
+
+/**
+ * Updates blocks according to position, handles that only 
+ * visible blocks are drawn
+ */
 
 Track.prototype.updateBlocks = function() {
 	
@@ -212,6 +247,10 @@ Track.prototype.updateBlocks = function() {
 	}
 }
 
+/**
+ * Calculates the next position if ball is in goal area
+ */
+
 Track.prototype.nextGoalPosition = function() {
 	
 	var nextPos = new THREE.Vector3(
@@ -243,6 +282,11 @@ Track.prototype.nextGoalPosition = function() {
 	}
 	return nextPos;
 }
+
+/**
+ * Calculates the next position in a level
+ * TODO: Make it better ;-)
+ */
 
 Track.prototype.nextPosition = function() {
 	
@@ -429,6 +473,11 @@ Track.prototype.nextPosition = function() {
 		
 	return nextPosition;
 }
+
+/**
+ * Calculates the next position if ball is not on track (currently not used)
+ * TODO: Make it better ;-)
+ */
 
 Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) {
 	                                    

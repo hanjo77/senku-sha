@@ -1,3 +1,11 @@
+/**
+ * The editor, allows to edit tracks and save them
+ * as strings to the database.
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
 
 function Editor(levelId) {
                              						             
@@ -34,6 +42,10 @@ function Editor(levelId) {
 	this.blockButton = $('.blockButton').first();
 }
 
+/**
+ * Clears the map
+ */
+
 Editor.prototype.clear = function() {
 	
 	this.topPos = 0;
@@ -59,6 +71,10 @@ Editor.prototype.clear = function() {
 	}
 	this.initHandlers();
 }
+
+/**
+ * Adds all event handlers for the editor
+ */
 
 Editor.prototype.initHandlers = function() {
 	
@@ -125,6 +141,14 @@ Editor.prototype.initHandlers = function() {
 	});
 }
 
+/**
+ * Returns an empty table row string
+ * @private
+ * @param {Number} rowId Row number
+ * @returns String for a table row
+ * @type String
+ */
+
 Editor.prototype.getEmptyTableRow = function(rowId) {
 	
 	return "<tr>"
@@ -135,6 +159,10 @@ Editor.prototype.getEmptyTableRow = function(rowId) {
 		+ "<td id=\"tableCell_" + rowId + "_4\"></td>"
 		+ "</tr>";
 }
+
+/**
+ * Handles the scroll down button/overlay click
+ */
 
 Editor.prototype.scrollDown = function() {
 	
@@ -154,6 +182,10 @@ Editor.prototype.scrollDown = function() {
 		});
 	}
 }
+
+/**
+ * Handles the scroll up button/overlay click
+ */
 
 Editor.prototype.scrollUp = function() {
 	
@@ -179,6 +211,11 @@ Editor.prototype.scrollUp = function() {
 		});
 	}
 }
+
+/**
+ * Loads a level
+ * @param {Object} data Object with properties { title: Name of the level, data: ASCII string of level }
+ */
 
 Editor.prototype.loadLevel = function(data) {
 	   
@@ -279,6 +316,12 @@ Editor.prototype.loadLevel = function(data) {
 	});
 }
 
+/**
+ * Adds a block
+ * @private
+ * @param {Array} pos Array with the position of the block [rowId, columnId]
+ */
+
 Editor.prototype.addBlock = function(pos) {
 	                        
 	if (this.activeButton && !isNaN(parseInt(this.activeButton.attr("id"), 10))) {
@@ -312,6 +355,13 @@ Editor.prototype.addBlock = function(pos) {
 		console.log(this.blocks);
 	}
 }
+
+/**
+ * Returns the current level ASCII string
+ * @private
+ * @returns Level data as ASCII string
+ * @type String
+ */
 
 Editor.prototype.levelString = function() {
 	

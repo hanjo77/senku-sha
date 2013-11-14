@@ -1,3 +1,11 @@
+/**
+ * The actual game class
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
+
 function Game(levelId) {
 
 	this.renderProcess;
@@ -66,6 +74,10 @@ function Game(levelId) {
 		}
 	});
 }
+
+/**
+ * Adds all event handlers for the game
+ */
 
 Game.prototype.addHandlers = function() {
 
@@ -152,6 +164,10 @@ Game.prototype.addHandlers = function() {
 	});
 }
 
+/**
+ * Starts the game
+ */
+
 Game.prototype.startGame = function() {
 	
 	this.isFinished = false;
@@ -209,6 +225,11 @@ Game.prototype.startGame = function() {
 	this.addHandlers();
 }
 
+/**
+ * The rendering method called on each frame
+ * @param {Number} time Current timestamp, used to synchronize game speed
+ */
+
 Game.prototype.render = function(time) {
 
 	this.renderProcess = requestAnimationFrame(this.render.bind(this));     
@@ -241,6 +262,12 @@ Game.prototype.render = function(time) {
 						 
 	this.renderer.render(this.scene, this.camera);
 }
+
+/**
+ * Clears the game and returns to menu or editor, without parameters, the menu will be opened.
+ * @param {Number} editLevelId ID of the level, if set, editor will be opened
+ * @param {Boolean} edit If true, the level will be loaded in editor, otherwise, level selection will be opened 
+ */
 
 Game.prototype.clearGame = function(editLevelId, edit) {
 

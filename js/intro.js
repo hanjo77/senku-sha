@@ -1,3 +1,10 @@
+/**
+ * The intro screen
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
 
 function Intro() {
 
@@ -18,6 +25,10 @@ function Intro() {
 	this.start();
 }
 
+/**
+ * Exits the intro screen
+ */
+
 Intro.prototype.leave = function() {
 	
 	cancelAnimationFrame(this.renderProcess);
@@ -28,6 +39,10 @@ Intro.prototype.leave = function() {
 	Util.changeContent("menu.php");
 	bgBall = new BackgroundBall();
 }
+
+/**
+ * Starts the intro screen
+ */
 
 Intro.prototype.start = function() {
 
@@ -89,6 +104,10 @@ Intro.prototype.start = function() {
 
 	this.render();
 }
+
+/**
+ * The rendering method called on each frame
+ */
 
 Intro.prototype.render = function() {
 

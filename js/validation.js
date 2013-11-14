@@ -1,9 +1,23 @@
+/**
+ * Static methods used for form validation
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
+
 function Validation() {
 	
 	
 }
 
-Validation.formIsValid = function(form) {
+/**
+ * Validates all input fields
+ * @returns true if all input fields are valid, otherwise false
+ * @type Boolean
+ */
+
+Validation.formIsValid = function() {
 	   
 	var valid = true;
 	$.each( $('input'), function( key, value ) {    
@@ -15,6 +29,13 @@ Validation.formIsValid = function(form) {
 	});
 	return valid;
 }
+
+/**
+ * Validates a form field
+ * @param {Object} obj A jQuery object of the form field to validate
+ * @returns true if all input fields are valid, otherwise false
+ * @type Boolean
+ */
 
 Validation.validateField = function(obj) {
 	   

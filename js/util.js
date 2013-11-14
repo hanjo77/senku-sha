@@ -1,6 +1,19 @@
+/**
+ * A collection of static methods to be used globally
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
+
 function Util() {
 
 }
+
+/**
+ * Removes all children of a ThreeJS object
+ * @param {Object} obj ThreeJS object
+ */
 
 Util.removeChilds = function(obj) {
 
@@ -28,23 +41,40 @@ Util.removeChilds = function(obj) {
 	
 		obj.dispose();
 	}
-	
-	/* if (obj.parent) {
-	
-		obj.parent.remove(obj);
-	} */
 }
+
+/**
+ * Creates a menu button
+ * @param {String} name ID of the button also used as Util method name called on click
+ * @param {String} content Text on button
+ * @returns jQuery object of the button
+ * @type Object
+ */
 
 Util.menuButton = function(name, content) {
 
 	return $('<a id="' + name + '" class="menuButton" onclick="Util.' + name + '()">' + content + '</a>');
 }         
 
+/**
+ * Creates a block button (used in editor)
+ * @param {Object} blockType (defined in CONFIG.BLOCK_TYPES)
+ * @returns jQuery object of the button
+ * @type Object
+ */
+
 Util.blockButton = function(blockType) {
 
 	var color = Util.getHexColorFromInt(blockType.color);
 	return $('<a id="' + blockType.id + '" class="blockButton" style="background-color: ' + color + '">&nbsp;</a>');
 }     
+
+/**
+ * Returns the hex value of an integer to be used for a CSS color attribute
+ * @param {String} intColor Integer value of color
+ * @returns Hexadecimal value to be used for CSS color attribute
+ * @type String
+ */
 
 Util.getHexColorFromInt = function(intColor) {
 	
@@ -56,11 +86,18 @@ Util.getHexColorFromInt = function(intColor) {
 	return "#" + color;
 }    
 
+/**
+ * Action called on exit button click
+ */
+
 Util.exit = function() {
 	   
 	Util.changeContent("menu.php");
-	// window.location.href = "index.php";
 }
+
+/**
+ * Action called on editor save button click
+ */
 
 Util.editorSave = function() {
 
@@ -83,6 +120,10 @@ Util.editorSave = function() {
 	});
 }
 
+/**
+ * Action called on editor level selection button click
+ */
+
 Util.editorLevelSelection = function() {
 
 	$.ajax({
@@ -98,6 +139,10 @@ Util.editorLevelSelection = function() {
 		display: "none"
 	});
 }
+
+/**
+ * Action called on editor delete level button click
+ */
 
 Util.deleteLevel = function(levelId) {
 
@@ -116,6 +161,10 @@ Util.deleteLevel = function(levelId) {
 	});
 }
 
+/**
+ * Action called on editor load level button click
+ */
+
 Util.loadLevel = function(levelId) {
 
 	$("#levelId").val(levelId);
@@ -133,80 +182,18 @@ Util.loadLevel = function(levelId) {
 	});
 }
 
+/**
+ * Action called on editor clear button click
+ */
+
 Util.editorClear = function() {
 
 	editor.clear();
 }
- 
-Util.getBallPosition = function(nextPos) {
-	     
-	var pos = game.ball.touchPoint();
-	var result = new THREE.Vector3( 
-			-nextPos.x,
-			-nextPos.y,
-			-nextPos.z
-		);
-	return result;                                                    
-}  
 
-Util.getCollisions = function(block, nextPos) {
-	    
-	var types = [];                              
-	var ballPos = Util.getBallPosition(nextPos); 
-	var movesLeft = (game.track.speedX > 0);
-	var movesRight = (game.track.speedX < 0);
-	var movesForward = (game.track.speedZ > 0);
-	var movesBack = (game.track.speedZ < 0);
-	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
-	var withinLength = (ballPos.z > block.front - (CONFIG.BLOCK_SIZE/2)) && (ballPos.z < block.back - (CONFIG.BLOCK_SIZE/2));
-	var neighbours = block.neighbours;
-
-	var frontIntersection = ((ballPos.z <= block.front + (CONFIG.BLOCK_SIZE/2) + game.ball.geometry.radius)
-		&& (ballPos.z > block.front)
-		&& withinWidth);
-	var backIntersection = ((ballPos.z >= (block.back + (CONFIG.BLOCK_SIZE/2)) - game.ball.geometry.radius)
-		&& (ballPos.z < block.back)
-		&& withinWidth);
-	var leftIntersection = ((ballPos.x >= block.right - game.ball.geometry.radius) 
-		&& (ballPos.x < block.left + (CONFIG.BLOCK_SIZE/2))
-		&& withinLength);
-	var rightIntersection = ((ballPos.x <= block.left + game.ball.geometry.radius ) 
-		&& (ballPos.x > block.right - (CONFIG.BLOCK_SIZE/2))
-		&& withinLength); 
-	if (leftIntersection) {
-
-		/* if (backIntersection) {
-			
-			types.push("frontRight");
-		}
-		else if (frontIntersection) {
-			
-			types.push("backRight");
-		} */
-		types.push("left");
-	}
-	else if (rightIntersection) {
-
-		/* if (backIntersection) {
-			
-			types.push("frontLeft");
-		}
-		else if (frontIntersection) {
-			
-			types.push("backLeft");
-		} */
-		types.push("right");
-	}
-	if (frontIntersection) {
-                      
-		types.push("front");
-	}
-	else if (backIntersection) {
-                                                      
-		types.push("back");
-	}      
-	return types;
-}
+/**
+ * Action called on activate level button click
+ */
 
 Util.activateLevel = function(levelId) {
 	
@@ -225,10 +212,18 @@ Util.activateLevel = function(levelId) {
 	});
 }
 
+/**
+ * Action called on test level button click
+ */
+
 Util.testLevel = function(levelId) {
 	
 	Util.changeContent("game.php?id=" + levelId);
 }
+
+/**
+ * Action called on edit level button click
+ */
 
 Util.editLevel = function(levelId) {
 	
@@ -237,6 +232,13 @@ Util.editLevel = function(levelId) {
 		game.clearGame(levelId, true);
 	}
 }
+
+/**
+ * Changes the contents of the content-container and handles 
+ * the background-animation according to the content
+ * @param {String} page URL to replace the current contents
+ */
+
 
 Util.changeContent = function(page) {
 	
@@ -285,6 +287,10 @@ Util.changeContent = function(page) {
 	});
 }
 
+/**
+ * Reads the current URL hash and changes the content depending on it
+ */
+
 Util.handleHash = function() {
 	
 	var hash = "intro";
@@ -308,6 +314,13 @@ Util.handleHash = function() {
 	Util.changeContent(hash + ".php" + param);
 }  
 
+/**
+ * Returns the number of seconds until a given time.
+ * @param {Object} endTime Time value (Date.getTime())
+ * @returns Seconds until the time
+ * @type Number
+ */
+
 Util.getSecondsUntil = function(endTime) {
 	
 	if (endTime) {
@@ -320,6 +333,11 @@ Util.getSecondsUntil = function(endTime) {
 	}
 	return null;
 }         
+
+/**
+ * Updates the info window
+ * TODO: Make it better... ;-)
+ */
 
 Util.updateInfoHTML = function() {
 	
@@ -443,6 +461,10 @@ Util.updateInfoHTML = function() {
 		});
 }
 
+/**
+ * Initializes all event handlers for the UI
+ */
+
 Util.initHandlers = function() {
 	 	   
 	$("#content").center();
@@ -555,6 +577,10 @@ Util.initHandlers = function() {
 	window.setTimeout(function() { Validation.formIsValid() }, 1000);
 }
 
+/**
+ * Updates the window, handles window resize issues
+ */
+
 Util.updateWindow = function() {
 	
 	var obj = null;
@@ -574,6 +600,81 @@ Util.updateWindow = function() {
 	}
 	$("#content").center();
 }
+
+/**
+ * Returns the ball position relative to the next track position
+ * @param {Object} nextPos THREE.Vector3 object of the next track position
+ * @returns THREE.Vector3 object of the ball position
+ * @type Object
+ * TODO: Make it better... ;-)
+ */
+
+Util.getBallPosition = function(nextPos) {
+	     
+	var pos = game.ball.touchPoint();
+	var result = new THREE.Vector3( 
+			-nextPos.x,
+			-nextPos.y,
+			-nextPos.z
+		);
+	return result;                                                    
+}  
+
+/**
+ * Returns an object of the collisions between the ball and a given block
+ * @param {Object} block BLOCK object to be tested
+ * @param {Object} nextPos THREE.Vector3 object of the next track position
+ * @returns String Array with the detected collisions (right|left|front|back)
+ * @type Array
+ * TODO: Make it better... ;-)
+ */
+
+Util.getCollisions = function(block, nextPos) {
+	    
+	var types = [];                              
+	var ballPos = Util.getBallPosition(nextPos); 
+	var movesLeft = (game.track.speedX > 0);
+	var movesRight = (game.track.speedX < 0);
+	var movesForward = (game.track.speedZ > 0);
+	var movesBack = (game.track.speedZ < 0);
+	var withinWidth = (ballPos.x > block.left) && (ballPos.x < block.right);
+	var withinLength = (ballPos.z > block.front - (CONFIG.BLOCK_SIZE/2)) && (ballPos.z < block.back - (CONFIG.BLOCK_SIZE/2));
+	var neighbours = block.neighbours;
+
+	var frontIntersection = ((ballPos.z <= block.front + (CONFIG.BLOCK_SIZE/2) + game.ball.geometry.radius)
+		&& (ballPos.z > block.front)
+		&& withinWidth);
+	var backIntersection = ((ballPos.z >= (block.back + (CONFIG.BLOCK_SIZE/2)) - game.ball.geometry.radius)
+		&& (ballPos.z < block.back)
+		&& withinWidth);
+	var leftIntersection = ((ballPos.x >= block.right - game.ball.geometry.radius) 
+		&& (ballPos.x < block.left + (CONFIG.BLOCK_SIZE/2))
+		&& withinLength);
+	var rightIntersection = ((ballPos.x <= block.left + game.ball.geometry.radius ) 
+		&& (ballPos.x > block.right - (CONFIG.BLOCK_SIZE/2))
+		&& withinLength); 
+	if (leftIntersection) {
+
+		types.push("left");
+	}
+	else if (rightIntersection) {
+
+		types.push("right");
+	}
+	if (frontIntersection) {
+                      
+		types.push("front");
+	}
+	else if (backIntersection) {
+                                                      
+		types.push("back");
+	}      
+	return types;
+}
+
+/**
+ * Centers a jQuery object relative to the window
+ */
 
 jQuery.fn.center = function () {
     this.css({

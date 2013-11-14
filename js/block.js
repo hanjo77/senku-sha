@@ -3,6 +3,7 @@
  * @author Hanjo
  * @version $Rev$
  * @requires OtherClassName
+ * @constructor
  */
 
 function Block(type, pos) {
@@ -27,7 +28,7 @@ function Block(type, pos) {
 	this.neighbours = {};
 }
 
-// inherit Mesh
+// inherit THREE.Mesh
 Block.prototype = new THREE.Mesh();
 Block.prototype.constructor = Block;           
 

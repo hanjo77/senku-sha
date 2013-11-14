@@ -1,3 +1,10 @@
+/**
+ * The background ball - Used as some background gimmick
+ * @author Hanjo
+ * @version $Rev$
+ * @requires OtherClassName
+ * @constructor
+ */
 
 function BackgroundBall() {
 
@@ -17,6 +24,10 @@ function BackgroundBall() {
 	
 	this.start();
 }
+
+/**
+ * Start the background ball
+ */
 
 BackgroundBall.prototype.start = function() {
 
@@ -58,6 +69,10 @@ BackgroundBall.prototype.start = function() {
 	
 	this.render();
 }
+
+/**
+ * The rendering method called on each frame
+ */
 
 BackgroundBall.prototype.render = function() {
 		
