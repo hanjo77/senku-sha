@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Intro</title>
+		<title>JsDoc Reference - Track</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -218,7 +218,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class Intro
+				Class Track
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -231,13 +231,13 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Applications_XAMPP_htdocs_senku-sha_js_intro.js.html">intro.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Applications_XAMPP_htdocs_senku-sha_js_track.js.html">track.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Intro.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Track.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -250,9 +250,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Intro.html#constructor">Intro</a></b>()
+								<b><a href="../symbols/Track.html#constructor">Track</a></b>(levelId, isTest)
 							</div>
-							<div class="description">The intro screen</div>
+							<div class="description">The track, playground and moving object of the game.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -266,7 +266,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Intro.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Track.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -279,27 +279,84 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Intro.html#leave">leave</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Track.html#blockForPosition">blockForPosition</a></b>(col, row)
 								</div>
-								<div class="description">Exits the intro screen</div>
+								<div class="description">Returns the block at the given position</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Intro.html#render">render</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Track.html#finishLevel">finishLevel</a></b>()
 								</div>
-								<div class="description">The rendering method called on each frame</div>
+								<div class="description">Called if level is finished</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Intro.html#start">start</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Track.html#getBallBlockFallingPosition">getBallBlockFallingPosition</a></b>(nextPosition, lastBlock)
 								</div>
-								<div class="description">Starts the intro screen</div>
+								<div class="description">Calculates the next position if ball is not on track (currently not used)
+TODO: Make it better ;-)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Track.html#initLevel">initLevel</a></b>(levelObj)
+								</div>
+								<div class="description">Initializes a level</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Track.html#loadLevel">loadLevel</a></b>()
+								</div>
+								<div class="description">Loads and initializes the level with the current level ID from the database.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Track.html#nextGoalPosition">nextGoalPosition</a></b>()
+								</div>
+								<div class="description">Calculates the next position if ball is in goal area</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Track.html#nextPosition">nextPosition</a></b>()
+								</div>
+								<div class="description">Calculates the next position in a level
+TODO: Make it better ;-)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Track.html#start">start</a></b>()
+								</div>
+								<div class="description">Starts the track</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Track.html#updateBlocks">updateBlocks</a></b>()
+								</div>
+								<div class="description">Updates blocks according to position, handles that only 
+visible blocks are drawn</div>
 							</td>
 						</tr>
 					
@@ -320,17 +377,34 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>Intro</b>()
+						<b>Track</b>(levelId, isTest)
 				</div>
 				
 				<div class="description">
-					The intro screen
+					The track, playground and moving object of the game.
 					<br /><i>Author: </i>Hanjo.
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								 <b>levelId</b>
+								
+							</dt>
+								<dd></dd>
+						
+							<dt>
+								 <b>isTest</b>
+								
+							</dt>
+								<dd></dd>
+						
+						</dl>
 					
 					
 					
@@ -358,15 +432,64 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="leave"> </a>
+					<a name="blockForPosition"> </a>
 					<div class="fixedFont">
 					
-					
-					<b>leave</b>()
+					<span class="light">{Object}</span>
+					<b>blockForPosition</b>(col, row)
 					
 					</div>
 					<div class="description">
-						Exits the intro screen
+						Returns the block at the given position
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>col</b>
+									
+								</dt>
+								<dd>Column number</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>row</b>
+									
+								</dt>
+								<dd>Row number</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>Block object</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="finishLevel"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>finishLevel</b>()
+					
+					</div>
+					<div class="description">
+						Called if level is finished
 						
 						
 					</div>
@@ -383,15 +506,146 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="render"> </a>
+					<a name="getBallBlockFallingPosition"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>render</b>()
+					<b>getBallBlockFallingPosition</b>(nextPosition, lastBlock)
 					
 					</div>
 					<div class="description">
-						The rendering method called on each frame
+						Calculates the next position if ball is not on track (currently not used)
+TODO: Make it better ;-)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>nextPosition</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lastBlock</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="initLevel"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>initLevel</b>(levelObj)
+					
+					</div>
+					<div class="description">
+						Initializes a level
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>levelObj</b>
+									
+								</dt>
+								<dd>ASCII-string of level-data</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="loadLevel"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>loadLevel</b>()
+					
+					</div>
+					<div class="description">
+						Loads and initializes the level with the current level ID from the database.
+Requires that the levelId property is set.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="nextGoalPosition"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>nextGoalPosition</b>()
+					
+					</div>
+					<div class="description">
+						Calculates the next position if ball is in goal area
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="nextPosition"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>nextPosition</b>()
+					
+					</div>
+					<div class="description">
+						Calculates the next position in a level
+TODO: Make it better ;-)
 						
 						
 					</div>
@@ -416,7 +670,33 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Starts the intro screen
+						Starts the track
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="updateBlocks"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>updateBlocks</b>()
+					
+					</div>
+					<div class="description">
+						Updates blocks according to position, handles that only 
+visible blocks are drawn
 						
 						
 					</div>

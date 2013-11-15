@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - THREE.MTLLoader.MaterialCreator</title>
+		<title>JsDoc Reference - Validation</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -203,7 +203,11 @@ ul.inheritsList
 	
 	<li><a href="../symbols/Intro.html">Intro</a></li>
 	
-	<li><a href="../symbols/THREE.MTLLoader.MaterialCreator.html">THREE.MTLLoader.MaterialCreator</a></li>
+	<li><a href="../symbols/Track.html">Track</a></li>
+	
+	<li><a href="../symbols/Util.html">Util</a></li>
+	
+	<li><a href="../symbols/Validation.html">Validation</a></li>
 	
 </ul>
 <hr />
@@ -214,24 +218,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class THREE.MTLLoader.MaterialCreator
+				Class Validation
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
+				<br />Version
+					$Rev$.<br />
 				
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Applications_XAMPP_htdocs_senku-sha_js_lib_mtl_loader.js.html">mtl_loader.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Applications_XAMPP_htdocs_senku-sha_js_validation.js.html">validation.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class THREE.MTLLoader.MaterialCreator.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Validation.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +250,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/THREE.MTLLoader.MaterialCreator.html#constructor">THREE.MTLLoader.MaterialCreator</a></b>(baseUrl, options)
+								<b><a href="../symbols/Validation.html#constructor">Validation</a></b>()
 							</div>
-							<div class="description">Create a new THREE-MTLLoader.MaterialCreator</div>
+							<div class="description">Static methods used for form validation</div>
 						</td>
 					</tr>
 				</tbody>
@@ -257,6 +263,42 @@ ul.inheritsList
 			
 
 <!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Validation.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">Validation.<b><a href="../symbols/Validation.html#.formIsValid">formIsValid</a></b>()
+								</div>
+								<div class="description">Validates all input fields</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">Validation.<b><a href="../symbols/Validation.html#.validateField">validateField</a></b>(obj)
+								</div>
+								<div class="description">Validates a form field</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -269,49 +311,29 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>THREE.MTLLoader.MaterialCreator</b>(baseUrl, options)
+						<b>Validation</b>()
 				</div>
 				
 				<div class="description">
-					Create a new THREE-MTLLoader.MaterialCreator
-					
+					Static methods used for form validation
+					<br /><i>Author: </i>Hanjo.
 				</div>
 				
 				
 				
 				
 					
+					
+					
+					
+					
+					
 						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
+						<dt class="heading">Requires:</dt>
 						
-							<dt>
-								 <b>baseUrl</b>
-								
-							</dt>
-								<dd>- Url relative to which textures are loaded</dd>
-						
-							<dt>
-								 <b>options</b>
-								
-							</dt>
-								<dd>- Set of options on how to construct the materials
-                 side: Which side to apply the material
-                       THREE.FrontSide (default), THREE.BackSide, THREE.DoubleSide
-                 wrap: What type of wrapping to apply for textures
-                       THREE.RepeatWrapping (default), THREE.ClampToEdgeWrapping, THREE.MirroredRepeatWrapping
-                 normalizeRGB: RGBs need to be normalized to 0-1 from 0-255
-                               Default: false, assumed to be already normalized
-                 ignoreZeroRGBs: Ignore values of RGBs (Ka,Kd,Ks) that are all 0's
-                                 Default: false
-                 invertTransparency: If transparency need to be inverted (inversion is needed if d = 0 is fully opaque)
-                                     Default: false (d = 1 is fully opaque)</dd>
+							<dd>OtherClassName</dd>
 						
 						</dl>
-					
-					
-					
-					
-					
 					
 					
 
@@ -322,6 +344,86 @@ ul.inheritsList
 			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name=".formIsValid"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Boolean}</span>
+					<span class="light">Validation.</span><b>formIsValid</b>()
+					
+					</div>
+					<div class="description">
+						Validates all input fields
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>true if all input fields are valid, otherwise false</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".validateField"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Boolean}</span>
+					<span class="light">Validation.</span><b>validateField</b>(obj)
+					
+					</div>
+					<div class="description">
+						Validates a form field
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>obj</b>
+									
+								</dt>
+								<dd>A jQuery object of the form field to validate</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>true if all input fields are valid, otherwise false</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
 			
 			
 <!-- ============================== event details ========================= -->		
@@ -334,7 +436,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Nov 15 2013 02:13:33 GMT+0100 (MEZ)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Nov 15 2013 14:01:51 GMT+0100 (MEZ)
 		</div>
 	</body>
 </html>

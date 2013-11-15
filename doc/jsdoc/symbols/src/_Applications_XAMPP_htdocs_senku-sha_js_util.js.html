@@ -19,7 +19,7 @@
 <span class='line'> 12</span> 
 <span class='line'> 13</span> </span><span class="COMM">/**
 <span class='line'> 14</span>  * Removes all children of a ThreeJS object
-<span class='line'> 15</span>  * @param {Object} obj ThreeJS object
+<span class='line'> 15</span>  * @param {THREE.Object3D} obj ThreeJS object
 <span class='line'> 16</span>  */</span><span class="WHIT">
 <span class='line'> 17</span> 
 <span class='line'> 18</span> </span><span class="NAME">Util.removeChilds</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -323,7 +323,7 @@
 <span class='line'>316</span> 
 <span class='line'>317</span> </span><span class="COMM">/**
 <span class='line'>318</span>  * Returns the number of seconds until a given time.
-<span class='line'>319</span>  * @param {Object} endTime Time value (Date.getTime())
+<span class='line'>319</span>  * @param {Number} endTime Time value (Date.getTime())
 <span class='line'>320</span>  * @returns Seconds until the time
 <span class='line'>321</span>  * @type Number
 <span class='line'>322</span>  */</span><span class="WHIT">
@@ -610,9 +610,9 @@
 <span class='line'>603</span> 
 <span class='line'>604</span> </span><span class="COMM">/**
 <span class='line'>605</span>  * Returns the ball position relative to the next track position
-<span class='line'>606</span>  * @param {Object} nextPos THREE.Vector3 object of the next track position
+<span class='line'>606</span>  * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
 <span class='line'>607</span>  * @returns THREE.Vector3 object of the ball position
-<span class='line'>608</span>  * @type Object
+<span class='line'>608</span>  * @type THREE.Vector3
 <span class='line'>609</span>  * TODO: Make it better... ;-)
 <span class='line'>610</span>  */</span><span class="WHIT">
 <span class='line'>611</span> 
@@ -629,8 +629,8 @@
 <span class='line'>622</span> 
 <span class='line'>623</span> </span><span class="COMM">/**
 <span class='line'>624</span>  * Returns an object of the collisions between the ball and a given block
-<span class='line'>625</span>  * @param {Object} block BLOCK object to be tested
-<span class='line'>626</span>  * @param {Object} nextPos THREE.Vector3 object of the next track position
+<span class='line'>625</span>  * @param {Block} block BLOCK object to be tested
+<span class='line'>626</span>  * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
 <span class='line'>627</span>  * @returns String Array with the detected collisions (right|left|front|back)
 <span class='line'>628</span>  * @type Array
 <span class='line'>629</span>  * TODO: Make it better... ;-)
