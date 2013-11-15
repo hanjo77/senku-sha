@@ -282,6 +282,24 @@ Track.prototype.nextGoalPosition = function() {
 }
 
 /**
+ * Returns the ball position relative to the next track position
+ * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
+ * @returns THREE.Vector3 object of the ball position
+ * @type THREE.Vector3
+ */
+
+Track.prototype.getBallPosition = function(nextPos) {
+
+    var pos = game.ball.touchPoint();
+    var result = new THREE.Vector3(
+        -nextPos.x,
+        -nextPos.y,
+        -nextPos.z
+    );
+    return result;
+}
+
+/**
  * Calculates the next position in a level
  * TODO: Make it better ;-)
  */
@@ -468,7 +486,7 @@ Track.prototype.nextPosition = function() {
 			}
 		}
 	}
-		
+
 	return nextPosition;
 }
 
@@ -479,7 +497,7 @@ Track.prototype.nextPosition = function() {
 
 Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) {
 	                                    
-	var ballPos = Util.getBallPosition(nextPosition);
+	var ballPos = this.getBallPosition(nextPosition);
 	                                    
 	if (!lastBlock) {
 		
@@ -493,7 +511,7 @@ Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) 
 			}
 		}
 	}   
-	var collisionTypes = Util.getCollisions(lastBlock, new THREE.Vector3(
+	var collisionTypes = lastBlock.getCollisions(new THREE.Vector3(
 		nextPosition.x, 
 		nextPosition.y+game.track.speedY, 
 		nextPosition.z
