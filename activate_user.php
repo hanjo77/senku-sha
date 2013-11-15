@@ -15,7 +15,7 @@
 			<h2>Senku-Sha</h2>
 			<?
 
-				include_once("inc/user.php");
+				include_once("inc/class.user.php");
 				$user = new User();
 				if ($user->activate()) {
 	

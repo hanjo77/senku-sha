@@ -1,8 +1,6 @@
 /**
  * The block, a tile of the track
- * @author Hanjo
- * @version $Rev$
- * @requires OtherClassName
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  * @constructor
  */
 

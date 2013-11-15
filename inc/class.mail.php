@@ -1,11 +1,20 @@
-<?
+<?php
+/**
+ * Class Mail - Sends a simple HTML e-mail
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
 
 require_once('inc/PHPMailer/class.phpmailer.php');
 
 /**
- * Class Mail
+ * Class Mail - Sends a simple HTML e-mail
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
-class Mail { 
+class Mail {
 	
 	protected $self = array();
 	

@@ -1,11 +1,20 @@
-<?
+<?php
+/**
+ * Class Level - Handles various level operations
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
 
-require_once("inc/db_util.php");
+require_once("inc/class.db_util.php");
 
 /**
- * Class Level
+ * Class Level - Handles various level operations
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
-class Level { 
+class Level {
 	
 	protected $self = array(); 
 	

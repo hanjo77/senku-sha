@@ -1,8 +1,7 @@
 /**
  * The main class that imports all the required scripts
  * and starts the Senku-Sha application.
- * @author Hanjo
- * @version $Rev$
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
 
 importScript("lib/leap.min.js");

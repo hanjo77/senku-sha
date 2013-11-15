@@ -1,8 +1,6 @@
 /**
  * A collection of static methods to be used globally
- * @author Hanjo
- * @version $Rev$
- * @requires OtherClassName
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  * @constructor
  */
 

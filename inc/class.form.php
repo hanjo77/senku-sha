@@ -1,11 +1,20 @@
-<?
+<?php
+/**
+ * Class Form - A very simple form module
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
 
-require_once("inc/db_util.php");
+require_once("inc/class.db_util.php");
 
 /**
- * Class Form
+ * Class Form - A very simple form module
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
-class Form { 
+class Form {
 	
 	protected $self = array();
 

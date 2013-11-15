@@ -1,8 +1,6 @@
 /**
  * The ball - our great main actor
- * @author Hanjo
- * @version $Rev$
- * @requires OtherClassName
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  * @constructor
  */
 

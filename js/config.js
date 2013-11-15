@@ -1,9 +1,7 @@
 /**
  * Configuration constants
- * @author Hanjo
- * @version $Rev$
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
-
 
 var CONFIG = {
 

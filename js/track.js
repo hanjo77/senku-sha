@@ -1,8 +1,6 @@
 /**
  * The track, playground and moving object of the game.
- * @author Hanjo
- * @version $Rev$
- * @requires OtherClassName
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  * @constructor
  */
 

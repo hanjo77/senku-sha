@@ -8,7 +8,7 @@ session_start();
 <ul>
 <?
 
-	require_once("inc/level.php");
+	require_once("inc/class.level.php");
 
 	$level = new Level(0);
 	$result = $level->list_levels($_SESSION["user_id"]);

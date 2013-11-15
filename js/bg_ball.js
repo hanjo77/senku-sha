@@ -1,8 +1,6 @@
 /**
  * The background ball - Used as some background gimmick
- * @author Hanjo
- * @version $Rev$
- * @requires OtherClassName
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  * @constructor
  */
 

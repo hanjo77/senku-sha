@@ -1,9 +1,7 @@
 /**
  * The editor, allows to edit tracks and save them
  * as strings to the database.
- * @author Hanjo
- * @version $Rev$
- * @requires OtherClassName
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  * @constructor
  */
 

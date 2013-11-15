@@ -2,9 +2,9 @@
 
 <?   
   	
-require_once("inc/form.php");  
-require_once("inc/mail.php");
-require_once("inc/user.php");
+require_once("inc/class.form.php");
+require_once("inc/class.mail.php");
+require_once("inc/class.user.php");
 
 $form = new Form("user", array(
 			  
