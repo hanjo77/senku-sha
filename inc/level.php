@@ -2,13 +2,20 @@
 
 require_once("inc/db_util.php");
 
+/**
+ * Class Level
+ */
 class Level { 
 	
 	protected $self = array(); 
 	
 	private static $id;
-	
-	public function __construct($levelId) { 
+
+    /**
+     * Initializes a new level
+     * @param int $levelId ID of the level
+     */
+    public function __construct($levelId) {
 		
 		$this->id = 0;
 		if (!is_null($levelId) && $levelId != "" && $levelId > 0) {
@@ -16,8 +23,13 @@ class Level {
 			$this->id = $levelId;
 		}
     }
-	
-	function list_levels($user_id) {
+
+    /**
+     * Lists levels from database
+     * @param int $user_id User ID whose levels shall be listed
+     * @return resource Database response object
+     */
+    function list_levels($user_id) {
 	
 		$db_util = new DBUtil();
 		if (isset($user_id)) {
@@ -31,7 +43,14 @@ class Level {
 		return $db_util->query($query);	
 	}
 
-	function save($title, $data, $user_id) {
+    /**
+     * Saves level to database
+     * @param string $title Title
+     * @param string $data Level ASCII string data
+     * @param int $user_id Creator user id
+     * @return int Level ID
+     */
+    function save($title, $data, $user_id) {
 		   
 		$db_util = new DBUtil();
 		if (!isset($this->id) || $this->id == 0) {
@@ -47,8 +66,12 @@ class Level {
 		}
 		return $id;	
 	}
-	
-	function delete() {
+
+    /**
+     * Deletes the level in the database
+     * @return null|resource Database response object
+     */
+    function delete() {
 		   
 		$db_util = new DBUtil();
 		if (!isset($this->id) || $this->id == 0) {
@@ -59,24 +82,37 @@ class Level {
 		}
 		return null;
 	}
-	
-	function activate() {
+
+    /**
+     * Activates the level
+     * @return resource Database response object
+     */
+    function activate() {
 		   
 		$db_util = new DBUtil();
 		$query = "UPDATE `level` SET `active` = 1 WHERE `id` = '".$this->id."'";
 		$result = $db_util->query($query);
 		return $result;	
 	}
-	
-	function deActivate() {
+
+    /**
+     * Deactivates the level
+     * @return resource Database response object
+     */
+    function deActivate() {
 		   
 		$db_util = new DBUtil();
 		$query = "UPDATE `level` SET `active` = 0 WHERE `id` = '".$this->id."'";
 		$result = $db_util->query($query);
 		return $result;	
 	}
-	
-	function load_plain($id) {
+
+    /**
+     * Returns the level ASCII string data
+     * @param int $id Level ID
+     * @return string Level ASCII string data
+     */
+    function load_plain($id) {
 	
 		$data = "{\n";
 		$db_util = new DBUtil();
@@ -91,7 +127,13 @@ class Level {
 		return $data;
 	}
 
-	function load($id, $test) {
+    /**
+     * Loads a level by ID
+     * @param int $id Level ID
+     * @param bool $test If true, only the level will be loaded, otherwise, the next level is included for a smooth change
+     * @return string Level ASCII string data
+     */
+    function load($id, $test) {
 		  
 		$this->id = $id; 
 		$data = "";

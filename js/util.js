@@ -12,7 +12,7 @@ function Util() {
 
 /**
  * Removes all children of a ThreeJS object
- * @param {Object} obj ThreeJS object
+ * @param {THREE.Object3D} obj ThreeJS object
  */
 
 Util.removeChilds = function(obj) {
@@ -316,7 +316,7 @@ Util.handleHash = function() {
 
 /**
  * Returns the number of seconds until a given time.
- * @param {Object} endTime Time value (Date.getTime())
+ * @param {Number} endTime Time value (Date.getTime())
  * @returns Seconds until the time
  * @type Number
  */
@@ -603,9 +603,9 @@ Util.updateWindow = function() {
 
 /**
  * Returns the ball position relative to the next track position
- * @param {Object} nextPos THREE.Vector3 object of the next track position
+ * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
  * @returns THREE.Vector3 object of the ball position
- * @type Object
+ * @type THREE.Vector3
  * TODO: Make it better... ;-)
  */
 
@@ -622,8 +622,8 @@ Util.getBallPosition = function(nextPos) {
 
 /**
  * Returns an object of the collisions between the ball and a given block
- * @param {Object} block BLOCK object to be tested
- * @param {Object} nextPos THREE.Vector3 object of the next track position
+ * @param {Block} block BLOCK object to be tested
+ * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
  * @returns String Array with the detected collisions (right|left|front|back)
  * @type Array
  * TODO: Make it better... ;-)

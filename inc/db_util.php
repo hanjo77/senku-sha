@@ -1,5 +1,8 @@
 <?
 
+/**
+ * Class DBUtil
+ */
 class DBUtil { 
 	
 	protected $self = array();
@@ -8,16 +11,22 @@ class DBUtil {
 	private static $user;
 	private static $password;
 	private static $connection;
-	
-	public function __construct() {
+
+    /**
+     * Initializes a new DBUtil class
+     */
+    public function __construct() {
                              
 		$this->url = "127.0.0.1"; 
 		$this->db = "senku-sha";
 		$this->user = "senku-sha";  
 		$this->password = "53nku-5h4";
     }
-          
-	function connect() {
+
+    /**
+     * Connects to the database
+     */
+    function connect() {
 		
 		$this->connection = mysql_connect($this->url, $this->user, $this->password);
 		if(! $this->connection )
@@ -27,6 +36,11 @@ class DBUtil {
 		mysql_select_db($this->db);
 	}
 
+    /**
+     * Executes a query on the database
+     * @param string $query SQL-query
+     * @return resource Database response object
+     */
 	function query($query) {
 	       
 	  	$this->connect();
@@ -39,7 +53,12 @@ class DBUtil {
 		return $result;	
 	}
 
-	function insert($query) {
+    /**
+     * Inserts into database
+     * @param string $query SQL-query
+     * @return int ID
+     */
+    function insert($query) {
 	       
 	  	$this->connect();
 		mysql_query($query);

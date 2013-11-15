@@ -1,10 +1,6 @@
-
 *.docx
-
 *.db
-
 *.docx#
-
 *.xlsx
-
 .idea/*
+*phpdoc-cache*

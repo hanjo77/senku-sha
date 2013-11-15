@@ -2,19 +2,38 @@
 
 require_once("inc/db_util.php");
 
+/**
+ * Class Form
+ */
 class Form { 
 	
 	protected $self = array();
-	
-	private static $table; 
-	private static $fields = array(); 
-	
-	public function __construct($table, $fields) {
+
+    /**
+     * @var String Table name
+     */
+
+    private static $table;
+    /**
+     * @var array Form field objects
+     */
+    private static $fields = array();
+
+    /**
+     * Initializes a new Form object
+     * @param string $table Table name
+     * @param array $fields Array of field objects
+     */
+    public function __construct($table, $fields) {
                              
     	$this->table = $table;
     	$this->fields = $fields;
     }
 
+    /**
+     * Add field
+     * @param array $field Field object
+     */
     function add_field($field) { 
 	
 		$name = array_keys($this->fields, $field);
@@ -53,12 +72,19 @@ class Form {
 		}
     }
 
-	function display() {
+    /**
+     * Displays the form
+     */
+    function display() {
 		
 		include("templates/tmpl_form.php");	
 	}
 
-	function save() {
+    /**
+     * Saves the form in the database
+     * @return int ID of the created entry
+     */
+    function save() {
 		    
 		$fields = "";
 		$values = ""; 

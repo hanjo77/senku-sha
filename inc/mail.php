@@ -2,17 +2,31 @@
 
 require_once('inc/PHPMailer/class.phpmailer.php');
 
+/**
+ * Class Mail
+ */
 class Mail { 
 	
 	protected $self = array();
 	
 	private static $table; 
-	private static $fields = array(); 
-	
-	public function __construct() {
+	private static $fields = array();
+
+    /**
+     * Initializes a new Mail object
+     */
+    public function __construct() {
                              
     }
 
+    /**
+     * Sends a HTML message by e-mail
+     * @param string $to_addr Destination address
+     * @param string $to_name Destination name
+     * @param string $subject Subject
+     * @param string $message Message HTML string
+     * @return string Response (OK | error info)
+     */
     function send($to_addr, $to_name, $subject, $message) { 
 	
 		$phpmailer = new PHPMailer();
