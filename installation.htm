@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Installation Manual</title>
+</head>
+<body class="plain">
+    <div class="content">
+        <h1>Installation Manual</h1>
+        <p>To install Senku-Sha on your web server, follow these steps:</p>
+        <ol>
+            <li>Find the SQL script file <code>doc/senku-sha-init-db.sql</code> and run it on your mySQL server to create the necessary database and tables.</li>
+            <li>Put all files inside your preferred folder of your web server.</li>
+            <li>Edit the file <code>inc/config.php</code> to fit your server settings:
+                <ul>
+                    <li>If you do not change the <code>mail</code> parameters, PHP will not be able to send e-mails to newly registered users.</li>
+                    <li>If you have not changed anything to the SQL script, you will only have to change the server URL of the <code>db</code> settings.</li>
+                </ul>
+            <li>Optional: Edit the file <code>js/config.js</code> if you want to change any game settings.</li>
+        </ol>
+    </div>
+</body>
+</html>

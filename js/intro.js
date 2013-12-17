@@ -81,8 +81,6 @@ Intro.prototype.start = function() {
 	this.camera.position.z = 10;
 	this.camera.position.y = 0;
 
-	// model
-
 	var loader = new THREE.OBJMTLLoader();
 	loader.addEventListener( 'load', function ( event ) {
 
@@ -101,7 +99,7 @@ Intro.prototype.start = function() {
    	this.container.get(0).appendChild(this.renderer.domElement);
 
 	this.render();
-}
+};
 
 /**
  * The rendering method called on each frame
@@ -117,4 +115,4 @@ Intro.prototype.render = function() {
 	}
 																	
 	this.renderer.render(this.scene, this.camera);
-}
+};

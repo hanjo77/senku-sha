@@ -37,6 +37,30 @@ noscript, #noWebGL {
 	border: 0px solid #000000;
 }
 
+body.plain {
+
+    font-size: 1.5em;
+    width: 100%;
+    background-color: #000000;
+    background-image: none;
+}
+
+body.plain .content {
+
+    margin: 2em;
+}
+
+body.plain * {
+
+    width: auto;
+    text-shadow: 0 0 5px #000;
+}
+
+body.plain h1 {
+
+    font-size: 3em;
+}
+
 #info a {
 	
 	margin: 0 0 1em;

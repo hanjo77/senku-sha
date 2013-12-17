@@ -1,4 +1,12 @@
-<!DOCTYPE HTML>
+<?php
+/**
+ * This page should be opened after the user clicks the activation
+ * link of the confirmation mail message
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
+?><!DOCTYPE HTML>
 <html>
 <head> 
 	<meta charset="UTF-8">

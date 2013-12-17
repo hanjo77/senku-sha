@@ -68,7 +68,7 @@ Editor.prototype.clear = function() {
 		})
 	}
 	this.initHandlers();
-}
+};
 
 /**
  * Adds all event handlers for the editor
@@ -137,7 +137,7 @@ Editor.prototype.initHandlers = function() {
 		                
 		$(e.target).css({ opacity: 0 });
 	});
-}
+};
 
 /**
  * Returns an empty table row string
@@ -156,7 +156,7 @@ Editor.prototype.getEmptyTableRow = function(rowId) {
 		+ "<td id=\"tableCell_" + rowId + "_3\"></td>"
 		+ "<td id=\"tableCell_" + rowId + "_4\"></td>"
 		+ "</tr>";
-}
+};
 
 /**
  * Handles the scroll down button/overlay click
@@ -179,7 +179,7 @@ Editor.prototype.scrollDown = function() {
 			display: "none"
 		});
 	}
-}
+};
 
 /**
  * Handles the scroll up button/overlay click
@@ -208,7 +208,7 @@ Editor.prototype.scrollUp = function() {
 			marginTop: nextPos
 		});
 	}
-}
+};
 
 /**
  * Loads a level
@@ -312,7 +312,7 @@ Editor.prototype.loadLevel = function(data) {
 		
 		display: "block"
 	});
-}
+};
 
 /**
  * Adds a block
@@ -352,7 +352,7 @@ Editor.prototype.addBlock = function(pos) {
 		console.log(pos);
 		console.log(this.blocks);
 	}
-}
+};
 
 /**
  * Returns the current level ASCII string
@@ -401,5 +401,5 @@ Editor.prototype.levelString = function() {
 	}
 	
 	return level;
-}
+};
 

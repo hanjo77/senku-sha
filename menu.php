@@ -1,4 +1,11 @@
-<?
+<?php
+/**
+ * The content include for the main menu
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
+?><?
 
 if (!isset($_SESSION)) {
 	

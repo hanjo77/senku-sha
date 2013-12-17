@@ -1,4 +1,11 @@
-<h2>Editor</h2>
+<?php
+/**
+ * The content include file for the level editor
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
+?><h2>Editor</h2>
             
 <p>Feel free to create your own track</p>
 

@@ -1,4 +1,10 @@
-<?
+<?php
+/**
+ * Loads a level from database to be used in game
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
 
 require_once("inc/class.level.php");
 session_start();

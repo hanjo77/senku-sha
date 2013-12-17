@@ -1,4 +1,11 @@
-<h2>Login</h2>
+<?php
+/**
+ * The content include for the login form
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
+?><h2>Login</h2>
 
 <?   
   	

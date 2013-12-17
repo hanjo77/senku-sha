@@ -23,10 +23,10 @@ Validation.formIsValid = function() {
 		if (!Validation.validateField($(value))) {
 			
 			valid = false;
-		};
-	});
+        }
+    });
 	return valid;
-}
+};
 
 /**
  * Validates a form field
@@ -86,4 +86,4 @@ Validation.validateField = function(obj) {
 		}
 	}
 	return valid;	
-}
+};

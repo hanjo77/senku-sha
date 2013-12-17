@@ -64,12 +64,12 @@ class Level {
 		$db_util = new DBUtil();
 		if (!isset($this->id) || $this->id == 0) {
 			
-			$query = "INSERT INTO `level` (`title`, `data`, `creator`) VALUES ('".$title."', '".$data."', '".$user_id."')";
+			$query = "INSERT INTO `level` (`title`, `data`, `creator`) VALUES ('".mysql_real_escape_string($title)."', '".$data."', '".$user_id."')";
 			$id = $db_util->insert($query);
 		}
 		else {
 			
-			$query = "UPDATE `level` SET `title` = '".$title."', `data` = '".$data."' WHERE id = '".$this->id."'";
+			$query = "UPDATE `level` SET `title` = '".mysql_real_escape_string($title)."', `data` = '".$data."' WHERE id = '".$this->id."'";
 			$db_util->query($query);
 			$id = $this->id;
 		}

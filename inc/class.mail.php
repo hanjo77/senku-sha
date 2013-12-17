@@ -6,7 +6,8 @@
  * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
 
-require_once('inc/PHPMailer/class.phpmailer.php');
+require_once('PHPMailer/class.phpmailer.php');
+require_once('config.php');
 
 /**
  * Class Mail - Sends a simple HTML e-mail
@@ -41,13 +42,13 @@ class Mail {
 		$phpmailer = new PHPMailer();
 
 		$phpmailer->IsSMTP();
-		$phpmailer->Host = "ssl://smtp.gmail.com";
+		$phpmailer->Host = Config::$mail["server"];
 		$phpmailer->SMTPAuth = true;
 		$phpmailer->Port  = 465;
-		$phpmailer->Username = "********";
-		$phpmailer->Password = "********";
+		$phpmailer->Username = Config::$mail["user"];
+		$phpmailer->Password = Config::$mail["password"];
 		
-		$phpmailer->SetFrom('mymail@domain.com', 'Senku-Sha'); //set from name
+		$phpmailer->SetFrom(Config::$mail["address"], 'Senku-Sha'); //set from name
 
 		$phpmailer->Subject = $subject;
 		$phpmailer->MsgHTML($message);

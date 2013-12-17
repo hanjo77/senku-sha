@@ -1,4 +1,7 @@
 <?php
+
+require_once("config.php");
+
 /**
  * Class DBUtil - Database utility
  * PHP Version 5.0.0
@@ -12,6 +15,7 @@
  * @package SenkuSha
  * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
+
 class DBUtil {
 	
 	protected $self = array();
@@ -25,11 +29,10 @@ class DBUtil {
      * Initializes a new DBUtil class
      */
     public function __construct() {
-                             
-		$this->url = "127.0.0.1"; 
-		$this->db = "senku-sha";
-		$this->user = "senku-sha";  
-		$this->password = "53nku-5h4";
+		$this->url = Config::$db["server"];
+		$this->db = Config::$db["name"];
+		$this->user = Config::$db["user"];
+		$this->password = Config::$db["password"];
     }
 
     /**

@@ -9,7 +9,6 @@ function Track(levelId, isTest) {
 	THREE.Object3D.call(this);
 	this.levelId = levelId;
 	this.isTest = isTest;
-	this.lastY = null;
 	this.lastZ = null;
 	this.trackSpeed = CONFIG.TRACK_SPEED;
 	this.speedModifier = 1;
@@ -59,7 +58,7 @@ Track.prototype.loadLevel = function() {
 			game.track.initLevel(eval("(" + result + ")"));
 		}
 	});	
-}
+};
 
 /**
  * Called if level is finished
@@ -97,7 +96,7 @@ Track.prototype.finishLevel = function() {
 		this.nextX = -1*CONFIG.BLOCK_SIZE*(Math.floor(this.blocks[this.blocks.length-4].length/2));
 		this.nextZ = -4*CONFIG.BLOCK_SIZE;
 	}
-}
+};
 
 /**
  * Starts the track
@@ -114,11 +113,11 @@ Track.prototype.start = function() {
 		
 		game.startTime = new Date();
 	}
-}
+};
    
 /**
  * Initializes a level
- * @param {String} levelObj ASCII-string of level-data
+ * @param {Object} levelObj ASCII-string of level-data
  */
 
 Track.prototype.initLevel = function(levelObj) {
@@ -128,12 +127,12 @@ Track.prototype.initLevel = function(levelObj) {
 	var level = levelObj.levelData;
 	var rows = level.split("\n");
 
-	var blockRow;
+	var blockRow, row, col;
 	this.blocks = [];
-   	for (var row = 0; row < rows.length; row++) {
+   	for (row = 0; row < rows.length; row++) {
     
 		blockRow = [];
-	   	for (var col = 0; col < rows[row].length; col++) {
+	   	for (col = 0; col < rows[row].length; col++) {
     
 			if (!isNaN(parseInt(rows[row].charAt(col), 10))) {
 		
@@ -152,9 +151,9 @@ Track.prototype.initLevel = function(levelObj) {
 		}
 		this.blocks.push(blockRow);
 	}
-	for (var row = 0; row < this.blocks.length; row++) {
+	for (row = 0; row < this.blocks.length; row++) {
 		
-		for (var col = 0; col < this.blocks[row].length; col++) {
+		for (col = 0; col < this.blocks[row].length; col++) {
 		
 			if (this.blocks[row][col]) {
 				
@@ -181,7 +180,7 @@ Track.prototype.initLevel = function(levelObj) {
 			this.remove(this.children[0]);
 		}
 	}
-}
+};
 
 /**
  * Returns the block at the given position
@@ -199,7 +198,7 @@ Track.prototype.blockForPosition = function(col, row) {
 		return block;
 	}
 	return null;                                                      
-} 
+};
 
 /**
  * Updates blocks according to position, handles that only 
@@ -211,29 +210,30 @@ Track.prototype.updateBlocks = function() {
 	if (game) {
 	
 		var currentBlock = game.ball.blockUnderBall(this.position);
+        var row, col, block;
 		if (currentBlock && (currentBlock.position.z/CONFIG.BLOCK_SIZE != this.activeRow)) {
 			
 			this.activeRow = currentBlock.position.z/CONFIG.BLOCK_SIZE;
-			for (var row = 0; row < this.blocks.length; row++) {
+			for (row = 0; row < this.blocks.length; row++) {
 
 				blockRow = new Array();
-				for (var col = 0; col < this.blocks[row].length; col++) {
+				for (col = 0; col < this.blocks[row].length; col++) {
 							 
-					var block = this.blocks[row][col];
+					block = this.blocks[row][col];
 					if (block) {
 
 						this.remove(block);
 					}
 				}
 			}  
-			for (var row = (this.activeRow-this.frontRows); row < (this.activeRow+this.backRows); row++) {
+			for (row = (this.activeRow-this.frontRows); row < (this.activeRow+this.backRows); row++) {
 
 				blockRow = new Array();
 				if (this.blocks[row]) {
 					
-					for (var col = 0; col < this.blocks[row].length; col++) {
+					for (col = 0; col < this.blocks[row].length; col++) {
 
-						var block = this.blocks[row][col];
+						block = this.blocks[row][col];
 						if (block) {
 
 							this.add(block);
@@ -243,7 +243,7 @@ Track.prototype.updateBlocks = function() {
 			}         
 		}                
 	}
-}
+};
 
 /**
  * Calculates the next position if ball is in goal area
@@ -279,7 +279,7 @@ Track.prototype.nextGoalPosition = function() {
 		this.tempSpeedZ = nextPos.z-this.position.z;
 	}
 	return nextPos;
-}
+};
 
 /**
  * Returns the ball position relative to the next track position
@@ -290,14 +290,12 @@ Track.prototype.nextGoalPosition = function() {
 
 Track.prototype.getBallPosition = function(nextPos) {
 
-    var pos = game.ball.touchPoint();
-    var result = new THREE.Vector3(
+    return new THREE.Vector3(
         -nextPos.x,
         -nextPos.y,
         -nextPos.z
     );
-    return result;
-}
+};
 
 /**
  * Calculates the next position in a level
@@ -421,28 +419,25 @@ Track.prototype.nextPosition = function() {
 			this.tempSpeedY = this.speedY*game.timeRate;           
 			nextPosition.y = this.position.y + this.tempSpeedY;          
 		}
-		
+
 		if (game.ball.isFalling){
-			
+
 			if (nextBlock && nextPosition.y >= floorPosY) {
-		
+
 				this.nextY = 0;
 				game.ball.inAir = false;
 				nextPosition.y = floorPosY;
 				this.speedY = CONFIG.GRAVITY;
 				game.ball.canMove = {
-			
+
 					back: true,
 					front: true,
 					left: true,
 					right: true
 				};
-				if (game.warpEndTime <= 0) {
-					
-					nextPosition = nextBlock.getNextPositionToBall(nextPosition);
-				}
+				if (game.warpEndTime <= 0) nextPosition = nextBlock.getNextPositionToBall(nextPosition, null);
 			}
-		}	
+		}
 			
 		if (!nextBlock && (game.track.position.y > 0)) {
 
@@ -451,7 +446,6 @@ Track.prototype.nextPosition = function() {
 				nextPosition = this.getBallBlockFallingPosition(nextPosition);
 				if (nextPosition.y > 1 && !this.isStopped) {
 
-					// game.clearGame();
 					this.oldSpeedY = this.speedY;
 					this.speedX = 0;
 					this.speedY = 0;
@@ -488,78 +482,67 @@ Track.prototype.nextPosition = function() {
 	}
 
 	return nextPosition;
-}
+};
 
 /**
  * Calculates the next position if ball is not on track (currently not used)
  * TODO: Make it better ;-)
  */
 
-Track.prototype.getBallBlockFallingPosition = function(nextPosition, lastBlock) {
-	                                    
-	var ballPos = this.getBallPosition(nextPosition);
-	                                    
-	if (!lastBlock) {
-		
-		lastBlock = game.ball.lastBlock;
-		var neighbours = lastBlock.neighbours;
-		for (var block in neighbours) {
+Track.prototype.getBallBlockFallingPosition = function (nextPosition, lastBlock) {
 
-			if (neighbours[block]) {
-				
-				nextPosition = this.getBallBlockFallingPosition(nextPosition, neighbours[block]);
-			}
-		}
-	}   
-	var collisionTypes = lastBlock.getCollisions(new THREE.Vector3(
-		nextPosition.x, 
-		nextPosition.y+game.track.speedY, 
-		nextPosition.z
-	));
-	var blockPos = lastBlock.position;
-	var lambda = null;
-	for (var i = 0; i < collisionTypes.length; i++) {
-	
-		switch(collisionTypes[i]) { 
-			
-			case "back":
-			case "backLeft":
-			case "backRight":     
-			
-				speedZ = CONFIG.ACCELERATION*game.timeRate;
-				lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.z-lastBlock.front, 2))/(this.position.y+CONFIG.GRAVITY);
-				break;                                                              
-			
-			case "front":
-			case "frontLeft":
-			case "frontRight":     
+    var ballPos = this.getBallPosition(nextPosition);
 
-				speedZ = -1*CONFIG.ACCELERATION*game.timeRate;
-				lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.z-lastBlock.back, 2))/(this.position.y+CONFIG.GRAVITY);
-				break;                                                              
+    if (!lastBlock) {
 
-			case "left":
-			case "backLeft":
-			case "frontLeft":     
+        lastBlock = game.ball.lastBlock;
+        var neighbours = lastBlock.neighbours;
+        for (var block in neighbours) {
 
-				speedX = -1*CONFIG.ACCELERATION*game.timeRate;
-				lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.x-lastBlock.right, 2))/(this.position.y+CONFIG.GRAVITY);
-				break;                                                              
+            if (neighbours[block]) nextPosition = this.getBallBlockFallingPosition(nextPosition, neighbours[block]);
+        }
+    }
+    var collisionTypes = lastBlock.getCollisions(new THREE.Vector3(
+        nextPosition.x,
+        nextPosition.y + game.track.speedY,
+        nextPosition.z
+    ));
+    var blockPos = lastBlock.position;
+    var lambda = null;
+    for (var i = 0; i < collisionTypes.length; i++) {
 
-			case "right":        
-			case "backRight":
-			case "frontRight":
-                 
-				speedX = CONFIG.ACCELERATION*game.timeRate;
-				lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.x-lastBlock.left, 2))/(this.position.y+CONFIG.GRAVITY);
-				break
-		}
-		nextPosition.x += game.track.speedX;
-		nextPosition.z += game.track.speedZ;
-	}
-	if (lambda && lambda != Infinity && lambda < 1) {
-		
-		nextPosition.y += (game.track.speedY - (lambda * game.track.speedY))-game.track.speedY;
-	}
-	return nextPosition;
-}
+        switch (collisionTypes[i]) {
+
+            case "back":
+
+                game.track.speedZ = CONFIG.ACCELERATION * game.timeRate;
+                lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.z - lastBlock.front, 2)) / (this.position.y + CONFIG.GRAVITY);
+                break;
+
+            case "front":
+
+                game.track.speedZ = -1 * CONFIG.ACCELERATION * game.timeRate;
+                lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.z - lastBlock.back, 2)) / (this.position.y + CONFIG.GRAVITY);
+                break;
+
+            case "left":
+
+                game.track.speedX = -1 * CONFIG.ACCELERATION * game.timeRate;
+                lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.x - lastBlock.right, 2)) / (this.position.y + CONFIG.GRAVITY);
+                break;
+
+            case "right":
+
+                game.track.speedX = CONFIG.ACCELERATION * game.timeRate;
+                lambda = Math.sqrt(Math.pow(game.ball.geometry.radius, 2) - Math.pow(ballPos.x - lastBlock.left, 2)) / (this.position.y + CONFIG.GRAVITY);
+                break
+        }
+        nextPosition.x += game.track.speedX;
+        nextPosition.z += game.track.speedZ;
+    }
+    if (lambda && lambda != Infinity && lambda < 1) {
+
+        nextPosition.y += (game.track.speedY - (lambda * game.track.speedY)) - game.track.speedY;
+    }
+    return nextPosition;
+};

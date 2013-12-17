@@ -1,4 +1,10 @@
-<?
+<?php
+/**
+ * Displays the level selection list
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
 
 session_start();         
 

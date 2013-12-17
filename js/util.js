@@ -39,7 +39,7 @@ Util.removeChilds = function(obj) {
 	
 		obj.dispose();
 	}
-}
+};
 
 /**
  * Creates a menu button
@@ -52,7 +52,7 @@ Util.removeChilds = function(obj) {
 Util.menuButton = function(name, content) {
 
 	return $('<a id="' + name + '" class="menuButton" onclick="Util.' + name + '()">' + content + '</a>');
-}         
+};
 
 /**
  * Creates a block button (used in editor)
@@ -65,7 +65,7 @@ Util.blockButton = function(blockType) {
 
 	var color = Util.getHexColorFromInt(blockType.color);
 	return $('<a id="' + blockType.id + '" class="blockButton" style="background-color: ' + color + '">&nbsp;</a>');
-}     
+};
 
 /**
  * Returns the hex value of an integer to be used for a CSS color attribute
@@ -82,7 +82,7 @@ Util.getHexColorFromInt = function(intColor) {
 		color = "0" + color;
 	}
 	return "#" + color;
-}    
+};
 
 /**
  * Action called on exit button click
@@ -91,7 +91,7 @@ Util.getHexColorFromInt = function(intColor) {
 Util.exit = function() {
 	   
 	Util.changeContent("menu.php");
-}
+};
 
 /**
  * Action called on editor save button click
@@ -116,7 +116,7 @@ Util.editorSave = function() {
 			$("#levelId").val(result);
 		}
 	});
-}
+};
 
 /**
  * Action called on editor level selection button click
@@ -136,7 +136,7 @@ Util.editorLevelSelection = function() {
 		
 		display: "none"
 	});
-}
+};
 
 /**
  * Action called on editor delete level button click
@@ -157,7 +157,7 @@ Util.deleteLevel = function(levelId) {
 			
 		Util.editorLevelSelection();
 	});
-}
+};
 
 /**
  * Action called on editor load level button click
@@ -178,7 +178,7 @@ Util.loadLevel = function(levelId) {
 		
 		editor.loadLevel(eval("(" + result + ")"));
 	});
-}
+};
 
 /**
  * Action called on editor clear button click
@@ -187,7 +187,7 @@ Util.loadLevel = function(levelId) {
 Util.editorClear = function() {
 
 	editor.clear();
-}
+};
 
 /**
  * Action called on activate level button click
@@ -208,7 +208,7 @@ Util.activateLevel = function(levelId) {
 			
 		Util.editorLevelSelection();
 	});
-}
+};
 
 /**
  * Action called on test level button click
@@ -217,7 +217,7 @@ Util.activateLevel = function(levelId) {
 Util.testLevel = function(levelId) {
 	
 	Util.changeContent("game.php?id=" + levelId);
-}
+};
 
 /**
  * Action called on edit level button click
@@ -229,7 +229,7 @@ Util.editLevel = function(levelId) {
 		
 		game.clearGame(levelId, true);
 	}
-}
+};
 
 /**
  * Changes the contents of the content-container and handles 
@@ -283,7 +283,7 @@ Util.changeContent = function(page) {
 		Validation.formIsValid($('form').get(0));
 		Util.updateWindow();		
 	});
-}
+};
 
 /**
  * Reads the current URL hash and changes the content depending on it
@@ -310,7 +310,7 @@ Util.handleHash = function() {
 		}
 	} 
 	Util.changeContent(hash + ".php" + param);
-}  
+};
 
 /**
  * Returns the number of seconds until a given time.
@@ -330,7 +330,7 @@ Util.getSecondsUntil = function(endTime) {
 		}
 	}
 	return null;
-}         
+};
 
 /**
  * Updates the info window
@@ -457,7 +457,7 @@ Util.updateInfoHTML = function() {
 	$("#lifeDisplay").css({
 			display: "block"
 		});
-}
+};
 
 /**
  * Initializes all event handlers for the UI
@@ -573,7 +573,7 @@ Util.initHandlers = function() {
 	});
 
 	window.setTimeout(function() { Validation.formIsValid() }, 1000);
-}
+};
 
 /**
  * Updates the window, handles window resize issues
@@ -597,7 +597,7 @@ Util.updateWindow = function() {
 		obj.renderer.setSize(obj.container.width(), obj.container.height());
 	}
 	$("#content").center();
-}
+};
 
 /**
  * Centers a jQuery object relative to the window
@@ -614,4 +614,4 @@ jQuery.fn.center = function () {
                                                 $(window).scrollLeft()) + "px"
 	});
     return this;
-}
+};

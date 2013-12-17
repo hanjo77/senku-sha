@@ -5,15 +5,14 @@
  */
 
 function Ball() {
-	       
-	// call parent constructor
+
 	THREE.Mesh.call(this);
 	this.geometry = new THREE.SphereGeometry(CONFIG.BALL_RADIUS, 24, 16);  
 	this.position.y = CONFIG.BALL_RADIUS;
 	
 	this.texture = THREE.ImageUtils.loadTexture('img/ball_texture.png');
 	this.material = new THREE.MeshLambertMaterial({
-		map: this.texture,                 
+		map: this.texture
 	}),                                                                     
 	                             
 	this.castShadow = true;
@@ -31,7 +30,6 @@ function Ball() {
 	};
 }
 
-// inherit THREE.Mesh
 Ball.prototype = new THREE.Mesh();
 Ball.prototype.constructor = Ball;
 
@@ -49,7 +47,7 @@ Ball.prototype.touchPoint = function() {
 		this.position.y,
 		this.position.z + this.geometry.radius
 	);
-}
+};
 
 /**
  * The point that will be under the ball in the next frame
@@ -65,7 +63,7 @@ Ball.prototype.nextTouchPoint = function() {
 		this.touchPoint().y,
 		this.touchPoint().z + speedZ
 	);
-}                     
+};
          
 /**
  * Rotate ball around an arbitrary axis in world space
@@ -80,7 +78,7 @@ Ball.prototype.rotateAroundWorldAxis = function(axis, radians) {
     rotWorldMatrix.multiply(this.matrix);        // pre-multiply
     this.matrix = rotWorldMatrix;
     this.rotation.setFromRotationMatrix(this.matrix);
-} 
+};
 
 Ball.prototype.jump = function() {
 	
@@ -88,7 +86,7 @@ Ball.prototype.jump = function() {
 
 		this.isJumping = true;
 	}
-}        
+};
 
 /**
  * Finds block under the ball
@@ -216,4 +214,4 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 		}                  
 	} 
 	return null;
-}
+};

@@ -160,7 +160,7 @@ Game.prototype.addHandlers = function() {
 			game.track.start();
 		}
 	});
-}
+};
 
 /**
  * Starts the game
@@ -221,7 +221,7 @@ Game.prototype.startGame = function() {
 	this.render();
 
 	this.addHandlers();
-}
+};
 
 /**
  * The rendering method called on each frame
@@ -259,7 +259,7 @@ Game.prototype.render = function(time) {
 	}
 						 
 	this.renderer.render(this.scene, this.camera);
-}
+};
 
 /**
  * Clears the game and returns to menu or editor, without parameters, the menu will be opened.
@@ -295,4 +295,4 @@ Game.prototype.clearGame = function(editLevelId, edit) {
 	}
 	this.currentLevel = 1;
 	delete this;
-}
+};

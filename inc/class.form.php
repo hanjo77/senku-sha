@@ -109,11 +109,11 @@ class Form {
 				$fields .= "`".$key."`";
 				if ($field["type"] == "password") {
 				
-					$values .= "PASSWORD('".$_POST[$key]."')";
+					$values .= "PASSWORD('".mysql_real_escape_string($_POST[$key])."')";
 				}
 				else {
 				
-					$values .= "'".$_POST[$key]."'";
+					$values .= "'".mysql_real_escape_string($_POST[$key])."'";
 				}
 			}
 		}

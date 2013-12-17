@@ -40,37 +40,37 @@ var CONFIG = {
 			color: 0xea4dc4,
 			blocker: true,
 			height: 1.5,
-			editor: true,
+			editor: true
 		}, {
 			id: 5,    
 			name: "invertor",
 			color: 0x00cccc,
-			editor: true,
+			editor: true
 		}, {
 			id: 6,    
 			name: "speedup",
 			color: 0x00cc00,
-			editor: true,
+			editor: true
 		}, {
 			id: 7,    
 			name: "slowdown",
 			color: 0xcc0000,
-			editor: true,
+			editor: true
 		}, {
 			id: 8,    
 			name: "jumper",
 			color: 0x0000cc,
-			editor: true,
+			editor: true
 		}, {
 			id: 9,    
 			name: "warp",
 			color: 0xcccccc,
-			editor: true,
+			editor: true
 		}, {
 			id: 10,    
 			name: "empty",
 			color: 0x000000,
-			editor: true,
+			editor: true
 		}
 	],
 	KEYCODE: {
@@ -94,11 +94,11 @@ var CONFIG = {
 		ROWS: 10
 	},
 	ACCELERATION: 1.5,
-	TRACK_SPEED: 1.5,
+	TRACK_SPEED: 2.5,
 	GRAVITY: 1,
 	JUMP_SPEED: 2,
 	JUMP_ACCELERATION: 2,
 	FALLING_SPEED_TRIGGER: -1,
 	LIVES: 5,
 	SCREEN_WIDTH: 15
-}
+};

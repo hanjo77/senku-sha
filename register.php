@@ -1,4 +1,11 @@
-<h2>Registration</h2>
+<?php
+/**
+ * The content include for the registration form
+ * PHP Version 5.0.0
+ * @package SenkuSha
+ * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
+ */
+?><h2>Registration</h2>
 
 <?   
   	
