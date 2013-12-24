@@ -1,6 +1,6 @@
 <?php
 
-require_once("config.php");
+require_once("class.config.php");
 
 /**
  * Class DBUtil - Database utility
@@ -29,10 +29,10 @@ class DBUtil {
      * Initializes a new DBUtil class
      */
     public function __construct() {
-		$this->url = Config::$db["server"];
-		$this->db = Config::$db["name"];
-		$this->user = Config::$db["user"];
-		$this->password = Config::$db["password"];
+		$this->url = SenkuShaConfig::$db["server"];
+		$this->db = SenkuShaConfig::$db["name"];
+		$this->user = SenkuShaConfig::$db["user"];
+		$this->password = SenkuShaConfig::$db["password"];
     }
 
     /**

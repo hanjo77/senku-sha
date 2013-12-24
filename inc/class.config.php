@@ -6,7 +6,7 @@
  * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
 
-class Config {
+class SenkuShaConfig {
 
     public $self = array();
 
