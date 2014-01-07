@@ -366,22 +366,26 @@ Editor.prototype.levelString = function() {
 	var rowString = "";
 	for (var row = 0; row < this.blocks.length; row++) {
 	
-		for (var col = 0; col < CONFIG.TRACK_WIDTH; col++) {
+		for (var col = CONFIG.TRACK_WIDTH-1; col >= 0; col--) {
 			
 			var block = $("#tableCell_" + row + "_" + col);
 			if (block && block.attr("class")) {
 				
-				rowString += block.attr("class");
+				rowString = block.attr("class") + rowString;
 			}
 			else {
 				
-				rowString += " ";
+				rowString = " " + rowString;
 			}
 		}
-		if (rowString.trim() != "" || level != "") {
+		if (rowString.trim() != "") {
 		
 			level = rowString + "\n" + level;
 			rowString = "";
+		}
+		else if (level != "") {
+			
+			rowString = "\n" + rowString;
 		}
 	}
 	console.log(level);
