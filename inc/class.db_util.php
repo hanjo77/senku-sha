@@ -56,7 +56,7 @@ class DBUtil {
 	function query($query) {
 	       
 	  	$this->connect();
-		$result = mysql_query($query, $this->connection);
+		$result = mysql_query(preg_replace("/\[\[\[([^\]\]\]]*)\]\]\]/", mysql_real_escape_string("$1"), $query), $this->connection);
 		if (!$result) {
 			
 			echo mysql_error();
@@ -73,7 +73,7 @@ class DBUtil {
     function insert($query) {
 	       
 	  	$this->connect();
-		mysql_query($query);
+		mysql_query(preg_replace("/\[\[\[([^\]\]\]]*)\]\]\]/", mysql_real_escape_string("$1"), $query));
 		$id = mysql_insert_id();
 		mysql_close();
 		return $id;	

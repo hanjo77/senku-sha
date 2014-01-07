@@ -243,14 +243,12 @@ Editor.prototype.loadLevel = function(data) {
 				var pos = [this.blocks.length, col];
 				var type = rowData.charAt(col);
 				var blockType = CONFIG.BLOCK_TYPES[parseInt(type, 10)];
-				console.log(blockType);
 				if (blockType 
 					&& blockType.alternatingId
 					&& ((pos[0]%2 == 1 && pos[1]%2 == 0) || (pos[0]%2 == 0 && pos[1]%2 == 1))
 					) {
 			
 					type = "" + blockType.alternatingId;
-					console.log("test");
 				}
 				if (blockType 
 					&& blockType.defaultId
@@ -258,7 +256,6 @@ Editor.prototype.loadLevel = function(data) {
 					) {
 			
 					type = "" + blockType.defaultId;
-					console.log("test");
 				}
 				
 				var id = "tableCell_" + pos[0] + "_" + pos[1];
@@ -334,8 +331,12 @@ Editor.prototype.addBlock = function(pos) {
 		var buttonId = parseInt(this.activeButton.attr("id"), 10);
 		var blockType = CONFIG.BLOCK_TYPES[buttonId];
 		if (blockType.alternatingId
-			&& ((pos[0]%2 == 1 && pos[1]%2 == 1) || (pos[0]%2 == 0 && pos[1]%2 == 0))
-			) {
+			&& (
+				(pos[0]%2 == 1 && pos[1]%2 == 1 && this.maxRow%2 == 0) || 
+				(pos[0]%2 == 0 && pos[1]%2 == 0 && this.maxRow%2 == 0) ||
+				(pos[0]%2 == 1 && pos[1]%2 == 0 && this.maxRow%2 == 1) || 
+				(pos[0]%2 == 0 && pos[1]%2 == 1 && this.maxRow%2 == 1)
+			)) {
 			
 			blockType = CONFIG.BLOCK_TYPES[blockType.alternatingId];
 		}
@@ -348,9 +349,7 @@ Editor.prototype.addBlock = function(pos) {
 		this.blocks[pos[0]][pos[1]] = "" + buttonId;
 		var color = Util.getHexColorFromInt(blockType.color);
 		block.attr("class", this.activeButton.attr("id"));
-		block.css("backgroundColor", color);   
-		console.log(pos);
-		console.log(this.blocks);
+		block.css("backgroundColor", color);
 	}
 };
 
@@ -364,42 +363,28 @@ Editor.prototype.addBlock = function(pos) {
 Editor.prototype.levelString = function() {
 	
 	var level = "";
-	console.log(this.blocks);
 	var rowString = "";
 	for (var row = 0; row < this.blocks.length; row++) {
 	
-		console.log(this.blocks[row]);
-		if (this.blocks[row]) {
+		for (var col = 0; col < CONFIG.TRACK_WIDTH; col++) {
 			
-			for (var col = 0; col < this.blocks[row].length; col++) {
+			var block = $("#tableCell_" + row + "_" + col);
+			if (block && block.attr("class")) {
 				
-				if (this.blocks[row][col]) {
-					
-					rowString += this.blocks[row][col];
-				}
-				else {
-					
-					rowString += " ";
-				}
+				rowString += block.attr("class");
+			}
+			else {
+				
+				rowString += " ";
 			}
 		}
-		if (rowString.trim() != "") {
+		if (rowString.trim() != "" || level != "") {
 		
-			console.log("linestring " + rowString);
-			level += rowString + "\n";
-			console.log(level);
+			level = rowString + "\n" + level;
 			rowString = "";
 		}
-		else if (level == "") {
-			
-			rowString = "";			
-		}
-		else {
-			
-			rowString += "\n";
-		}
 	}
-	
+	console.log(level);
 	return level;
 };
 

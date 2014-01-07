@@ -154,7 +154,7 @@ Block.prototype.getNextPositionToBall = function(nextPos, type) {
 	
 							nextPos.z = (this.back+game.ball.geometry.radius)*-1;
 							game.track.lastZ = nextPos.z;
-							game.track.speedZ = -1;
+							game.track.speedZ = 0;
 							game.track.tempSpeedZ = game.track.speedZ*game.timeRate;
 							nextPos.z += game.track.tempSpeedZ;
 							game.ball.canMove.front = false;
