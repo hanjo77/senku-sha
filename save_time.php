@@ -1,6 +1,6 @@
 <?php
 /**
- * This script is called to save a level from level editor
+ * This script is called to save the level time
  * PHP Version 5.0.0
  * @package SenkuSha
  * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
