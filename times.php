@@ -1,6 +1,6 @@
 <?php
 /**
- * The content include for the login form
+ * Displays the best level times
  * PHP Version 5.0.0
  * @package SenkuSha
  * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
