@@ -296,3 +296,21 @@ Game.prototype.clearGame = function(editLevelId, edit) {
 	this.currentLevel = 1;
 	delete this;
 };
+
+/**
+ * Saves the current time to the database
+ */
+Game.prototype.saveTime = function() {
+	
+	console.log(game.levelTime);
+	$.ajax({
+		
+		url: "save_time.php",
+		type: "POST",
+		data: {
+			
+			time: game.levelTime,
+			level: game.currentLevel
+		}
+	});
+}

@@ -203,8 +203,8 @@ Ball.prototype.blockUnderBall = function(trackPosition) {
 				
 				if (block.blockType.name.indexOf("goal") == -1) {
 					
-					game.startTime = 0;
 					game.isInGoal = false;
+					game.startTime = 0;
 					game.startTime = new Date();
 				}
 			}		

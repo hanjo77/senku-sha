@@ -113,6 +113,8 @@ class Level {
 		$db_util = new DBUtil();
 		$query = "UPDATE `level` SET `active` = 0 WHERE `id` = '".$this->id."'";
 		$result = $db_util->query($query);
+		$query = "DELETE FROM `time` WHERE `level` = '".$this->id."'";
+		$result = $db_util->query($query);
 		return $result;	
 	}
 
@@ -168,8 +170,14 @@ class Level {
 		$result = $db_util->query($query);
 		$next_level = 0;
 		$current_level = $id;
+		$changed = false;
 		while($record = mysql_fetch_array($result)) {
  		
+			if (!$changed) {
+				
+				$changed = true;
+				$current_level = $record["id"];
+			}
 			$data = $record["data"].$goal_area.$data;
 			$next_level = $record["id"];
 			if ($next_level == 0) {

@@ -49,7 +49,9 @@ class DBUtil {
 	}
 
     /**
-     * Executes a query on the database
+     * Executes a query on the database.
+	 * Strings capsuled in triple square brackets will be escaped 
+	 * against SQL injections
      * @param string $query SQL-query
      * @return resource Database response object
      */
@@ -66,7 +68,9 @@ class DBUtil {
 	}
 
     /**
-     * Inserts into database
+     * Inserts into database.
+	 * Strings capsuled in triple square brackets will be escaped 
+	 * against SQL injections
      * @param string $query SQL-query
      * @return int ID
      */

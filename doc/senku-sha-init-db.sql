@@ -34,7 +34,7 @@ USE `senku-sha`;
 -- --------------------------------------------------------
 
 --
--- Table `users`
+-- Table structure `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -46,38 +46,40 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQUE_LEVEL_NAME` (`name`),
   UNIQUE KEY `UNIQUE_EMAIL` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
 
 --
--- Table `levels`
+-- Table structure `level`
 --
 
 CREATE TABLE IF NOT EXISTS `level` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` text COLLATE utf8_unicode_520_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_520_ci NOT NULL DEFAULT '',
   `creator` int(32) NOT NULL,
   `active` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQUE_USER_TITLE` (`title`),
-  FOREIGN KEY `FK_LEVEL_CREATOR_USER_ID` (`creator`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=1 ;
+  FOREIGN KEY (`creator`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=29 ;
+
+-- --------------------------------------------------------
 
 --
--- Table `hiscore`
+-- Table structure `time`
 --
 
-CREATE TABLE IF NOT EXISTS `hiscore` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `time` int(32) NOT NULL,
-  `user` int(32) NOT NULL,
-  `level` int(32) NOT NULL,
-  `date` timestamp NOT NULL,
+CREATE TABLE IF NOT EXISTS `time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY `FK_HISCORE_USER_USER_ID` (`user`) REFERENCES `user` (`id`)
-  FOREIGN KEY `FK_HISCORE_LEVEL_LEVEL_ID` (`level`) REFERENCES `level` (`id`)
+  FOREIGN KEY (`user`) REFERENCES `user`(`id`),
+  FOREIGN KEY (`level`) REFERENCES `level`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci AUTO_INCREMENT=1 ;
-
 
 --
 -- Give rights to user for database

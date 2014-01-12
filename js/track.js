@@ -66,6 +66,7 @@ Track.prototype.loadLevel = function() {
 
 Track.prototype.finishLevel = function() {
 	
+	game.saveTime();
 	this.isStarted = false;
 	this.speedX = 0;
 	this.speedZ = 0;

@@ -199,6 +199,14 @@ h2 {
 	text-shadow: 0 0 10px #000;
 }
    
+h3 {
+	
+	font-size: 2em;
+	padding: 0;
+	margin: 0;
+	text-shadow: 0 0 10px #000;
+}
+   
 p {                            
 	
 	text-shadow: 0 0 10px #000;
@@ -538,4 +546,20 @@ canvas {
 	color: #ff0000;
 	border-color: #ff0000;
 	background-color: #ffffff;
+}
+
+ul.bestTimes {
+	
+	list-style: none;
+	max-height: 20em;
+	padding: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 50%;
+	margin: 2em 0 2em 25%;
+}
+
+ul.bestTimes .bestLevelTime {
+	
+	margin-left: 2em;
 }
