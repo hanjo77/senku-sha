@@ -4,3 +4,5 @@
 *.xlsx
 .idea/*
 *phpdoc-cache*
+
+inc/class.config.php
