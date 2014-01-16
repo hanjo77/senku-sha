@@ -321,6 +321,7 @@ Editor.prototype.addBlock = function(pos) {
 	if (this.activeButton && !isNaN(parseInt(this.activeButton.attr("id"), 10))) {
 		
 		var block = $("#"+pos);
+		var blockIndex = buttonId;
 		pos = pos.replace("tableCell_", "").split("_");
 		pos[0] = (this.maxRow-1)-pos[0];
 		if (!this.blocks[pos[0]]) {
@@ -328,6 +329,7 @@ Editor.prototype.addBlock = function(pos) {
 			this.blocks[pos[0]] = new Array();
 		}
 		var buttonId = parseInt(this.activeButton.attr("id"), 10);
+		console.log(buttonId);
 		var blockType = CONFIG.BLOCK_TYPES[buttonId];
 		if (blockType.alternatingId
 			&& (
@@ -337,9 +339,9 @@ Editor.prototype.addBlock = function(pos) {
 				(pos[0]%2 == 0 && pos[1]%2 == 1 && this.maxRow%2 == 1)
 			)) {
 			
-			blockType = CONFIG.BLOCK_TYPES[blockType.alternatingId];
+			buttonId = blockType.alternatingId;
+			blockType = CONFIG.BLOCK_TYPES[buttonId];
 		}
-		var buttonId = blockType.id;
 		if (blockType.name == "empty") {
 			
 			buttonId = " ";
@@ -347,7 +349,7 @@ Editor.prototype.addBlock = function(pos) {
 
 		this.blocks[pos[0]][pos[1]] = "" + buttonId;
 		var color = Util.getHexColorFromInt(blockType.color);
-		block.attr("class", this.activeButton.attr("id"));
+		block.attr("class", buttonId);
 		block.css("backgroundColor", color);
 	}
 };
@@ -368,7 +370,7 @@ Editor.prototype.levelString = function() {
 		for (var col = CONFIG.TRACK_WIDTH-1; col >= 0; col--) {
 			
 			var block = $("#tableCell_" + row + "_" + col);
-			if (block && block.attr("class")) {
+			if (block && block.attr("class") < 10) {
 				
 				rowString = block.attr("class") + rowString;
 			}
