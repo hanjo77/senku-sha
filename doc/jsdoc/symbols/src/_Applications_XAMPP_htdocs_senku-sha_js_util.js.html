@@ -46,7 +46,7 @@
 <span class='line'> 39</span> </span><span class="WHIT">	</span><span class="WHIT">
 <span class='line'> 40</span> </span><span class="WHIT">		</span><span class="NAME">obj.dispose</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 41</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 42</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 43</span> 
 <span class='line'> 44</span> </span><span class="COMM">/**
 <span class='line'> 45</span>  * Creates a menu button
@@ -59,7 +59,7 @@
 <span class='line'> 52</span> </span><span class="NAME">Util.menuButton</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">content</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 53</span> 
 <span class='line'> 54</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'&lt;a id="'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'" class="menuButton" onclick="Util.'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'()">'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">content</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'&lt;/a>'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 55</span> </span><span class="PUNC">}</span><span class="WHIT">         </span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 56</span> 
 <span class='line'> 57</span> </span><span class="COMM">/**
 <span class='line'> 58</span>  * Creates a block button (used in editor)
@@ -72,7 +72,7 @@
 <span class='line'> 65</span> 
 <span class='line'> 66</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">color</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Util.getHexColorFromInt</span><span class="PUNC">(</span><span class="NAME">blockType.color</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 67</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'&lt;a id="'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">blockType.id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'" class="blockButton" style="background-color: '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">color</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'">&nbsp;&lt;/a>'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 68</span> </span><span class="PUNC">}</span><span class="WHIT">     </span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 69</span> 
 <span class='line'> 70</span> </span><span class="COMM">/**
 <span class='line'> 71</span>  * Returns the hex value of an integer to be used for a CSS color attribute
@@ -89,7 +89,7 @@
 <span class='line'> 82</span> </span><span class="WHIT">		</span><span class="NAME">color</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"0"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 83</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 84</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="STRN">"#"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 85</span> </span><span class="PUNC">}</span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 86</span> 
 <span class='line'> 87</span> </span><span class="COMM">/**
 <span class='line'> 88</span>  * Action called on exit button click
@@ -98,7 +98,7 @@
 <span class='line'> 91</span> </span><span class="NAME">Util.exit</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 92</span> </span><span class="WHIT">	   </span><span class="WHIT">
 <span class='line'> 93</span> </span><span class="WHIT">	</span><span class="NAME">Util.changeContent</span><span class="PUNC">(</span><span class="STRN">"menu.php"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 94</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 95</span> 
 <span class='line'> 96</span> </span><span class="COMM">/**
 <span class='line'> 97</span>  * Action called on editor save button click
@@ -123,7 +123,7 @@
 <span class='line'>116</span> </span><span class="WHIT">			</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">"#levelId"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">val</span><span class="PUNC">(</span><span class="NAME">result</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>117</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>118</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>119</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>120</span> 
 <span class='line'>121</span> </span><span class="COMM">/**
 <span class='line'>122</span>  * Action called on editor level selection button click
@@ -143,7 +143,7 @@
 <span class='line'>136</span> </span><span class="WHIT">		</span><span class="WHIT">
 <span class='line'>137</span> </span><span class="WHIT">		</span><span class="NAME">display</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"none"</span><span class="WHIT">
 <span class='line'>138</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>139</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>140</span> 
 <span class='line'>141</span> </span><span class="COMM">/**
 <span class='line'>142</span>  * Action called on editor delete level button click
@@ -164,7 +164,7 @@
 <span class='line'>157</span> </span><span class="WHIT">			</span><span class="WHIT">
 <span class='line'>158</span> </span><span class="WHIT">		</span><span class="NAME">Util.editorLevelSelection</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>159</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>160</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>161</span> 
 <span class='line'>162</span> </span><span class="COMM">/**
 <span class='line'>163</span>  * Action called on editor load level button click
@@ -185,7 +185,7 @@
 <span class='line'>178</span> </span><span class="WHIT">		</span><span class="WHIT">
 <span class='line'>179</span> </span><span class="WHIT">		</span><span class="NAME">editor.loadLevel</span><span class="PUNC">(</span><span class="NAME">eval</span><span class="PUNC">(</span><span class="STRN">"("</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">")"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>180</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>181</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>182</span> 
 <span class='line'>183</span> </span><span class="COMM">/**
 <span class='line'>184</span>  * Action called on editor clear button click
@@ -194,7 +194,7 @@
 <span class='line'>187</span> </span><span class="NAME">Util.editorClear</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>188</span> 
 <span class='line'>189</span> </span><span class="WHIT">	</span><span class="NAME">editor.clear</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>190</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>191</span> 
 <span class='line'>192</span> </span><span class="COMM">/**
 <span class='line'>193</span>  * Action called on activate level button click
@@ -215,7 +215,7 @@
 <span class='line'>208</span> </span><span class="WHIT">			</span><span class="WHIT">
 <span class='line'>209</span> </span><span class="WHIT">		</span><span class="NAME">Util.editorLevelSelection</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>210</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>211</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>212</span> 
 <span class='line'>213</span> </span><span class="COMM">/**
 <span class='line'>214</span>  * Action called on test level button click
@@ -224,7 +224,7 @@
 <span class='line'>217</span> </span><span class="NAME">Util.testLevel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">levelId</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>218</span> </span><span class="WHIT">	</span><span class="WHIT">
 <span class='line'>219</span> </span><span class="WHIT">	</span><span class="NAME">Util.changeContent</span><span class="PUNC">(</span><span class="STRN">"game.php?id="</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">levelId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>220</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>221</span> 
 <span class='line'>222</span> </span><span class="COMM">/**
 <span class='line'>223</span>  * Action called on edit level button click
@@ -236,7 +236,7 @@
 <span class='line'>229</span> </span><span class="WHIT">		</span><span class="WHIT">
 <span class='line'>230</span> </span><span class="WHIT">		</span><span class="NAME">game.clearGame</span><span class="PUNC">(</span><span class="NAME">levelId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>231</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>232</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>233</span> 
 <span class='line'>234</span> </span><span class="COMM">/**
 <span class='line'>235</span>  * Changes the contents of the content-container and handles 
@@ -290,7 +290,7 @@
 <span class='line'>283</span> </span><span class="WHIT">		</span><span class="NAME">Validation.formIsValid</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'form'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">get</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>284</span> </span><span class="WHIT">		</span><span class="NAME">Util.updateWindow</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">		</span><span class="WHIT">
 <span class='line'>285</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>286</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>286</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>287</span> 
 <span class='line'>288</span> </span><span class="COMM">/**
 <span class='line'>289</span>  * Reads the current URL hash and changes the content depending on it
@@ -317,7 +317,7 @@
 <span class='line'>310</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>311</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="WHIT">
 <span class='line'>312</span> </span><span class="WHIT">	</span><span class="NAME">Util.changeContent</span><span class="PUNC">(</span><span class="NAME">hash</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">".php"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">param</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>313</span> </span><span class="PUNC">}</span><span class="WHIT">  </span><span class="WHIT">
+<span class='line'>313</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>314</span> 
 <span class='line'>315</span> </span><span class="COMM">/**
 <span class='line'>316</span>  * Returns the number of seconds until a given time.
@@ -337,7 +337,7 @@
 <span class='line'>330</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>331</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>332</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>333</span> </span><span class="PUNC">}</span><span class="WHIT">         </span><span class="WHIT">
+<span class='line'>333</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>334</span> 
 <span class='line'>335</span> </span><span class="COMM">/**
 <span class='line'>336</span>  * Updates the info window
@@ -464,7 +464,7 @@
 <span class='line'>457</span> </span><span class="WHIT">	</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">"#lifeDisplay"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">css</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>458</span> </span><span class="WHIT">			</span><span class="NAME">display</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"block"</span><span class="WHIT">
 <span class='line'>459</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>460</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>460</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>461</span> 
 <span class='line'>462</span> </span><span class="COMM">/**
 <span class='line'>463</span>  * Initializes all event handlers for the UI
@@ -580,7 +580,7 @@
 <span class='line'>573</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>574</span> 
 <span class='line'>575</span> </span><span class="WHIT">	</span><span class="NAME">window.setTimeout</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">Validation.formIsValid</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>576</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>576</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>577</span> 
 <span class='line'>578</span> </span><span class="COMM">/**
 <span class='line'>579</span>  * Updates the window, handles window resize issues
@@ -604,92 +604,21 @@
 <span class='line'>597</span> </span><span class="WHIT">		</span><span class="NAME">obj.renderer.setSize</span><span class="PUNC">(</span><span class="NAME">obj.container.width</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">obj.container.height</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>598</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>599</span> </span><span class="WHIT">	</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">"#content"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">center</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>600</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>600</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>601</span> 
 <span class='line'>602</span> </span><span class="COMM">/**
-<span class='line'>603</span>  * Returns the ball position relative to the next track position
-<span class='line'>604</span>  * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
-<span class='line'>605</span>  * @returns THREE.Vector3 object of the ball position
-<span class='line'>606</span>  * @type THREE.Vector3
-<span class='line'>607</span>  * TODO: Make it better... ;-)
-<span class='line'>608</span>  */</span><span class="WHIT">
-<span class='line'>609</span> 
-<span class='line'>610</span> </span><span class="NAME">Util.getBallPosition</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">nextPos</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>611</span> </span><span class="WHIT">	     </span><span class="WHIT">
-<span class='line'>612</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">pos</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">game.ball.touchPoint</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>613</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">THREE.Vector3</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>614</span> </span><span class="WHIT">			</span><span class="PUNC">-</span><span class="NAME">nextPos.x</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>615</span> </span><span class="WHIT">			</span><span class="PUNC">-</span><span class="NAME">nextPos.y</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>616</span> </span><span class="WHIT">			</span><span class="PUNC">-</span><span class="NAME">nextPos.z</span><span class="WHIT">
-<span class='line'>617</span> </span><span class="WHIT">		</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>618</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">                                                    </span><span class="WHIT">
-<span class='line'>619</span> </span><span class="PUNC">}</span><span class="WHIT">  </span><span class="WHIT">
-<span class='line'>620</span> 
-<span class='line'>621</span> </span><span class="COMM">/**
-<span class='line'>622</span>  * Returns an object of the collisions between the ball and a given block
-<span class='line'>623</span>  * @param {Block} block BLOCK object to be tested
-<span class='line'>624</span>  * @param {THREE.Vector3} nextPos THREE.Vector3 object of the next track position
-<span class='line'>625</span>  * @returns String Array with the detected collisions (right|left|front|back)
-<span class='line'>626</span>  * @type Array
-<span class='line'>627</span>  * TODO: Make it better... ;-)
-<span class='line'>628</span>  */</span><span class="WHIT">
-<span class='line'>629</span> 
-<span class='line'>630</span> </span><span class="NAME">Util.getCollisions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">block</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nextPos</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>631</span> </span><span class="WHIT">	    </span><span class="WHIT">
-<span class='line'>632</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">types</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">                              </span><span class="WHIT">
-<span class='line'>633</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ballPos</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Util.getBallPosition</span><span class="PUNC">(</span><span class="NAME">nextPos</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>634</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">movesLeft</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">game.track.speedX</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>635</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">movesRight</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">game.track.speedX</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>636</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">movesForward</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">game.track.speedZ</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>637</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">movesBack</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">game.track.speedZ</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>638</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">withinWidth</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.x</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">block.left</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.x</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">block.right</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>639</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">withinLength</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.z</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">block.front</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">CONFIG.BLOCK_SIZE</span><span class="PUNC">/</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.z</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">block.back</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">CONFIG.BLOCK_SIZE</span><span class="PUNC">/</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>640</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">neighbours</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">block.neighbours</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>641</span> 
-<span class='line'>642</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">frontIntersection</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">ballPos.z</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">block.front</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">CONFIG.BLOCK_SIZE</span><span class="PUNC">/</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">game.ball.geometry.radius</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>643</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.z</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">block.front</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>644</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">withinWidth</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>645</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">backIntersection</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">ballPos.z</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">block.back</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">CONFIG.BLOCK_SIZE</span><span class="PUNC">/</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">game.ball.geometry.radius</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>646</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.z</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">block.back</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>647</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">withinWidth</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>648</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">leftIntersection</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">ballPos.x</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NAME">block.right</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">game.ball.geometry.radius</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>649</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.x</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">block.left</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">CONFIG.BLOCK_SIZE</span><span class="PUNC">/</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>650</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">withinLength</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>651</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">rightIntersection</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">ballPos.x</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">block.left</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">game.ball.geometry.radius</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>652</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ballPos.x</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">block.right</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">CONFIG.BLOCK_SIZE</span><span class="PUNC">/</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>653</span> </span><span class="WHIT">		</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">withinLength</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>654</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">leftIntersection</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>655</span> 
-<span class='line'>656</span> </span><span class="WHIT">		</span><span class="NAME">types.push</span><span class="PUNC">(</span><span class="STRN">"left"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>657</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>658</span> </span><span class="WHIT">	</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">rightIntersection</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>659</span> 
-<span class='line'>660</span> </span><span class="WHIT">		</span><span class="NAME">types.push</span><span class="PUNC">(</span><span class="STRN">"right"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>661</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>662</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">frontIntersection</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>663</span> </span><span class="WHIT">                      </span><span class="WHIT">
-<span class='line'>664</span> </span><span class="WHIT">		</span><span class="NAME">types.push</span><span class="PUNC">(</span><span class="STRN">"front"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>665</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>666</span> </span><span class="WHIT">	</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">backIntersection</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>667</span> </span><span class="WHIT">                                                      </span><span class="WHIT">
-<span class='line'>668</span> </span><span class="WHIT">		</span><span class="NAME">types.push</span><span class="PUNC">(</span><span class="STRN">"back"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>669</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">      </span><span class="WHIT">
-<span class='line'>670</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">types</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>671</span> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>672</span> 
-<span class='line'>673</span> </span><span class="COMM">/**
-<span class='line'>674</span>  * Centers a jQuery object relative to the window
-<span class='line'>675</span>  */</span><span class="WHIT">
-<span class='line'>676</span> 
-<span class='line'>677</span> </span><span class="NAME">jQuery.fn.center</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>678</span> </span><span class="WHIT">    </span><span class="NAME">this.css</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>679</span> </span><span class="WHIT">    	</span><span class="WHIT">
-<span class='line'>680</span> </span><span class="WHIT">		</span><span class="NAME">position</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"absolute"</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>681</span> </span><span class="WHIT">		</span><span class="NAME">height</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"auto"</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>682</span> </span><span class="WHIT">		</span><span class="NAME">top</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Math.max</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">height</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">outerHeight</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>683</span> </span><span class="WHIT">                                                </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">scrollTop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px"</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>684</span> </span><span class="WHIT">		</span><span class="NAME">left</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Math.max</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">width</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">outerWidth</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
-<span class='line'>685</span> </span><span class="WHIT">                                                </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">scrollLeft</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px"</span><span class="WHIT">
-<span class='line'>686</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>687</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>688</span> </span><span class="PUNC">}</span></pre></body></html>
+<span class='line'>603</span>  * Centers a jQuery object relative to the window
+<span class='line'>604</span>  */</span><span class="WHIT">
+<span class='line'>605</span> 
+<span class='line'>606</span> </span><span class="NAME">jQuery.fn.center</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>607</span> </span><span class="WHIT">    </span><span class="NAME">this.css</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>608</span> </span><span class="WHIT">    	</span><span class="WHIT">
+<span class='line'>609</span> </span><span class="WHIT">		</span><span class="NAME">position</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"absolute"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>610</span> </span><span class="WHIT">		</span><span class="NAME">height</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"auto"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>611</span> </span><span class="WHIT">		</span><span class="NAME">top</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Math.max</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">height</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">outerHeight</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'>612</span> </span><span class="WHIT">                                                </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">scrollTop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>613</span> </span><span class="WHIT">		</span><span class="NAME">left</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Math.max</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">width</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">outerWidth</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'>614</span> </span><span class="WHIT">                                                </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">scrollLeft</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px"</span><span class="WHIT">
+<span class='line'>615</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>616</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>617</span> </span><span class="PUNC">}</span><span class="PUNC">;</span></pre></body></html>

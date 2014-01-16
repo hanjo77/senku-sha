@@ -44,7 +44,7 @@ $form = new Form("login", array(
 
 if (isset($_POST["submit"])) {
 	    
-	$user = new User();
+	$user = new User(null);
 	$logged_in = $user->login();
 		if ($logged_in) {
 		 

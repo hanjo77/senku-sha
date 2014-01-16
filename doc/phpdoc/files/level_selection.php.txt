@@ -26,7 +26,7 @@ session_start();
 			$active = " (active)";
 		}
 		echo "<li id=\"level_".$record["id"]."\">".
-				"<a href=\"#editor_".$record["id"]."\">".$record["title"].$active."</a>".
+				"<a href=\"#editor_".$record["id"]."\">".htmlentities($record["title"]).$active."</a>".
 				"<span>".
 					"<a class=\"buttonLoad\" onclick=\"Util.loadLevel(".$record["id"].")\">Load</a>".
 					"<a class=\"buttonLoad\" onclick=\"Util.testLevel(".$record["id"].")\">Test</a>".
