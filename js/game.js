@@ -31,6 +31,7 @@ function Game(levelId) {
 	this.track;
 	this.bgBall;
 	this.levelTime;
+	this.levelName;
 	this.mousePos;
 	this.isMouseControlled;
 	this.fingers;
@@ -178,6 +179,7 @@ Game.prototype.startGame = function() {
 	
 	this.scene = new THREE.Scene();
 	this.container = $("#content");
+	this.container.html("<div id=\"levelName\" />");
 	this.container.css({
 		
 		width: $(window).innerWidth(),
@@ -302,7 +304,6 @@ Game.prototype.clearGame = function(editLevelId, edit) {
  */
 Game.prototype.saveTime = function() {
 	
-	console.log(game.levelTime);
 	$.ajax({
 		
 		url: "save_time.php",

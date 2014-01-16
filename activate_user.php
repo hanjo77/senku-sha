@@ -14,6 +14,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="js/util.js"></script>
 </head>
 <body>      
 	<div id="bgBall" style="display: block"></div>
@@ -24,8 +26,8 @@
 			<?
 
 				include_once("inc/class.user.php");
-				$user = new User();
-				if ($user->activate()) {
+				$user = new User($_GET["id"]);
+				if ($user->activate($_GET["h"])) {
 	
 				?>
 	
@@ -50,5 +52,10 @@
 			?>
 			<a href="./#" class="menuButton">Continue</a>
 		</div>
+		<script>
+			
+		$("#content").center();
+			
+		</script>
 	</div>
 </body>

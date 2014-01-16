@@ -125,6 +125,7 @@ Track.prototype.initLevel = function(levelObj) {
 	
 	game.nextLevel = levelObj.nextLevel;
 	game.currentLevel = levelObj.currentLevel;
+	game.levelName = levelObj.title;
 	var level = levelObj.levelData;
 	var rows = level.split("\n");
 

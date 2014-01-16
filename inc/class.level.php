@@ -83,8 +83,11 @@ class Level {
     function delete() {
 		   
 		$db_util = new DBUtil();
-		if (!isset($this->id) || $this->id == 0) {
+		if (isset($this->id) && $this->id != 0) {
 			
+			
+			$query = "DELETE FROM `time` WHERE `level` = '".$this->id."'";
+			$db_util->query($query);
 			$query = "DELETE FROM `level` WHERE `id` = '".$this->id."'";
 			$result = $db_util->query($query);
 			return $result;	
@@ -166,7 +169,7 @@ class Level {
 			$only_active = "";
 			$limit = 1;
 		} 
-		$query = "SELECT `id`, `data` FROM `level` WHERE `id` >= ".$id.$only_active." ORDER BY `id` ASC LIMIT 0, ".$limit;
+		$query = "SELECT `id`, `data`, `title` FROM `level` WHERE `id` >= ".$id.$only_active." ORDER BY `id` ASC LIMIT 0, ".$limit;
 		$result = $db_util->query($query);
 		$next_level = 0;
 		$current_level = $id;
@@ -176,6 +179,7 @@ class Level {
 			if (!$changed) {
 				
 				$changed = true;
+				$title = $record["title"];
 				$current_level = $record["id"];
 			}
 			$data = $record["data"].$goal_area.$data;
@@ -194,7 +198,8 @@ class Level {
 		return "{\n"
 			."\"currentLevel\": ".$current_level.",\n"
 			."\"nextLevel\": ".$next_level.",\n"
-			."\"levelData\": \"".str_replace("\n", "\\n", $data)."\"\n"
+			."\"levelData\": \"".str_replace("\n", "\\n", $data)."\",\n"
+			."\"title\": \"".$title."\"\n"
 			."}";	
 	}
 }

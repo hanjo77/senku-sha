@@ -23,8 +23,8 @@ $result = $db_util->query($query);
 while($record = mysql_fetch_array($result)) {
 
 	echo("<li>"
-		."<h3>".$record["level"]."</h3>"
-		."<p>".$record["user"]."<span class=\"bestLevelTime\">".$record["time"]." Sec</span></p>"
+		."<h3>".htmlentities($record["level"])."</h3>"
+		."<p>".htmlentities($record["user"])."<span class=\"bestLevelTime\">".$record["time"]." Sec</span></p>"
 		."</li>");
 }
 

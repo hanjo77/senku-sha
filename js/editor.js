@@ -388,7 +388,6 @@ Editor.prototype.levelString = function() {
 			rowString = "\n" + rowString;
 		}
 	}
-	console.log(level);
 	return level;
 };
 
