@@ -51,18 +51,17 @@ Editor.prototype.clear = function() {
 	this.maxRow = CONFIG.EDITOR.ROWS;
 	this.displayContainer.html("<table id=\"editorTable\"></table>");
 	this.table = $("#editorTable");
-	for (var i = this.maxRow-1; i >= 0; i--) {
+	var i;
+	var emptyRow = [];
+	for (i = 0; i < CONFIG.TRACK_WIDTH; i++) {
+		
+		emptyRow.push(" ");
+	}
+	for (i = this.maxRow-1; i >= 0; i--) {
 	
 		var tableRow = this.getEmptyTableRow(i);
-		if (i == this.maxRow-1) {
-			
-			this.table.append(tableRow);
-		}
-		else {
-			
-			$('#editorTable tr:first').before(tableRow);
-		}
-		this.blocks.unshift([]);
+		this.table.append(tableRow);
+		this.blocks.push(emptyRow);
 		this.table.css({
 			marginBottom: 0
 		})

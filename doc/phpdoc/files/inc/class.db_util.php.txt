@@ -1,7 +1,4 @@
 <?php
-
-require_once("class.config.php");
-
 /**
  * Class DBUtil - Database utility
  * PHP Version 5.0.0
@@ -15,7 +12,6 @@ require_once("class.config.php");
  * @package SenkuSha
  * @author Hansjürg Jaggi (hanjo) <hanjo77@gmail.com>
  */
-
 class DBUtil {
 	
 	protected $self = array();
@@ -29,10 +25,11 @@ class DBUtil {
      * Initializes a new DBUtil class
      */
     public function __construct() {
-		$this->url = SenkuShaConfig::$db["server"];
-		$this->db = SenkuShaConfig::$db["name"];
-		$this->user = SenkuShaConfig::$db["user"];
-		$this->password = SenkuShaConfig::$db["password"];
+                             
+		$this->url = "127.0.0.1"; 
+		$this->db = "senku-sha";
+		$this->user = "senku-sha";  
+		$this->password = "53nku-5h4";
     }
 
     /**
@@ -49,16 +46,14 @@ class DBUtil {
 	}
 
     /**
-     * Executes a query on the database.
-	 * Strings capsuled in triple square brackets will be escaped 
-	 * against SQL injections
+     * Executes a query on the database
      * @param string $query SQL-query
      * @return resource Database response object
      */
 	function query($query) {
 	       
 	  	$this->connect();
-		$result = mysql_query(preg_replace("/\[\[\[([^\]\]\]]*)\]\]\]/", mysql_real_escape_string("$1"), $query), $this->connection);
+		$result = mysql_query($query, $this->connection);
 		if (!$result) {
 			
 			echo mysql_error();
@@ -68,16 +63,14 @@ class DBUtil {
 	}
 
     /**
-     * Inserts into database.
-	 * Strings capsuled in triple square brackets will be escaped 
-	 * against SQL injections
+     * Inserts into database
      * @param string $query SQL-query
      * @return int ID
      */
     function insert($query) {
 	       
 	  	$this->connect();
-		mysql_query(preg_replace("/\[\[\[([^\]\]\]]*)\]\]\]/", mysql_real_escape_string("$1"), $query));
+		mysql_query($query);
 		$id = mysql_insert_id();
 		mysql_close();
 		return $id;	

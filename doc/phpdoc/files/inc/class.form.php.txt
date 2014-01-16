@@ -109,11 +109,11 @@ class Form {
 				$fields .= "`".$key."`";
 				if ($field["type"] == "password") {
 				
-					$values .= "PASSWORD('[[[".$_POST[$key]."]]]')";
+					$values .= "PASSWORD('".$_POST[$key]."')";
 				}
 				else {
 				
-					$values .= "'[[[".$_POST[$key]."]]]'";
+					$values .= "'".$_POST[$key]."'";
 				}
 			}
 		}

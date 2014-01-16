@@ -22,7 +22,6 @@ if (isset($_GET["logout"])) {
 <h2>Senku-Sha</h2>
 <div class="buttonRows">
 	<a rel="game.php" class="menuButton">Play</a> 
-	<a rel="times.php" class="menuButton">Times</a> 
 	<div class="buttonRow">
 	<?
                               
