@@ -58,7 +58,7 @@ Validation.validateField = function(obj) {
 
 				case "email":   
 
-				   	if (!obj.val()) {
+				   	if (!obj.val().match(/[\w-]+@([\w-]+\.)+[\w-]+/)) {
 
 						messageBox.html("not valid"); 
 						valid = false
