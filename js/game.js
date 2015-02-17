@@ -38,6 +38,8 @@ function Game(levelId) {
 	this.hands;
 	this.isFinished;
 	this.trackPosition = new THREE.Vector3(0, 0, 0);
+	this.isMotionEnabled;
+	this.motionCenter;
 	if (levelId) {
 		
 		this.currentLevel = levelId;
@@ -143,7 +145,7 @@ Game.prototype.addHandlers = function() {
 			game.renderer.setSize(game.container.width(), game.container.height());
 		}
 	});
-	
+		
 	$(window).mousemove(function(e) {
 		
 		game.mousePos = [e.clientX, e.clientY];
@@ -161,6 +163,40 @@ Game.prototype.addHandlers = function() {
 			game.track.start();
 		}
 	});
+	
+	if (window.DeviceMotionEvent) {
+		
+		window.ondevicemotion = function(event) {
+			
+			if (!game.motionCenter) {
+			
+				game.motionCenter = [
+					event.accelerationIncludingGravity.x,
+					event.accelerationIncludingGravity.z
+				];
+			}
+			var motion = [
+				event.accelerationIncludingGravity.x - game.motionCenter[0],
+				event.accelerationIncludingGravity.z - game.motionCenter[1]
+			];
+			
+			if (motion[1] < -1) {
+				
+				if (game.track.isStarted) {
+			
+					// game.ball.jump();
+				}
+				else {
+			
+					game.track.start();
+				}
+			}
+			if (game.track.isStarted) {
+				
+				game.track.speedX = motion[0]/-5;
+			}
+		}
+	}
 };
 
 /**
